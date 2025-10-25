@@ -39,3 +39,15 @@
 
 # debug information files
 *.dwo
+
+# Visual Studio IDE files
+.vs/
+*.VC.db
+*.VC.VC.db
+*.VC.opendb
+*.opendb
+*.sdf
+*.ipch
+*.user
+*.userosscache
+*.sln.docstates
