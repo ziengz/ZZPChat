@@ -1,0 +1,9 @@
+E:\c\StatusServer\ConfigMgr.cpp;E:\c\StatusServer\StatusServer\x64\Debug\ConfigMgr.obj
+E:\c\StatusServer\IOContextPool.cpp;E:\c\StatusServer\StatusServer\x64\Debug\IOContextPool.obj
+E:\c\StatusServer\message.grpc.pb.cc;E:\c\StatusServer\StatusServer\x64\Debug\message.grpc.pb.obj
+E:\c\StatusServer\message.pb.cc;E:\c\StatusServer\StatusServer\x64\Debug\message.pb.obj
+E:\c\StatusServer\MysqlDao.cpp;E:\c\StatusServer\StatusServer\x64\Debug\MysqlDao.obj
+E:\c\StatusServer\MySqlMgr.cpp;E:\c\StatusServer\StatusServer\x64\Debug\MySqlMgr.obj
+E:\c\StatusServer\RedisMgr.cpp;E:\c\StatusServer\StatusServer\x64\Debug\RedisMgr.obj
+E:\c\StatusServer\StatusServer.cpp;E:\c\StatusServer\StatusServer\x64\Debug\StatusServer.obj
+E:\c\StatusServer\StatusServiceImpl.cpp;E:\c\StatusServer\StatusServer\x64\Debug\StatusServiceImpl.obj
