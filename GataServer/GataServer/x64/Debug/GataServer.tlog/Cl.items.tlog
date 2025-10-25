@@ -1,0 +1,13 @@
+E:\c\GataServer\ConfigMgr.cpp;E:\c\GataServer\GataServer\x64\Debug\ConfigMgr.obj
+E:\c\GataServer\CServer.cpp;E:\c\GataServer\GataServer\x64\Debug\CServer.obj
+E:\c\GataServer\GataServer.cpp;E:\c\GataServer\GataServer\x64\Debug\GataServer.obj
+E:\c\GataServer\HttpConnection.cpp;E:\c\GataServer\GataServer\x64\Debug\HttpConnection.obj
+E:\c\GataServer\IOContextPool.cpp;E:\c\GataServer\GataServer\x64\Debug\IOContextPool.obj
+E:\c\GataServer\LogicSystem.cpp;E:\c\GataServer\GataServer\x64\Debug\LogicSystem.obj
+E:\c\GataServer\message.grpc.pb.cc;E:\c\GataServer\GataServer\x64\Debug\message.grpc.pb.obj
+E:\c\GataServer\message.pb.cc;E:\c\GataServer\GataServer\x64\Debug\message.pb.obj
+E:\c\GataServer\MysqlDao.cpp;E:\c\GataServer\GataServer\x64\Debug\MysqlDao.obj
+E:\c\GataServer\MySqlMgr.cpp;E:\c\GataServer\GataServer\x64\Debug\MySqlMgr.obj
+E:\c\GataServer\RedisMgr.cpp;E:\c\GataServer\GataServer\x64\Debug\RedisMgr.obj
+E:\c\GataServer\StatusGrpcClient.cpp;E:\c\GataServer\GataServer\x64\Debug\StatusGrpcClient.obj
+E:\c\GataServer\VarifyGrpcClient.cpp;E:\c\GataServer\GataServer\x64\Debug\VarifyGrpcClient.obj

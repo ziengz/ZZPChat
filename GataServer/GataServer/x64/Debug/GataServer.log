@@ -1,0 +1,12 @@
+﻿  LogicSystem.cpp
+  Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+  - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
+  - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
+  Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
+LINK : warning LNK4199: 已忽略 /DELAYLOAD:libboost_filesystem-vc142-mt-s-x64-1_82.lib；未找到来自 libboost_filesystem-vc142-mt-s-x64-1_82.lib 的导入
+  GataServer.vcxproj -> E:\c\GataServer\x64\Debug\GataServer.exe
+  E:\c\GataServer\config.ini
+  复制了 1 个文件
+  E:\c\GataServer\mysqlcppconn-9-vs14.dll
+  E:\c\GataServer\mysqlcppconn8-2-vs14.dll
+  复制了 2 个文件
