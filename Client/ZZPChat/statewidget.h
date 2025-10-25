@@ -3,6 +3,8 @@
 #define STATEWIDGET_H
 
 #include <QWidget>
+#include "global.h"
+#include <QLabel>
 
 
 
@@ -13,6 +15,31 @@ public:
     explicit StateWidget(QWidget *parent = nullptr);
     void SetState(QString normal = "",QString hover="",QString press="",
                   QString select="",QString select_hover="",QString select_press="");
+    ClickLbState GetCurState();
+    void ClearState();
+
+    void SetSelected(bool bselected);
+    void AddRedPoint();
+    void ShowRedPoint(bool show = true);
+
+protected:
+    virtual void mousePressEvent(QMouseEvent *event);
+    virtual void mouseReleaseEvent(QMouseEvent *event);
+    virtual void enterEvent(QEnterEvent *event);
+    virtual void leaveEvent(QEvent *event);
+
+private:
+    QString _normal;
+    QString _normal_hover;
+    QString _normal_press;
+    QString _selected;
+    QString _selected_hover;
+    QString _selected_press;
+
+    ClickLbState _curstate;
+    QLabel* _red_point;
+signals:
+    void Clicked(void);
 
 
 
