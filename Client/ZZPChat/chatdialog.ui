@@ -109,7 +109,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QWidget" name="side_chat_lb" native="true">
+          <widget class="StateWidget" name="side_chat_lb" native="true">
            <property name="minimumSize">
             <size>
              <width>30</width>
@@ -125,7 +125,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QWidget" name="side_contact_lb" native="true">
+          <widget class="StateWidget" name="side_contact_lb" native="true">
            <property name="minimumSize">
             <size>
              <width>30</width>
@@ -280,7 +280,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QListWidget" name="search_list"/>
+       <widget class="SearchList" name="search_list"/>
       </item>
       <item>
        <widget class="ChatUserList" name="chat_user_list">
@@ -307,9 +307,10 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="ChatPage" name="chat_page"/>
+     <widget class="QWidget" name="friend_apply_page"/>
      <widget class="QWidget" name="add_friend_page"/>
     </widget>
    </item>
@@ -336,6 +337,17 @@
    <extends>QWidget</extends>
    <header>chatpage.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>StateWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">statewidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SearchList</class>
+   <extends>QListWidget</extends>
+   <header location="global">searchlist.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

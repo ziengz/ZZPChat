@@ -23,6 +23,8 @@ public:
     void ShowRedPoint(bool show = true);
 
 protected:
+    void paintEvent(QPaintEvent *event);
+
     virtual void mousePressEvent(QMouseEvent *event);
     virtual void mouseReleaseEvent(QMouseEvent *event);
     virtual void enterEvent(QEnterEvent *event);

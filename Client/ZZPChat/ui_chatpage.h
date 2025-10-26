@@ -14,13 +14,12 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QSpacerItem>
-#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include <chatview.h>
+#include <clickedbtn.h>
 #include <clickedlabel.h>
-#include "clickedbtn.h"
-#include "chatview.h"
-#include "messagetextedit.h"
+#include <messagetextedit.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -195,7 +194,7 @@ public:
         title_lb->setText(QCoreApplication::translate("ChatPage", "\347\207\203\347\203\247\347\232\204\350\203\270\346\257\233", nullptr));
         emo_lb->setText(QString());
         file_lb->setText(QString());
-        receive_btn->setText(QCoreApplication::translate("ChatPage", "\346\216\245\346\224\266", nullptr));
+        receive_btn->setText(QCoreApplication::translate("ChatPage", "\346\216\245\345\217\227", nullptr));
         send_btn->setText(QCoreApplication::translate("ChatPage", "\345\217\221\351\200\201", nullptr));
     } // retranslateUi
 

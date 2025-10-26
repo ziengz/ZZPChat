@@ -19,9 +19,11 @@
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
-#include <chatpage.h>
 #include <chatuserlist.h>
-#include "clickedbtn.h"
+#include <clickedbtn.h>
+#include <searchlist.h>
+#include <statewidget.h>
+#include "chatpage.h"
 #include "customizeedit.h"
 
 QT_BEGIN_NAMESPACE
@@ -35,8 +37,8 @@ public:
     QWidget *widget_2;
     QVBoxLayout *verticalLayout_5;
     QLabel *side_head_lb;
-    QLabel *side_chat_lb;
-    QLabel *side_contact_lb;
+    StateWidget *side_chat_lb;
+    StateWidget *side_contact_lb;
     QSpacerItem *verticalSpacer;
     QWidget *chat_user_wid;
     QVBoxLayout *verticalLayout;
@@ -45,11 +47,12 @@ public:
     CustomizeEdit *search_edit;
     QSpacerItem *horizontalSpacer;
     ClickedBtn *add_btn;
-    QListWidget *search_list;
+    SearchList *search_list;
     ChatUserList *chat_user_list;
     QListWidget *con_user_list;
     QStackedWidget *stackedWidget;
     ChatPage *chat_page;
+    QWidget *friend_apply_page;
     QWidget *add_friend_page;
 
     void setupUi(QDialog *ChatDialog)
@@ -88,14 +91,14 @@ public:
 
         verticalLayout_5->addWidget(side_head_lb);
 
-        side_chat_lb = new QLabel(widget_2);
+        side_chat_lb = new StateWidget(widget_2);
         side_chat_lb->setObjectName("side_chat_lb");
         side_chat_lb->setMinimumSize(QSize(30, 30));
         side_chat_lb->setMaximumSize(QSize(30, 30));
 
         verticalLayout_5->addWidget(side_chat_lb);
 
-        side_contact_lb = new QLabel(widget_2);
+        side_contact_lb = new StateWidget(widget_2);
         side_contact_lb->setObjectName("side_contact_lb");
         side_contact_lb->setMinimumSize(QSize(30, 30));
         side_contact_lb->setMaximumSize(QSize(30, 30));
@@ -154,7 +157,7 @@ public:
 
         verticalLayout->addWidget(search_wid);
 
-        search_list = new QListWidget(chat_user_wid);
+        search_list = new SearchList(chat_user_wid);
         search_list->setObjectName("search_list");
 
         verticalLayout->addWidget(search_list);
@@ -179,6 +182,9 @@ public:
         chat_page = new ChatPage();
         chat_page->setObjectName("chat_page");
         stackedWidget->addWidget(chat_page);
+        friend_apply_page = new QWidget();
+        friend_apply_page->setObjectName("friend_apply_page");
+        stackedWidget->addWidget(friend_apply_page);
         add_friend_page = new QWidget();
         add_friend_page->setObjectName("add_friend_page");
         stackedWidget->addWidget(add_friend_page);
@@ -187,6 +193,9 @@ public:
 
 
         retranslateUi(ChatDialog);
+
+        stackedWidget->setCurrentIndex(1);
+
 
         QMetaObject::connectSlotsByName(ChatDialog);
     } // setupUi

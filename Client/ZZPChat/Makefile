@@ -190,6 +190,7 @@ Makefile: ZZPChat.pro D:/Qt6_3/6.5.0/mingw_64/mkspecs/win32-g++/qmake.conf D:/Qt
 		D:/Qt6_3/6.5.0/mingw_64/mkspecs/features/qt_config.prf \
 		D:/Qt6_3/6.5.0/mingw_64/mkspecs/win32-g++/qmake.conf \
 		D:/Qt6_3/6.5.0/mingw_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		D:/Qt6_3/6.5.0/mingw_64/mkspecs/features/exclusive_builds.prf \
 		D:/Qt6_3/6.5.0/mingw_64/mkspecs/features/toolchain.prf \
 		D:/Qt6_3/6.5.0/mingw_64/mkspecs/features/default_pre.prf \
@@ -220,7 +221,6 @@ Makefile: ZZPChat.pro D:/Qt6_3/6.5.0/mingw_64/mkspecs/win32-g++/qmake.conf D:/Qt
 		D:/Qt6_3/6.5.0/mingw_64/lib/Qt6Network.prl \
 		D:/Qt6_3/6.5.0/mingw_64/lib/Qt6Core.prl \
 		D:/Qt6_3/6.5.0/mingw_64/lib/Qt6EntryPoint.prl \
-		.qmake.stash \
 		D:/Qt6_3/6.5.0/mingw_64/mkspecs/features/build_pass.prf \
 		res.qrc
 	$(QMAKE) -o Makefile ZZPChat.pro -spec win32-g++ CONFIG+=debug CONFIG+=qml_debug
@@ -344,6 +344,7 @@ D:/Qt6_3/6.5.0/mingw_64/mkspecs/features/qt_functions.prf:
 D:/Qt6_3/6.5.0/mingw_64/mkspecs/features/qt_config.prf:
 D:/Qt6_3/6.5.0/mingw_64/mkspecs/win32-g++/qmake.conf:
 D:/Qt6_3/6.5.0/mingw_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 D:/Qt6_3/6.5.0/mingw_64/mkspecs/features/exclusive_builds.prf:
 D:/Qt6_3/6.5.0/mingw_64/mkspecs/features/toolchain.prf:
 D:/Qt6_3/6.5.0/mingw_64/mkspecs/features/default_pre.prf:
@@ -374,7 +375,6 @@ D:/Qt6_3/6.5.0/mingw_64/lib/Qt6Gui.prl:
 D:/Qt6_3/6.5.0/mingw_64/lib/Qt6Network.prl:
 D:/Qt6_3/6.5.0/mingw_64/lib/Qt6Core.prl:
 D:/Qt6_3/6.5.0/mingw_64/lib/Qt6EntryPoint.prl:
-.qmake.stash:
 D:/Qt6_3/6.5.0/mingw_64/mkspecs/features/build_pass.prf:
 res.qrc:
 qmake: FORCE

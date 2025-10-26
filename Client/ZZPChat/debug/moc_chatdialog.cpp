@@ -8,6 +8,7 @@
 
 #include "../chatdialog.h"
 #include <QtNetwork/QSslError>
+#include <QtGui/qtextcursor.h>
 #include <QtCore/qmetatype.h>
 
 #if __has_include(<QtCore/qtmochelpers.h>)
@@ -41,14 +42,22 @@ struct qt_meta_stringdata_CLASSChatDialogENDCLASS_t {};
 static constexpr auto qt_meta_stringdata_CLASSChatDialogENDCLASS = QtMocHelpers::stringData(
     "ChatDialog",
     "slot_loading_chat_user",
-    ""
+    "",
+    "slot_side_chat",
+    "slot_side_contect",
+    "slot_text_changed",
+    "text"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSChatDialogENDCLASS_t {
-    uint offsetsAndSizes[6];
+    uint offsetsAndSizes[14];
     char stringdata0[11];
     char stringdata1[23];
     char stringdata2[1];
+    char stringdata3[15];
+    char stringdata4[18];
+    char stringdata5[18];
+    char stringdata6[5];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSChatDialogENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -56,11 +65,19 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSChatDialogENDCLASS_t qt_meta_st
     {
         QT_MOC_LITERAL(0, 10),  // "ChatDialog"
         QT_MOC_LITERAL(11, 22),  // "slot_loading_chat_user"
-        QT_MOC_LITERAL(34, 0)   // ""
+        QT_MOC_LITERAL(34, 0),  // ""
+        QT_MOC_LITERAL(35, 14),  // "slot_side_chat"
+        QT_MOC_LITERAL(50, 17),  // "slot_side_contect"
+        QT_MOC_LITERAL(68, 17),  // "slot_text_changed"
+        QT_MOC_LITERAL(86, 4)   // "text"
     },
     "ChatDialog",
     "slot_loading_chat_user",
-    ""
+    "",
+    "slot_side_chat",
+    "slot_side_contect",
+    "slot_text_changed",
+    "text"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -72,7 +89,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSChatDialogENDCLASS[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-       1,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -80,10 +97,16 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSChatDialogENDCLASS[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   20,    2, 0x08,    1 /* Private */,
+       1,    0,   38,    2, 0x08,    1 /* Private */,
+       3,    0,   39,    2, 0x08,    2 /* Private */,
+       4,    0,   40,    2, 0x08,    3 /* Private */,
+       5,    1,   41,    2, 0x08,    4 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,    6,
 
        0        // eod
 };
@@ -98,7 +121,14 @@ Q_CONSTINIT const QMetaObject ChatDialog::staticMetaObject = { {
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<ChatDialog, std::true_type>,
         // method 'slot_loading_chat_user'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'slot_side_chat'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'slot_side_contect'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'slot_text_changed'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<const QString &, std::false_type>
     >,
     nullptr
 } };
@@ -110,10 +140,12 @@ void ChatDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         (void)_t;
         switch (_id) {
         case 0: _t->slot_loading_chat_user(); break;
+        case 1: _t->slot_side_chat(); break;
+        case 2: _t->slot_side_contect(); break;
+        case 3: _t->slot_text_changed((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
         default: ;
         }
     }
-    (void)_a;
 }
 
 const QMetaObject *ChatDialog::metaObject() const
@@ -135,13 +167,13 @@ int ChatDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 1)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 1;
+        _id -= 4;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 1)
+        if (_id < 4)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 1;
+        _id -= 4;
     }
     return _id;
 }

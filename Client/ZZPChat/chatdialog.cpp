@@ -17,6 +17,23 @@ ChatDialog::ChatDialog(QWidget *parent) :
     ui->search_edit->addAction(searchAction,QLineEdit::LeadingPosition);
     ui->search_edit->setPlaceholderText(QStringLiteral("搜索"));
 
+    QPixmap pix(":/res/head_1.jpg");
+    ui->side_head_lb->setPixmap(pix);                         //原比例缩放
+    QPixmap scaledPixmap = pix.scaled(ui->side_head_lb->size(),Qt::KeepAspectRatio);
+    ui->side_head_lb->setPixmap(scaledPixmap);
+    ui->side_head_lb->setScaledContents(true);  //设置QLabel自动缩放图片内容以适应大小
+
+    ui->side_chat_lb->setProperty("state","normal");
+
+    ui->side_chat_lb->SetState("normal","hover","pressed","selected_normal","selected_hover","selected_pressed");
+    ui->side_contact_lb->SetState("normal","hover","pressed","selected_normal","selected_hover","selected_pressed");
+
+    AddLBGroup(ui->side_chat_lb);
+    AddLBGroup(ui->side_contact_lb);
+    //处理点击其中一个图标时，其他图标会变为正常
+    connect(ui->side_chat_lb,&StateWidget::Clicked,this,&ChatDialog::slot_side_chat);
+    connect(ui->side_contact_lb,&StateWidget::Clicked,this,&ChatDialog::slot_side_contect);
+
     //创建一个清除动作并设置图标
     QAction* clearAction = new QAction(ui->search_edit);
     clearAction->setIcon(QIcon(":/res/close_transparent.png"));
@@ -43,6 +60,11 @@ ChatDialog::ChatDialog(QWidget *parent) :
     connect(ui->chat_user_list,&ChatUserList::sig_loading_chat_user,this,&ChatDialog::slot_loading_chat_user);
 
     addChatUserList();
+
+    connect(ui->search_edit,&QLineEdit::textChanged,this,&ChatDialog::slot_text_changed);
+    this->installEventFilter(this);
+
+    ui->side_chat_lb->SetSelected(true);
 }
 
 ChatDialog::~ChatDialog()
@@ -64,7 +86,7 @@ void ChatDialog::ShowSearch(bool b_search)
         ui->search_list->hide();
         _mode = ChatUIMode::ChatMode;
     }
-    else{
+    else if(_state ==ChatUIMode::ContactMode){
         ui->chat_user_list->hide();
         ui->con_user_list->show();
         ui->search_list->hide();
@@ -114,6 +136,11 @@ void ChatDialog::addChatUserList()
     }
 }
 
+void ChatDialog::AddLBGroup(StateWidget *lb)
+{
+    _lb_list.push_back(lb);
+}
+
 void ChatDialog::slot_loading_chat_user()
 {
     if(_b_loading){
@@ -128,5 +155,66 @@ void ChatDialog::slot_loading_chat_user()
     //显示完删除对话框
     loadingDlg->deleteLater();
     _b_loading = false;
+}
+
+void ChatDialog::ClearLabelState(StateWidget *lb)
+{
+    for(auto& elem:_lb_list){
+        if(elem==lb){
+            continue;
+        }
+        elem->ClearState();
+    }
+}
+
+bool ChatDialog::eventFilter(QObject *watched, QEvent *event)
+{
+    //监听鼠标点击事件
+    if(event->type()==QEvent::MouseButtonPress){
+        QMouseEvent*mouseEvent = static_cast<QMouseEvent*>(event);
+        handleGlobalMousePress(mouseEvent);
+        return true;
+    }
+    return QDialog::eventFilter(watched,event);
+}
+
+void ChatDialog::handleGlobalMousePress(QMouseEvent *event)
+{
+    //计算鼠标点击位置，如果不在searchlist范围内，清空搜索框内容切换回chat_user_list
+    if(_mode!=ChatUIMode::SearchMode)
+        return;
+    QPoint posInSearchList = ui->search_list->mapFromGlobal(event->globalPos());
+    //如果点击位置不包含在search_list中
+    if(!ui->search_list->rect().contains(posInSearchList)){
+        ui->search_edit->clear();
+        ShowSearch(false);
+    }
+}
+
+void ChatDialog::slot_side_chat()
+{
+    qDebug()<<"receive side_chat clicked";
+    ui->search_edit->clear();
+    ClearLabelState(ui->side_chat_lb);
+    ui->stackedWidget->setCurrentWidget(ui->chat_page);
+    _state = ChatUIMode::ChatMode;
+    ShowSearch(false);
+}
+
+void ChatDialog::slot_side_contect()
+{
+    qDebug()<<"receive side_contect clicked";
+    ui->search_edit->clear();
+    ClearLabelState(ui->side_contact_lb);
+    ui->stackedWidget->setCurrentWidget(ui->friend_apply_page);
+    _state = ChatUIMode::ContactMode;
+    ShowSearch(false);
+}
+
+void ChatDialog::slot_text_changed(const QString& text)
+{
+    if(!text.isEmpty()){
+        ShowSearch(true);
+    }
 }
 

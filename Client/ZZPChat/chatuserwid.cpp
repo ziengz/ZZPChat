@@ -6,7 +6,7 @@ ChatUserWid::ChatUserWid(QWidget *parent) :
     ui(new Ui::ChatUserWid)
 {
     ui->setupUi(this);
-    this->SetItemType(ListItemType::CHAT_USER_ITEM);
+    SetItemType(ListItemType::CHAT_USER_ITEM);
 }
 
 ChatUserWid::~ChatUserWid()
