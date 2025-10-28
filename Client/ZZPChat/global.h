@@ -67,6 +67,8 @@ enum TipErr{
     TIP_USER_ERR = 6
 };
 
+const int tip_offset = 5;
+
 //label状态
 enum ClickLbState{
     Normal = 0,

@@ -14,6 +14,7 @@ CONFIG += c++17
 
 SOURCES += \
     adduseritem.cpp \
+    applyfriend.cpp \
     bubbleframe.cpp \
     chatdialog.cpp \
     chatitembase.cpp \
@@ -23,8 +24,10 @@ SOURCES += \
     chatview.cpp \
     clickedbtn.cpp \
     clickedlabel.cpp \
+    clickedoncelabel.cpp \
     customizeedit.cpp \
     findsuccessdlg.cpp \
+    friendlabel.cpp \
     global.cpp \
     httpmgr.cpp \
     listitembase.cpp \
@@ -46,6 +49,7 @@ SOURCES += \
 
 HEADERS += \
     adduseritem.h \
+    applyfriend.h \
     bubbleframe.h \
     chatdialog.h \
     chatitembase.h \
@@ -55,8 +59,10 @@ HEADERS += \
     chatview.h \
     clickedbtn.h \
     clickedlabel.h \
+    clickedoncelabel.h \
     customizeedit.h \
     findsuccessdlg.h \
+    friendlabel.h \
     global.h \
     httpmgr.h \
     listitembase.h \
@@ -78,10 +84,12 @@ HEADERS += \
 
 FORMS += \
     adduseritem.ui \
+    applyfriend.ui \
     chatdialog.ui \
     chatpage.ui \
     chatuserwid.ui \
     findsuccessdlg.ui \
+    friendlabel.ui \
     loadingdlg.ui \
     logindialog.ui \
     mainwindow.ui \
@@ -99,43 +107,38 @@ RESOURCES += \
 DISTFILES += \
     config.ini
 
-CONFIG(debug, debug | release) {
-    #指定要拷贝的文件目录为工程目录下release目录下的所有dll、lib文件，例如工程目录在D:\QT\Test
-    #PWD就为D:/QT/Test，DllFile = D:/QT/Test/release/*.dll
-    TargetConfig = $${PWD}/config.ini
-    #将输入目录中的"/"替换为"\"
-    TargetConfig = $$replace(TargetConfig, /, \\)
-    #将输出目录中的"/"替换为"\"
-    OutputDir =  $${OUT_PWD}/$${DESTDIR}
-    OutputDir = $$replace(OutputDir, /, \\)
-    //执行copy命令
-    QMAKE_POST_LINK += copy /Y \"$$TargetConfig\" \"$$OutputDir\" &
-    # 首先，定义static文件夹的路径
-    StaticDir = $${PWD}/static
-    # 将路径中的"/"替换为"\"
-    StaticDir = $$replace(StaticDir, /, \\)
-    #message($${StaticDir})
-    # 使用xcopy命令拷贝文件夹，/E表示拷贝子目录及其内容，包括空目录。/I表示如果目标不存在则创建目录。/Y表示覆盖现有文件而不提示。
-    QMAKE_POST_LINK += xcopy /Y /E /I \"$$StaticDir\" \"$$OutputDir\\static\\\"
-}else{
-      #release
+CONFIG(debug, debug|release) {
+    message("debug mode")
+
+    OutputDir = $${OUT_PWD}/bin
+    OutputDir = $$absolute_path($$OutputDir)
+    message("OutputDir: $$OutputDir")
+
+    TargetConfig = $$PWD/config.ini
+    exists($$TargetConfig) {
+        QMAKE_POST_LINK += $$QMAKE_COPY \"$$TargetConfig\" \"$$OutputDir\" $$escape_expand(\n\t)
+    }
+
+    # Static 文件夹 - 直接复制内容到 bin 目录
+    StaticDir = $$PWD/static
+    exists($$StaticDir) {
+        # 复制 static 目录内的所有内容到 bin 目录（不创建 static 子文件夹）
+        QMAKE_POST_LINK += $$QMAKE_COPY_DIR \"$$StaticDir\" \"$$OutputDir\" $$escape_expand(\n\t)
+    }
+} else {
     message("release mode")
-    #指定要拷贝的文件目录为工程目录下release目录下的所有dll、lib文件，例如工程目录在D:\QT\Test
-    #PWD就为D:/QT/Test，DllFile = D:/QT/Test/release/*.dll
-    TargetConfig = $${PWD}/config.ini
-    #将输入目录中的"/"替换为"\"
-    TargetConfig = $$replace(TargetConfig, /, \\)
-    #将输出目录中的"/"替换为"\"
-    OutputDir =  $${OUT_PWD}/$${DESTDIR}
-    OutputDir = $$replace(OutputDir, /, \\)
-    //执行copy命令
-    QMAKE_POST_LINK += copy /Y \"$$TargetConfig\" \"$$OutputDir\"
-    # 首先，定义static文件夹的路径
-    StaticDir = $${PWD}/static
-    # 将路径中的"/"替换为"\"
-    StaticDir = $$replace(StaticDir, /, \\)
-    #message($${StaticDir})
-    # 使用xcopy命令拷贝文件夹，/E表示拷贝子目录及其内容，包括空目录。/I表示如果目标不存在则创建目录。/Y表示覆盖现有文件而不提示。
-     QMAKE_POST_LINK += xcopy /Y /E /I \"$$StaticDir\" \"$$OutputDir\\static\\\"
+    OutputDir = $${OUT_PWD}/bin
+    OutputDir = $$absolute_path($$OutputDir)
+
+    TargetConfig = $$PWD/config.ini
+    exists($$TargetConfig) {
+        QMAKE_POST_LINK += $$QMAKE_COPY \"$$TargetConfig\" \"$$OutputDir\" $$escape_expand(\n\t)
+    }
+
+    StaticDir = $$PWD/static
+    exists($$StaticDir) {
+        QMAKE_POST_LINK += $$QMAKE_COPY_DIR \"$$StaticDir\" \"$$OutputDir\" $$escape_expand(\n\t)
+    }
 }
+
 win32-msvc*:QMAKE_CXXFLAGS += /wd"4819" /utf-8

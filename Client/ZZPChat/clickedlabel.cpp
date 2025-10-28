@@ -44,7 +44,7 @@ void ClickedLabel::mouseReleaseEvent(QMouseEvent *event)
             repolish(this);
             update();
         }
-        emit Click();
+        emit Click(this->text(),curstate_);
         return;
     }
     QLabel::mouseReleaseEvent(event);

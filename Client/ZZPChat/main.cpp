@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
     //QDir::toNativeSeparators() 将路径中的分隔符转换为当前平台的本地格式
     //结果示例（Windows）：C:\Program Files\MyApp\config.ini
     QString config_path = QDir::toNativeSeparators(path+QDir::separator()+filename);
-    qDebug()<<config_path;
+    qDebug()<<"1:"<<config_path;
 //  3、使用QSettings读取INI文件
     //第二个参数指定使用ini文件格式
     QSettings settings(config_path,QSettings::IniFormat);
