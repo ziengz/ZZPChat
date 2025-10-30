@@ -19,6 +19,17 @@ public:
     QString _icon;
 };
 
+struct UserInfo{
+    UserInfo(int uid, QString name, QString nick, QString icon, int sex):
+        _uid(uid),_name(name),_nick(nick),_icon(icon),_sex(sex){}
+
+
+    int _uid;
+    QString _name;
+    QString _nick;
+    QString _icon;
+    int _sex;
+};
 
 
 #endif // USERDATA_H

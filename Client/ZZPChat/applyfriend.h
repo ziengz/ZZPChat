@@ -42,11 +42,19 @@ private:
     std::shared_ptr<SearchInfo>_si;
 
 public slots:
+    void slotLabelEnter();
     void ShowMoreLabel();
     void SlotApplySure();
     void SlotApplyCancel();
-
-
+    //通过点击tip实现增加和减少好友便签
+    void SlotChangeFriendLabelByTip(QString text,ClickLbState);
+    //输入标签显示提示框，点击提示框内容后添加好友便签
+     void SlotAddFirendLabelByClickTip(QString text);
+    //删除标签
+    void SlotRemoveFriendLabel(QString name);
+    void slotLabelTextChange(const QString& text);
+    //输入框输入完成
+    void SlotLabelEditFinished();
 };
 
 #endif // APPLYFRIEND_H

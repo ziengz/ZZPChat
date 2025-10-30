@@ -13,10 +13,21 @@ class FriendLabel : public QFrame
 
 public:
     explicit FriendLabel(QWidget *parent = nullptr);
+    void SetText(QString text);
     ~FriendLabel();
+    int Width();
+    int Height();
+    QString Text();
 
 private:
     Ui::FriendLabel *ui;
+    QString _text;
+    int _width;
+    int _height;
+public slots:
+    void slot_close();
+signals:
+    void sig_close(QString text);
 };
 
 #endif // FRIENDLABEL_H

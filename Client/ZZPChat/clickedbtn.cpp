@@ -6,6 +6,7 @@ ClickedBtn::ClickedBtn(QWidget *parent):QPushButton(parent)
 {
     //设置鼠标移动到上面变为手状
     setCursor(Qt::PointingHandCursor);
+    setFocusPolicy(Qt::NoFocus);
 }
 
 ClickedBtn::~ClickedBtn()
