@@ -14,16 +14,17 @@
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
-#include <QtWidgets/QListWidget>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include <applyfriendpage.h>
 #include <chatuserlist.h>
-#include <clickedbtn.h>
+#include <contactuserlist.h>
 #include <searchlist.h>
 #include <statewidget.h>
 #include "chatpage.h"
+#include "clickedbtn.h"
 #include "customizeedit.h"
 
 QT_BEGIN_NAMESPACE
@@ -49,10 +50,10 @@ public:
     ClickedBtn *add_btn;
     SearchList *search_list;
     ChatUserList *chat_user_list;
-    QListWidget *con_user_list;
+    ContactUserList *con_user_list;
     QStackedWidget *stackedWidget;
     ChatPage *chat_page;
-    QWidget *friend_apply_page;
+    ApplyFriendPage *friend_apply_page;
     QWidget *add_friend_page;
 
     void setupUi(QDialog *ChatDialog)
@@ -169,7 +170,7 @@ public:
 
         verticalLayout->addWidget(chat_user_list);
 
-        con_user_list = new QListWidget(chat_user_wid);
+        con_user_list = new ContactUserList(chat_user_wid);
         con_user_list->setObjectName("con_user_list");
 
         verticalLayout->addWidget(con_user_list);
@@ -182,7 +183,7 @@ public:
         chat_page = new ChatPage();
         chat_page->setObjectName("chat_page");
         stackedWidget->addWidget(chat_page);
-        friend_apply_page = new QWidget();
+        friend_apply_page = new ApplyFriendPage();
         friend_apply_page->setObjectName("friend_apply_page");
         stackedWidget->addWidget(friend_apply_page);
         add_friend_page = new QWidget();

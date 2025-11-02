@@ -38,6 +38,7 @@ signals:
     void sig_login_failed(int);
     void sig_switch_chatdlg();
     void sig_user_search(std::shared_ptr<SearchInfo>);
+    void sig_auth_rsp(std::shared_ptr<AuthRsp>);
 };
 
 #endif // TCPMGR_H
