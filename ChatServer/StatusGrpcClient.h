@@ -16,7 +16,6 @@ using message::StatusService;
 using message::LoginReq;
 using message::LoginRsp;
 
-
 class StatusConPool 
 {
 public:

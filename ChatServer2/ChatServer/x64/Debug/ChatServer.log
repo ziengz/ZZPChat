@@ -1,0 +1,31 @@
+﻿  Session.cpp
+  Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+  - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
+  - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
+  Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
+E:\c\ChatServer\Session.cpp(35,20): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+E:\c\ChatServer\Session.cpp(54,20): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+E:\c\ChatServer\Session.cpp(136,61): warning C4267: “参数”: 从“size_t”转换到“boost::asio::detail::u_short_type”，可能丢失数据
+E:\c\ChatServer\Session.cpp(144,18): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+E:\c\ChatServer\Session.cpp(173,32): warning C4244: “+=”: 从“unsigned __int64”转换到“int”，可能丢失数据
+E:\Microsoft Visual Studio\2022\Community_IDE\VC\Tools\MSVC\14.44.35207\include\xutility(476,82): warning C4267: “参数”: 从“size_t”转换到“short”，可能丢失数据
+  (编译源文件“Session.cpp”)
+      E:\Microsoft Visual Studio\2022\Community_IDE\VC\Tools\MSVC\14.44.35207\include\xutility(476,82):
+      模板实例化上下文(最早的实例化上下文)为
+          E:\c\ChatServer\Session.cpp(45,22):
+          查看对正在编译的函数 模板 实例化“std::shared_ptr<SendNode> std::make_shared<SendNode,char*&,size_t&,short&>(char *&,size_t &,short &)”的引用
+          E:\Microsoft Visual Studio\2022\Community_IDE\VC\Tools\MSVC\14.44.35207\include\memory(2913,46):
+          查看对正在编译的函数 模板 实例化“std::_Ref_count_obj2<SendNode>::_Ref_count_obj2<char*&,size_t&,short&>(char *&,size_t &,short &)”的引用
+          E:\Microsoft Visual Studio\2022\Community_IDE\VC\Tools\MSVC\14.44.35207\include\memory(2100,18):
+          查看对正在编译的函数 模板 实例化“void std::_Construct_in_place<_Ty,char*&,size_t&,short&>(_Ty &,char *&,size_t &,short &) noexcept(false)”的引用
+          with
+          [
+              _Ty=SendNode
+          ]
+  
+  ChatServer.vcxproj -> E:\c\ChatServer\x64\Debug\ChatServer.exe
+  E:\c\ChatServer\config.ini
+  复制了 1 个文件
+  E:\c\ChatServer\mysqlcppconn-9-vs14.dll
+  E:\c\ChatServer\mysqlcppconn8-2-vs14.dll
+  复制了 2 个文件
