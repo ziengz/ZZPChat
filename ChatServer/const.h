@@ -38,6 +38,9 @@ using namespace boost;
 #define MAX_RECVQUE 10000
 
 
+#define CODEPREFIX  "code_"
+#define LOGIN_COUNT  "logincount"
+
 enum Error_Codes {
 	Success = 0,
 	Error_Json = 1001,  //Json½âÎö´íÎó
@@ -87,4 +90,3 @@ private:
 	std::function<void()> func_;
 };
 
-#define CODEPREFIX  "code_"

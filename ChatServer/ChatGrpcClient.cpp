@@ -4,6 +4,7 @@
 #include "RedisMgr.h"
 #include "Session.h"
 #include <string>
+#include "ChatServiceImpl.h"
 
 ChatGrpcClient::ChatGrpcClient()
 {
@@ -75,11 +76,6 @@ AuthFriendRsp ChatGrpcClient::NotifyAuthFriend(std::string server_ip, AuthFriend
         return rsp;
     }
     return rsp;
-}
-
-bool ChatGrpcClient::GetBaseInfo(std::string base_key, int uid, std::shared_ptr<UserInfo>& userinfo)
-{
-    return false;
 }
 
 TextChatMsgRsp ChatGrpcClient::NotifyTextChatMsg(std::string server_ip, const TextChatMsgReq& req, const Json::Value& rtvalue)

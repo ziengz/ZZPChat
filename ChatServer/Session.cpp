@@ -4,15 +4,25 @@
 #include "CServer.h"
 
 Session::Session(boost::asio::io_context& io_context, CServer* server) :
-	socket_(io_context),b_stop(false),b_head_parse(false),server_(server)
+	socket_(io_context),b_stop(false),b_head_parse(false),server_(server),_uid(0)
 {
 	boost::uuids::uuid a_uuid = uuids::random_generator()();
-	_uuid = boost::uuids::to_string(a_uuid);
+	_session_id = boost::uuids::to_string(a_uuid);
 	_recv_head_node = std::make_shared<MsgNode>(HEAD_TOTAL_LEN);
 }
 
-std::string Session::GetUuid() {
-	return _uuid;
+std::string Session::GetSessionid() {
+	return _session_id;
+}
+
+void Session::SetUserId(int uid)
+{
+	_uid = uid;
+}
+
+int Session::GetUserId()
+{
+	return _uid;
 }
 
 tcp::socket& Session::GetSocket()
@@ -35,7 +45,7 @@ void Session::Send(char* data, std::size_t msg_len, short msg_id)
 	int send_que_size = _send_que.size();
 	if (send_que_size > MAX_SENDQUE) {
 		std::cout << "send_que size is falled,size is " << MAX_SENDQUE << std::endl;
-		server_->ClearSession(_uuid);
+		server_->ClearSession(_session_id);
 		return;
 	}
 	//如果发送队列中还残有数据则返回
@@ -54,7 +64,7 @@ void Session::Send(std::string data, short msg_id)
 	int send_que_size = _send_que.size();
 	if (send_que_size > MAX_SENDQUE) {
 		std::cout << "send que is falled,size is " << MAX_SENDQUE << std::endl;
-		server_->ClearSession(_uuid);
+		server_->ClearSession(_session_id);
 		return;
 	}
 	//如果大于0，说明队列中还残有数据未发送
@@ -112,7 +122,7 @@ void Session::AsyncReadHead(int total_len)
 			if (bytes_transfered < HEAD_TOTAL_LEN) {
 				std::cout << "read length not match, read [" << bytes_transfered << "] , total ["
 					<< HEAD_TOTAL_LEN << "]" << std::endl;
-				server_->ClearSession(_uuid);
+				server_->ClearSession(_session_id);
 				Close();
 				return;
 			}
@@ -127,7 +137,7 @@ void Session::AsyncReadHead(int total_len)
 			
 			if (msg_id > MAX_LEN) {
 				std::cout << "invalid msg_id is " << msg_id << std::endl;
-				server_->ClearSession(_uuid);
+				server_->ClearSession(_session_id);
 				return;
 			}
 
@@ -137,7 +147,7 @@ void Session::AsyncReadHead(int total_len)
 			std::cout << "length id is " << length << std::endl;
 			if (length > MAX_LEN) {
 				std::cout << "invalid msg_length is " << length << std::endl;
-				server_->ClearSession(_uuid);
+				server_->ClearSession(_session_id);
 				return;
 			}
 			_recv_msg_node = std::make_shared<RecvNode>(length, msg_id);
@@ -163,7 +173,7 @@ void Session::AsyncReadBody(int length)
 			if (byte_transfered < length) {
 				std::cout << "read length not match, read [" << byte_transfered << "] , total ["
 					<< length << "]" << std::endl;
-				server_->ClearSession(_uuid);
+				server_->ClearSession(_session_id);
 				Close();
 				return;
 			}

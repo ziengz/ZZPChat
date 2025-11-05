@@ -22,7 +22,9 @@ public:
 	void AsyncReadHead(int total_len);
 	void AsyncReadFull(std::size_t max_len, FuncCallBack handle);
 	void AsyncReadLen(std::size_t read_len,std::size_t total_len, FuncCallBack handle);
-	std::string GetUuid();
+	std::string GetSessionid();
+	void SetUserId(int uid);
+	int GetUserId();
 	tcp::socket& GetSocket();
 private:
 	CServer* server_;
@@ -34,7 +36,8 @@ private:
 	std::shared_ptr<MsgNode> _recv_head_node;
 	std::shared_ptr<RecvNode> _recv_msg_node;
 	char data_[MAX_LEN];
-	std::string _uuid;
+	std::string _session_id;
+	int _uid;
 };
 
 class LogicNode {

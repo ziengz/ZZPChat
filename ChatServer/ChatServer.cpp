@@ -7,12 +7,35 @@
 #include "ConfigMgr.h"
 #include "CServer.h"
 #include "IOContextPool.h"
+#include "RedisMgr.h"
+#include <grpcpp/grpcpp.h>
+#include "ChatServiceImpl.h"
+
+using grpc::ServerBuilder;
 
 
 int main()
 {
     try {
         auto& config = ConfigMgr::Instance();
+        std::string server_name = config["SelfServer"]["Name"];
+        //将登录数设置为0
+        RedisMgr::GetIntance()->HSet(LOGIN_COUNT, server_name, "0");
+
+        std::string server_address(config["SelfServer"]["Host"] + ":" + config["SelfServer"]["RPCPort"]);
+        ServerBuilder builder;
+        ChatServiceImpl service;
+
+        builder.AddListeningPort(server_address,grpc::InsecureServerCredentials());
+        builder.RegisterService(&service);
+        std::unique_ptr<grpc::Server>server(builder.BuildAndStart());
+        std::cout << "server listening on " << server_address << std::endl;
+
+        std::thread grpc_server_thread([&server](){
+            server->Wait();
+        });
+
+
         auto pool = IOContextPool::GetIntance();
         boost::asio::io_context ioc;
         boost::asio::signal_set signals(ioc, SIGINT, SIGTERM);

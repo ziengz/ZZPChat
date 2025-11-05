@@ -2,6 +2,7 @@
 #include "StatusGrpcClient.h"
 #include "MySqlMgr.h"
 #include "CServer.h"
+#include "UserMgr.h"
 
 LogicSystem::LogicSystem():_b_stop(false)
 {
@@ -114,5 +115,9 @@ void LogicSystem::LogicHandler(std::shared_ptr<Session> session, const short& ms
 	returnValue["uid"] = uid;
 	returnValue["token"] = rsp.token();
 	returnValue["name"] = user_info->name;
+
+	session->SetUserId(uid);
+
+	UserMgr::GetIntance()->SetUserSession(uid, session);
 	
 }
