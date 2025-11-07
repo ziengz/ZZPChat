@@ -13,12 +13,13 @@ class LogicSystem:public Singleton<LogicSystem>
 public:
 	~LogicSystem();
 	void PostMsgToQue(std::shared_ptr<LogicNode>msg);
+	bool GetBaseInfo(std::string base_key, int uid,std::shared_ptr<UserInfo>& userinfo);
 
 private:
 	LogicSystem();
 	void DealMsg();
 	void RegisterCallBack();
-	void LogicHandler(std::shared_ptr<Session> session, const short& msg_id, const std::string& msg_data);
+	void LoginHandler(std::shared_ptr<Session> session, const short& msg_id, const std::string& msg_data);
 
 	std::thread _work_thread;
 	std::queue<std::shared_ptr<LogicNode>> _msg_que;

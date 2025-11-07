@@ -38,7 +38,9 @@ private:
 	void insertToken(int  uid, std::string token);
 	std::unordered_map<std::string ,ChatServer> servers_;
 	//std::vector<ChatServer> servers_;
-	std::unordered_map<int, std::string>tokens_;
+	
+	//取消对token_的使用，降低对内存消耗，使用redis存储
+	//std::unordered_map<int, std::string>tokens_;
 	ChatServer getChatServer();
 	std::mutex mutex_;
 

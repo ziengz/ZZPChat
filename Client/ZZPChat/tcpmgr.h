@@ -12,10 +12,14 @@ class TcpMgr:public QObject,public singleton<TcpMgr>,
         public std::enable_shared_from_this<TcpMgr>
 {
     Q_OBJECT
-public:
-    TcpMgr();
-private:
     friend class singleton<TcpMgr>;
+public:
+    ~TcpMgr();
+    void CloseCOnnection();
+private:
+    TcpMgr();
+    void initHandlers();
+    void handleMsg(ReqId id ,int len,QByteArray data);
     QTcpSocket socket_;
     QString host_;
     quint16 port_;
@@ -23,8 +27,6 @@ private:
     bool b_recv_pending;
     quint16 message_id_;
     quint16 message_len_;
-    void initHandlers();
-    void handleMsg(ReqId id ,int len,QByteArray data);
     QMap<ReqId, std::function<void(ReqId id,int len,QByteArray data)>> handlers_;
 
 

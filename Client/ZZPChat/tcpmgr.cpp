@@ -4,6 +4,16 @@
 
 #include "usermgr.h"
 
+TcpMgr::~TcpMgr()
+{
+
+}
+
+void TcpMgr::CloseCOnnection()
+{
+    socket_.close();
+}
+
 TcpMgr::TcpMgr():host_(""),port_(0),b_recv_pending(false),
     message_id_(0),message_len_(0)
 {
@@ -12,8 +22,10 @@ TcpMgr::TcpMgr():host_(""),port_(0),b_recv_pending(false),
         emit sig_con_success(true);
     });
 
-    initHandlers();
+
     connect(&socket_,&QTcpSocket::readyRead,[&](){
+        // 当有数据可读时，读取所有数据
+        // 读取所有数据并追加到缓冲区
         buffer_.append(socket_.readAll());
         QDataStream stream(&buffer_,QIODevice::ReadOnly);
         stream.setVersion(QDataStream::Qt_6_0);
@@ -36,6 +48,7 @@ TcpMgr::TcpMgr():host_(""),port_(0),b_recv_pending(false),
                 return;
             }
 
+            b_recv_pending = false;
             QByteArray messageBody = buffer_.mid(0,message_len_);
             qDebug()<<"receive body msg is "<<messageBody;
             buffer_ = buffer_.mid(message_len_);
@@ -81,6 +94,8 @@ TcpMgr::TcpMgr():host_(""),port_(0),b_recv_pending(false),
         qDebug()<<"Disconnect from server";
     });
     connect(this,&TcpMgr::sig_send_data,this,&TcpMgr::slot_send_data);
+    //注册消息
+    initHandlers();
 
 }
 
@@ -136,7 +151,7 @@ void TcpMgr::slot_tcp_connect(ServerInfo si)
     qDebug()<<"Connection to Server...";
     host_ = si.Host;
     port_ = static_cast<quint16>(si.Port.toUInt());
-    //qDebug()<<"host: "<<host_<<" port: "<<port_;
+    qDebug()<<"host: "<<host_<<" port: "<<port_;
     socket_.connectToHost(host_,port_);
 }
 

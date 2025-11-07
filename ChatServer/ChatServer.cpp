@@ -39,13 +39,18 @@ int main()
         auto pool = IOContextPool::GetIntance();
         boost::asio::io_context ioc;
         boost::asio::signal_set signals(ioc, SIGINT, SIGTERM);
-        signals.async_wait([&ioc, pool](auto, auto) {
+        signals.async_wait([&ioc, pool,&server](auto, auto) {
             pool->Stop();
             ioc.stop();
+            server->Shutdown();
             });
         auto port = config["SelfServer"]["Port"];
-        CServer server(ioc, atoi(port.c_str()));
+        CServer s(ioc, atoi(port.c_str()));
         ioc.run();
+
+        RedisMgr::GetIntance()->HDel(LOGIN_COUNT, server_name);
+        RedisMgr::GetIntance()->Close();
+        grpc_server_thread.join();
     }
     catch (std::exception&e) {
         std::cout << "Exception is " << e.what() << std::endl;

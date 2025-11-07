@@ -82,17 +82,30 @@ class RedisMgr : public Singleton<RedisMgr>,
     friend class Singleton<RedisMgr>;
 public:
     ~RedisMgr();
+	// 相当于执行：GET key
     bool Get(const std::string& key, std::string& value);
-    bool Set(const std::string& key, const std::string& value);
-    bool LPush(const std::string& key, const std::string& value);
-    bool LPop(const std::string& key, std::string& value);
-    bool RPush(const std::string& key, const std::string& value);
-    bool RPop(const std::string& key, std::string& value);
-    bool HSet(const std::string& key, const std::string& hkey, const std::string& value);
-    bool HSet(const char* key, const char* hkey, const char* hvalue, size_t hvaluelen);
-    std::string HGet(const std::string& key, const std::string& hkey);
-    bool Del(const std::string& key);
-    bool ExistsKey(const std::string& key);
+	// 相当于执行：SET key value
+	bool Set(const std::string& key, const std::string& value);
+	// 相当于执行：LPUSH key value
+	bool LPush(const std::string& key, const std::string& value);
+	// 相当于执行：LPOP key
+	bool LPop(const std::string& key, std::string& value);
+	// 相当于执行：RPUSH key value
+	bool RPush(const std::string& key, const std::string& value);
+	// 相当于执行：RPOP key
+	bool RPop(const std::string& key, std::string& value);
+	// 相当于执行：HSET key field value
+	bool HSet(const std::string& key, const std::string& hkey, const std::string& value);
+	// 相当于执行：HSET key field value (二进制安全版本)
+	bool HSet(const char* key, const char* hkey, const char* hvalue, size_t hvaluelen);
+	// 相当于执行：HGET key field
+	std::string HGet(const std::string& key, const std::string& hkey);
+	// 相当于执行：HDEL key field
+	bool HDel(const std::string& key, std::string& field);
+	// 相当于执行：DEL key
+	bool Del(const std::string& key);
+	// 相当于执行：EXISTS key
+	bool ExistsKey(const std::string& key);
     void Close();
 private:
     RedisMgr();

@@ -1,5 +1,6 @@
 E:\ZZPChat\ChatServer\ChatGrpcClient.cpp;E:\ZZPChat\ChatServer\ChatServer\x64\Debug\ChatGrpcClient.obj
 E:\ZZPChat\ChatServer\ChatServer.cpp;E:\ZZPChat\ChatServer\ChatServer\x64\Debug\ChatServer.obj
+E:\ZZPChat\ChatServer\ChatServiceImpl.cpp;E:\ZZPChat\ChatServer\ChatServer\x64\Debug\ChatServiceImpl.obj
 E:\ZZPChat\ChatServer\ConfigMgr.cpp;E:\ZZPChat\ChatServer\ChatServer\x64\Debug\ConfigMgr.obj
 E:\ZZPChat\ChatServer\CServer.cpp;E:\ZZPChat\ChatServer\ChatServer\x64\Debug\CServer.obj
 E:\ZZPChat\ChatServer\IOContextPool.cpp;E:\ZZPChat\ChatServer\ChatServer\x64\Debug\IOContextPool.obj

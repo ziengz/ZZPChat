@@ -1,7 +1,48 @@
-﻿  StatusServiceImpl.cpp
-  StatusServer.vcxproj -> E:\c\StatusServer\x64\Debug\StatusServer.exe
-  E:\c\StatusServer\config.ini
+﻿  ConfigMgr.cpp
+  Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+  - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
+  - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
+  Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
+  IOContextPool.cpp
+  Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+  - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
+  - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
+  Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
+  message.grpc.pb.cc
+  message.pb.cc
+E:\ZZPChat\StatusServer\message.pb.cc(530,67): warning C4244: “=”: 从“google::protobuf::uint64”转换到“google::protobuf::int32”，可能丢失数据
+E:\ZZPChat\StatusServer\message.pb.cc(787,65): warning C4244: “=”: 从“google::protobuf::uint64”转换到“google::protobuf::int32”，可能丢失数据
+E:\ZZPChat\StatusServer\message.pb.cc(1009,67): warning C4244: “=”: 从“google::protobuf::uint64”转换到“google::protobuf::int32”，可能丢失数据
+E:\ZZPChat\StatusServer\message.pb.cc(1305,65): warning C4244: “=”: 从“google::protobuf::uint64”转换到“google::protobuf::int32”，可能丢失数据
+E:\ZZPChat\StatusServer\message.pb.cc(1547,67): warning C4244: “=”: 从“google::protobuf::uint64”转换到“google::protobuf::int32”，可能丢失数据
+E:\ZZPChat\StatusServer\message.pb.cc(1554,65): warning C4244: “=”: 从“google::protobuf::uint64”转换到“google::protobuf::int32”，可能丢失数据
+  MysqlDao.cpp
+  Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+  - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
+  - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
+  Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
+  MySqlMgr.cpp
+  Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+  - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
+  - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
+  Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
+  RedisMgr.cpp
+  Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+  - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
+  - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
+  Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
+  StatusServer.cpp
+  Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+  - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
+  - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
+  Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
+  StatusServiceImpl.cpp
+  正在生成代码...
+E:\ZZPChat\StatusServer\MysqlDao.cpp(87,1): warning C4715: “MysqlDao::CheckEmail”: 不是所有的控件路径都返回值
+E:\ZZPChat\StatusServer\ConfigMgr.h(22,1): warning C4715: “SectionInfo::operator=”: 不是所有的控件路径都返回值
+  StatusServer.vcxproj -> E:\ZZPChat\StatusServer\x64\Debug\StatusServer.exe
+  E:\ZZPChat\StatusServer\config.ini
   复制了 1 个文件
-  E:\c\StatusServer\mysqlcppconn-9-vs14.dll
-  E:\c\StatusServer\mysqlcppconn8-2-vs14.dll
+  E:\ZZPChat\StatusServer\mysqlcppconn-9-vs14.dll
+  E:\ZZPChat\StatusServer\mysqlcppconn8-2-vs14.dll
   复制了 2 个文件

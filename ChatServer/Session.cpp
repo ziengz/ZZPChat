@@ -2,6 +2,7 @@
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include "CServer.h"
+#include "LogicSystem.h"
 
 Session::Session(boost::asio::io_context& io_context, CServer* server) :
 	socket_(io_context),b_stop(false),b_head_parse(false),server_(server),_uid(0)
@@ -184,6 +185,8 @@ void Session::AsyncReadBody(int length)
 			_recv_msg_node->data_[_recv_msg_node->total_len_] = '\0';
 			std::cout << "recv_msg is " << _recv_msg_node->data_ << std::endl;
 
+			//此处将消息投递到逻辑队列中，给客户端回包
+			LogicSystem::GetIntance()->PostMsgToQue(std::make_shared<LogicNode>(Shared_self(),_recv_msg_node));
 			AsyncReadHead(HEAD_TOTAL_LEN);
 		}
 		catch (std::exception& e) {

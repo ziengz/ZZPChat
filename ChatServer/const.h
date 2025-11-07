@@ -39,7 +39,15 @@ using namespace boost;
 
 
 #define CODEPREFIX  "code_"
+#define USERIPPREFIX  "uip_"
+#define USERTOKENPREFIX  "utoken_"
+#define IPCOUNTPREFIX  "ipcount_"
+#define USER_BASE_INFO "ubaseinfo_"
 #define LOGIN_COUNT  "logincount"
+#define NAME_INFO  "nameinfo_"
+#define LOCK_PREFIX "lock_"
+#define USER_SESSION_PREFIX "usession_"
+#define LOCK_COUNT "lockcount"
 
 enum Error_Codes {
 	Success = 0,
