@@ -5,6 +5,8 @@
 #include "global.h"
 #include <QFontMetrics>
 #include "usermgr.h"
+#include "tcpmgr.h"
+#include <QJsonDocument>
 
 ApplyFriend::ApplyFriend(QWidget *parent) :
     QDialog(parent),
@@ -310,8 +312,30 @@ void ApplyFriend::resetLabels()
 
 void ApplyFriend::SlotApplySure()
 {
+    qDebug()<<"slot apply sure called";
+    QJsonObject jsonObj;
+    auto uid = UserMgr::getInstance()->GetUid();
+    jsonObj["uid"] = uid;
+    auto name = ui->name_ed->text();
+    if(name.isEmpty()){
+        name = ui->name_ed->placeholderText();
+    }
+    auto bakname = ui->back_ed->text();
+    if(bakname.isEmpty())
+    {
+        bakname = ui->back_ed->placeholderText();
+    }
+    jsonObj["applyname"] = name;
+    jsonObj["bakname"] = bakname;
+    jsonObj["touid"] = _si->_uid;
 
+    QJsonDocument Doc(jsonObj);
+    QByteArray jsonData = Doc.toJson(QJsonDocument::Compact);
+    emit TcpMgr::getInstance()->sig_send_data(ReqId::ID_ADD_FRIEND_REQ,jsonData);
+    this->hide();
+    deleteLater();
 }
+
 
 void ApplyFriend::SlotApplyCancel()
 {

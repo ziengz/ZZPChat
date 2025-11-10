@@ -68,7 +68,9 @@ void StateWidget::AddRedPoint()
 
 void StateWidget::ShowRedPoint(bool show)
 {
-    _red_point->setVisible(true);
+    _red_point->setVisible(show);
+    repolish(this);
+    update();
 }
 
 void StateWidget::paintEvent(QPaintEvent *event)

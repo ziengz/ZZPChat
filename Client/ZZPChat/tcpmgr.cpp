@@ -1,7 +1,6 @@
 #include "tcpmgr.h"
 #include <QJsonDocument>
 #include <QJsonObject>
-
 #include "usermgr.h"
 
 TcpMgr::~TcpMgr()
@@ -104,7 +103,7 @@ void TcpMgr::initHandlers()
     //处理登陆聊天服务器回包，用于接收用户信息
     handlers_.insert(ReqId::ID_CHAT_LOGIN_RSP,[this](ReqId id,int len,QByteArray data){
         Q_UNUSED(len);
-        qDebug()<<"handle id is "<<id;
+        qDebug()<<"handle id is "<<id<<"data is "<<data;
         QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
         //检查转换是否成功
         if(jsonDoc.isNull()){
@@ -125,12 +124,86 @@ void TcpMgr::initHandlers()
             emit sig_login_failed(err);
             return;
         }
-        UserMgr::getInstance()->SetUid(jsonObj["uid"].toInt());
-        UserMgr::getInstance()->SetName(jsonObj["name"].toString());
+
+        auto uid = jsonObj["uid"].toInt();
+        auto name = jsonObj["name"].toString();
+        auto nick = jsonObj["nick"].toString();
+        auto icon = jsonObj["icon"].toString();
+        auto sex = jsonObj["sex"].toInt();
+        auto desc = jsonObj["desc"].toString();
+        auto user_info = std::make_shared<UserInfo>(uid, name, nick, icon, sex,"",desc);
+
+        UserMgr::getInstance()->setSearchInfo(user_info);
         UserMgr::getInstance()->SetToken(jsonObj["Token"].toString());
 
         emit sig_switch_chatdlg();
 
+    });
+
+    handlers_.insert(ReqId::ID_SEARCH_USER_RSP,[this](ReqId id,int len,QByteArray data){
+        Q_UNUSED(len);
+
+        qDebug()<<"handle id is"<<id<<"data is" <<data;
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
+        QJsonObject jsonObj(jsonDoc.object());
+
+        if(!jsonObj.contains("error"))
+        {
+            int err = ErrorCodes::ERR_JSON;
+            qDebug()<<"Search failed,err is json parse err,err is "<<err;
+            emit sig_user_search(nullptr);
+            return;
+        }
+        int err = jsonObj["error"].toInt();
+        if(err!=ErrorCodes::SUCCESS)
+        {
+            qDebug()<<"Search failed,err is "<<err;
+            emit sig_user_search(nullptr);
+            return;
+        }
+        auto searchinfo = std::make_shared<SearchInfo>(jsonObj["uid"].toInt(),
+                jsonObj["name"].toString(),jsonObj["nick"].toString(),jsonObj["desc"].toString(),
+                jsonObj["sex"].toInt(),jsonObj["icon"].toString());
+        emit sig_user_search(searchinfo);
+    });
+    handlers_.insert(ReqId::ID_NOTIFY_ADD_FRIEND_REQ,[this](ReqId id,int len,QByteArray data){
+        Q_UNUSED(len);
+        qDebug() << "handle id is " << id << " data is " << data;
+
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
+
+        if (jsonDoc.isNull()) {
+            qDebug() << "Failed to create QJsonDocument.";
+            return;
+        }
+
+        QJsonObject jsonObj(jsonDoc.object());
+        if(!jsonObj.contains("error")){
+            int err = ErrorCodes::ERR_JSON;
+            qDebug()<<"Notify Failed,err is Json parse err"<<err;
+            emit sig_user_search(nullptr);
+            return;
+        }
+        int err = jsonObj["error"].toInt();
+        if(jsonObj["error"]!=ErrorCodes::SUCCESS){
+            qDebug()<<"Notify failed,error is "<<err;
+            emit sig_user_search(nullptr);
+            return;
+        }
+        //int from_uid, QString name, QString desc,QString icon, QString nick, int sex
+        int from_uid = jsonObj["applyuid"].toInt();
+        QString name = jsonObj["name"].toString();
+        QString desc = jsonObj["desc"].toString();
+        QString icon = jsonObj["icon"].toString();
+        QString nick = jsonObj["nick"].toString();
+        int sex = jsonObj["sex"].toInt();
+
+       auto apply_info = std::make_shared<AddFriendApply>(
+                   from_uid, name, desc,
+                     icon, nick, sex);
+       qDebug()<<"Notify sig is received";
+
+       emit sig_friend_apply(apply_info);
     });
 }
 
@@ -155,11 +228,9 @@ void TcpMgr::slot_tcp_connect(ServerInfo si)
     socket_.connectToHost(host_,port_);
 }
 
-void TcpMgr::slot_send_data(ReqId reqId, QString data)
+void TcpMgr::slot_send_data(ReqId reqId, QByteArray data)
 {
     uint16_t id = reqId;
-    QByteArray dataByte = data.toUtf8();
-
     quint16 len = static_cast<quint16>(data.size());
 
     QByteArray block;
@@ -170,8 +241,8 @@ void TcpMgr::slot_send_data(ReqId reqId, QString data)
     stream.setByteOrder(QDataStream::BigEndian);
 
     stream<<id<<len;
-    block.append(dataByte);
-    qDebug()<<block;
+    block.append(data);
+    qDebug()<<"1:"<<block;
     socket_.write(block);
 }
 

@@ -3,6 +3,9 @@
 #include <QAction>
 #include "chatuserwid.h"
 #include "loadingdlg.h"
+#include "tcpmgr.h"
+#include "usermgr.h"
+#include "userdata.h"
 
 ChatDialog::ChatDialog(QWidget *parent) :
     QDialog(parent),
@@ -16,6 +19,7 @@ ChatDialog::ChatDialog(QWidget *parent) :
     searchAction->setIcon(QIcon(":/res/search.png"));
     ui->search_edit->addAction(searchAction,QLineEdit::LeadingPosition);
     ui->search_edit->setPlaceholderText(QStringLiteral("搜索"));
+    ui->search_list->setSeatchEdit(ui->search_edit);
 
     QPixmap pix(":/res/head_1.jpg");
     ui->side_head_lb->setPixmap(pix);                         //原比例缩放
@@ -65,6 +69,9 @@ ChatDialog::ChatDialog(QWidget *parent) :
     this->installEventFilter(this);
 
     ui->side_chat_lb->SetSelected(true);
+
+    //连接申请添加好友的信号
+    connect(TcpMgr::getInstance().get(),&TcpMgr::sig_friend_apply,this,&ChatDialog::slot_apply_friend);
 }
 
 ChatDialog::~ChatDialog()
@@ -194,5 +201,23 @@ void ChatDialog::slot_text_changed(const QString& text)
     if(!text.isEmpty()){
         ShowSearch(true);
     }
+}
+
+void ChatDialog::slot_apply_friend(std::shared_ptr<AddFriendApply> apply)
+{
+    qDebug()<<"receive apply uid is "<<apply->_from_uid<<" name is "<<apply->_name
+           <<" desc is "<<apply->_desc;
+    bool b_already = UserMgr::getInstance()->AlreadyApply(apply->_from_uid);
+    if(b_already){
+        return;
+    }
+    qDebug()<<"1";
+    UserMgr::getInstance()->AddApplyList(std::make_shared<ApplyInfo>(apply));
+    qDebug()<<"2";
+    ui->side_contact_lb->ShowRedPoint(true);
+    qDebug()<<"3";
+    ui->con_user_list->ShowRedPoint(true);
+    qDebug()<<"4";
+    ui->friend_apply_page->addNewApply(apply);
 }
 

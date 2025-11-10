@@ -20,6 +20,12 @@ private:
 	void DealMsg();
 	void RegisterCallBack();
 	void LoginHandler(std::shared_ptr<Session> session, const short& msg_id, const std::string& msg_data);
+	void SearchInfo(std::shared_ptr<Session>session, const short& msg_id, const std::string& msg_data);
+	void AddFriendApply(std::shared_ptr<Session>session, const short& msg_id, const std::string& msg_data);
+	bool isPureDigit(std::string uid_str);
+	void getUserByUid(std::string uid_str, Json::Value& rtvalue);
+	void getUserByName(std::string uid_str, Json::Value& rtvalue);
+
 
 	std::thread _work_thread;
 	std::queue<std::shared_ptr<LogicNode>> _msg_que;

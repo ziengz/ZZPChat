@@ -204,6 +204,7 @@ public:
 	bool CheckEmail(const std::string& name, const std::string& email);
 	bool UpdatePwd(const std::string& name, const std::string& newpwd);
 	bool CheckPwd(const std::string& email, const std::string& pwd, UserInfo& userInfo);
+	bool AddFriendApply(const int& from, const int& to);
 	//bool TestProcedure(const std::string& email, int& uid, std::string& name);
 	std::shared_ptr<UserInfo> GetUser(int uid);
 	std::shared_ptr<UserInfo> GetUser(std::string name);

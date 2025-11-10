@@ -21,6 +21,8 @@ ContactUserList::ContactUserList(QWidget*parent)
 void ContactUserList::ShowRedPoint(bool bshow)
 {
     _add_friend_item->ShowRedPoint(bshow);
+    repolish(this);
+    update();
 }
 
 bool ContactUserList::eventFilter(QObject *object, QEvent *event)

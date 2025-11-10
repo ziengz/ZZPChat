@@ -3,6 +3,7 @@ release/applyfriend.o
 release/applyfrienditem.o
 release/applyfriendlist.o
 release/applyfriendpage.o
+release/authenfriend.o
 release/bubbleframe.o
 release/chatdialog.o
 release/chatitembase.o
@@ -16,6 +17,7 @@ release/clickedoncelabel.o
 release/contactuserlist.o
 release/conuseritem.o
 release/customizeedit.o
+release/findfaildlg.o
 release/findsuccessdlg.o
 release/friendlabel.o
 release/global.o
@@ -43,6 +45,7 @@ release/moc_applyfriend.o
 release/moc_applyfrienditem.o
 release/moc_applyfriendlist.o
 release/moc_applyfriendpage.o
+release/moc_authenfriend.o
 release/moc_chatdialog.o
 release/moc_chatitembase.o
 release/moc_chatpage.o
@@ -55,6 +58,7 @@ release/moc_clickedoncelabel.o
 release/moc_contactuserlist.o
 release/moc_conuseritem.o
 release/moc_customizeedit.o
+release/moc_findfaildlg.o
 release/moc_findsuccessdlg.o
 release/moc_friendlabel.o
 release/moc_grouptipitem.o

@@ -14,11 +14,15 @@ class UserMgr:public QObject,public singleton<UserMgr>,
 public:
     friend class singleton<UserMgr>;
     ~UserMgr();
-    void SetName(QString name);
-    void SetUid(int uid);
+
     void SetToken(QString token);
+    void setSearchInfo(std::shared_ptr<UserInfo> user_info);
+    int GetUid();
     QString GetName();
     std::vector<std::shared_ptr<ApplyInfo>> GetApplyList();
+    bool CheckFriendById(int uid);
+    void AddApplyList(std::shared_ptr<ApplyInfo>apply_list);
+    bool AlreadyApply(int uid);
 
 private:
     UserMgr();

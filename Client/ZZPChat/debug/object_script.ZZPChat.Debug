@@ -3,6 +3,7 @@ debug/applyfriend.o
 debug/applyfrienditem.o
 debug/applyfriendlist.o
 debug/applyfriendpage.o
+debug/authenfriend.o
 debug/bubbleframe.o
 debug/chatdialog.o
 debug/chatitembase.o
@@ -16,6 +17,7 @@ debug/clickedoncelabel.o
 debug/contactuserlist.o
 debug/conuseritem.o
 debug/customizeedit.o
+debug/findfaildlg.o
 debug/findsuccessdlg.o
 debug/friendlabel.o
 debug/global.o
@@ -43,6 +45,7 @@ debug/moc_applyfriend.o
 debug/moc_applyfrienditem.o
 debug/moc_applyfriendlist.o
 debug/moc_applyfriendpage.o
+debug/moc_authenfriend.o
 debug/moc_chatdialog.o
 debug/moc_chatitembase.o
 debug/moc_chatpage.o
@@ -55,6 +58,7 @@ debug/moc_clickedoncelabel.o
 debug/moc_contactuserlist.o
 debug/moc_conuseritem.o
 debug/moc_customizeedit.o
+debug/moc_findfaildlg.o
 debug/moc_findsuccessdlg.o
 debug/moc_friendlabel.o
 debug/moc_grouptipitem.o

@@ -45,6 +45,7 @@ void FindSuccessDlg::on_add_friend_btn_clicked()
     //处理添加朋友逻辑
     this->hide();
     auto applyFriend = new ApplyFriend(_parent);
+    applyFriend->SetSearchInfo(_si);
     applyFriend->setModal(true);
     applyFriend->show();
 }

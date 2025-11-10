@@ -9,6 +9,7 @@
 #include <QListWidgetItem>
 #include <QScrollBar>
 #include "tcpmgr.h"
+#include "loadingdlg.h"
 
 class SearchList:public QListWidget
 {
@@ -39,10 +40,11 @@ protected:
     }
 
 private:
-    void waitPending(bool pending = true);
+    void waitPending(bool pending);
     bool _send_pending;
     void addTipItem();
     QWidget* _search_edit;
+    LoadingDlg* _loadingDlg;
     std::shared_ptr<QDialog> _find_dlg;
 private slots:
     void slot_item_clicked(QListWidgetItem*item);
