@@ -3,6 +3,8 @@
 #include <QScrollBar>
 #include "conuseritem.h"
 #include "grouptipitem.h"
+#include "usermgr.h"
+#include "tcpmgr.h"
 #include <QRandomGenerator>
 
 ContactUserList::ContactUserList(QWidget*parent)
@@ -14,6 +16,9 @@ ContactUserList::ContactUserList(QWidget*parent)
     this->viewport()->installEventFilter(this);
     addContactUserList();
     connect(this,&QListWidget::itemClicked,this,&ContactUserList::slot_item_clicked);
+
+    connect(TcpMgr::getInstance().get(),&TcpMgr::sig_add_auth_friend,this,&ContactUserList::slot_add_auth_friend);
+    connect(TcpMgr::getInstance().get(),&TcpMgr::sig_auth_rsp,this,&ContactUserList::slot_auth_rsp);
 
 
 }
@@ -129,6 +134,41 @@ void ContactUserList::slot_item_clicked(QListWidgetItem *item)
         emit sig_switch_friend_info_page();
         return;
     }
+}
+
+void ContactUserList::slot_add_auth_friend(std::shared_ptr<AuthInfo> auth_info)
+{
+    qDebug()<<"contactUserList recv slot_add_auth_friend";
+    bool b_friend = UserMgr::getInstance()->CheckFriendById(auth_info->_uid);
+    if(b_friend){
+        return;
+    }
+
+    auto* con_user_item = new ConUserItem();
+    con_user_item->SetInfo(auth_info);
+    QListWidgetItem*item = new QListWidgetItem();
+    item->setSizeHint(con_user_item->sizeHint());
+    int index = this->row(_groupitem);
+    this->insertItem(index+1,item);
+    this->setItemWidget(item,con_user_item);
+}
+
+void ContactUserList::slot_auth_rsp(std::shared_ptr<AuthRsp> auth_rsp)
+{
+    qDebug()<<"contactUserList recv slot_auth_rsp";
+    bool b_friend = UserMgr::getInstance()->CheckFriendById(auth_rsp->_uid);
+    if(b_friend){
+        return;
+    }
+
+    auto* con_user_item = new ConUserItem();
+
+    con_user_item->SetInfo(auth_rsp);
+    QListWidgetItem*item = new QListWidgetItem();
+    item->setSizeHint(con_user_item->sizeHint());
+    int index = this->row(_groupitem);
+    this->insertItem(index+1,item);
+    this->setItemWidget(item,con_user_item);
 }
 
 

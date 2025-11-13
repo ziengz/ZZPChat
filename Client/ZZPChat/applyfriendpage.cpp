@@ -13,7 +13,8 @@ ApplyFriendPage::ApplyFriendPage(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->apply_friend_list,&ApplyFriendList::sig_show_search,this,&ApplyFriendPage::sig_show_search);
     loadApplyList();
-    connect(TcpMgr::getInstance().get(),&TcpMgr::sig_auth_rsp,this,&ApplyFriendPage::slot_auth_rsp);
+
+    connect(TcpMgr::getInstance().get(),&TcpMgr::sig_add_auth_friend,this,&ApplyFriendPage::slot_add_auth_friend);
 
 }
 
@@ -40,6 +41,7 @@ void ApplyFriendPage::addNewApply(std::shared_ptr<AddFriendApply> apply)
     ui->apply_friend_list->setItemWidget(item,apply_item);
     //新添加的好友需要加上按钮
     apply_item->ShowAddBtn(true);
+    _unauth_items[apply->_from_uid] = apply_item;
     //收到审核好友信号
     connect(apply_item, &ApplyFriendItem::sig_auth_friend, [this](std::shared_ptr<ApplyInfo> apply_info){
         auto*authFriend = new AuthenFriend(this);
@@ -124,13 +126,15 @@ void ApplyFriendPage::loadApplyList()
     }
 }
 
-void ApplyFriendPage::slot_auth_rsp(std::shared_ptr<AuthRsp> auth_rsp)
+void ApplyFriendPage::slot_add_auth_friend(std::shared_ptr<AuthInfo> auth_info)
 {
-    auto uid = auth_rsp->_uid;
+    auto uid = auth_info->_uid;
     auto find_iter = _unauth_items.find(uid);
     if(find_iter == _unauth_items.end()){
         return;
     }
     //int,ApplyFriendItem
-    find_iter->second->ShowAddBtn(true);
+    find_iter->second->ShowAddBtn(false);
+    qDebug()<<"button state is modifyed";
 }
+

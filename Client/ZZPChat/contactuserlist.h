@@ -7,6 +7,7 @@
 #include <QEvent>
 #include <QWheelEvent>
 #include <memory>
+#include "userdata.h"
 
 class ConUserItem;
 
@@ -22,7 +23,8 @@ private:
     void addContactUserList();
 public slots:
     void slot_item_clicked(QListWidgetItem* item);
-
+    void slot_add_auth_friend(std::shared_ptr<AuthInfo> auth_info);
+    void slot_auth_rsp(std::shared_ptr<AuthRsp>suth_rsp);
 signals:
     void sig_loading_contact_user();
     void sig_switch_apply_friend_page();

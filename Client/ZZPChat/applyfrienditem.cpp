@@ -31,6 +31,8 @@ void ApplyFriendItem::ShowAddBtn(bool bshow)
         ui->already_add_lb->show();
         _added = true;
     }
+    repolish(this);
+    update();
 }
 
 void ApplyFriendItem::SetInfo(std::shared_ptr<ApplyInfo> apply_info)

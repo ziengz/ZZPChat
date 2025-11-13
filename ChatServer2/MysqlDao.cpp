@@ -210,6 +210,93 @@ bool MysqlDao::AddFriendApply(const int& from, const int& to) {
 	return true;
 }
 
+bool MysqlDao::AuthFriendApply(const int& from, const int& to) {
+	auto con = pool_->getConnection();
+	Defer defer([&con,this]() {
+		pool_->returnConnection(std::move(con));
+		});
+	try {
+		if (con == nullptr){
+			return false;
+		}
+		std::shared_ptr<sql::PreparedStatement>pstmt(con->con_->prepareStatement("update friend_apply set status = 1 "
+			"where from_uid = ? and to_uid = ?"));
+		//因为是对方认证发过来的申请，所以要反过来设置from和to的uid
+		pstmt->setInt(1, to);
+		pstmt->setInt(2, from);
+		int rowAffected = pstmt->executeUpdate();
+		if (rowAffected < 0) {
+			return false;
+		}
+		return true;
+	}
+	catch (sql::SQLException& e) {
+		std::cerr << "SQLException: " << e.what();
+		std::cerr << " (MySQL error code: " << e.getErrorCode();
+		std::cerr << ", SQLState: " << e.getSQLState() << " )" << std::endl;
+		return false;
+	}
+}
+
+bool MysqlDao::AddFriend(const int& from, const int& to, std::string back_name) {
+	auto con = pool_->getConnection();
+	Defer defer([&con, this] {
+		pool_->returnConnection(std::move(con));
+		});
+	try {
+		if (con == nullptr) {
+			return false;
+		}
+		//开始事务
+		con->con_->setAutoCommit(false);
+
+		// 准备第一个SQL语句, 插入认证方好友数据
+		std::shared_ptr<sql::PreparedStatement>pstmt(con->con_->prepareStatement("insert ignore into friend(self_id,friend_id,back) "
+			"values (?,?,?)"));
+		pstmt->setInt(1, from);
+		pstmt->setInt(2, to);
+		pstmt->setString(3, back_name);
+		int rowAffected = pstmt->executeUpdate();
+		if (rowAffected < 0) {
+			con->con_->rollback();
+			std::cout << "executed failed" << std::endl;
+			return false;
+		}
+
+		//准备第二个SQL语句，插入申请方好友数据
+		std::unique_ptr<sql::PreparedStatement> pstmt2(con->con_->prepareStatement("INSERT IGNORE INTO friend(self_id, friend_id, back) "
+			"VALUES (?, ?, ?) "
+		));
+		//反过来的申请时from，验证时to
+		pstmt2->setInt(1, to); // from id
+		pstmt2->setInt(2, from);
+		pstmt2->setString(3, "");
+		// 执行更新
+		int rowAffected2 = pstmt2->executeUpdate();
+		if (rowAffected2 < 0) {
+			con->con_->rollback();
+			return false;
+		}
+
+		// 提交事务
+		con->con_->commit();
+		std::cout << "addfriend insert friends success" << std::endl;
+
+		return true;
+	}
+	catch (sql::SQLException& e) {
+		// 如果发生错误，回滚事务
+		if (con) {
+			con->con_->rollback();
+		}
+		std::cerr << "SQLException: " << e.what();
+		std::cerr << " (MySQL error code: " << e.getErrorCode();
+		std::cerr << ", SQLState: " << e.getSQLState() << " )" << std::endl;
+		return false;
+	}
+	return true;
+}
+
 std::shared_ptr<UserInfo> MysqlDao::GetUser(std::string name)
 {
 	auto con = pool_->getConnection();

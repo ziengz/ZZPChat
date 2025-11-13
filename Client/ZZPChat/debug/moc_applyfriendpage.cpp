@@ -41,14 +41,20 @@ struct qt_meta_stringdata_CLASSApplyFriendPageENDCLASS_t {};
 static constexpr auto qt_meta_stringdata_CLASSApplyFriendPageENDCLASS = QtMocHelpers::stringData(
     "ApplyFriendPage",
     "sig_show_search",
-    ""
+    "",
+    "slot_add_auth_friend",
+    "std::shared_ptr<AuthInfo>",
+    "auth_info"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSApplyFriendPageENDCLASS_t {
-    uint offsetsAndSizes[6];
+    uint offsetsAndSizes[12];
     char stringdata0[16];
     char stringdata1[16];
     char stringdata2[1];
+    char stringdata3[21];
+    char stringdata4[26];
+    char stringdata5[10];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSApplyFriendPageENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -56,11 +62,17 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSApplyFriendPageENDCLASS_t qt_me
     {
         QT_MOC_LITERAL(0, 15),  // "ApplyFriendPage"
         QT_MOC_LITERAL(16, 15),  // "sig_show_search"
-        QT_MOC_LITERAL(32, 0)   // ""
+        QT_MOC_LITERAL(32, 0),  // ""
+        QT_MOC_LITERAL(33, 20),  // "slot_add_auth_friend"
+        QT_MOC_LITERAL(54, 25),  // "std::shared_ptr<AuthInfo>"
+        QT_MOC_LITERAL(80, 9)   // "auth_info"
     },
     "ApplyFriendPage",
     "sig_show_search",
-    ""
+    "",
+    "slot_add_auth_friend",
+    "std::shared_ptr<AuthInfo>",
+    "auth_info"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -72,7 +84,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSApplyFriendPageENDCLASS[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-       1,   14, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -80,10 +92,16 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSApplyFriendPageENDCLASS[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   20,    2, 0x06,    1 /* Public */,
+       1,    1,   26,    2, 0x06,    1 /* Public */,
+
+ // slots: name, argc, parameters, tag, flags, initial metatype offsets
+       3,    1,   29,    2, 0x0a,    3 /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Bool,    2,
+
+ // slots: parameters
+    QMetaType::Void, 0x80000000 | 4,    5,
 
        0        // eod
 };
@@ -99,7 +117,10 @@ Q_CONSTINIT const QMetaObject ApplyFriendPage::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<ApplyFriendPage, std::true_type>,
         // method 'sig_show_search'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<bool, std::false_type>
+        QtPrivate::TypeAndForceComplete<bool, std::false_type>,
+        // method 'slot_add_auth_friend'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<std::shared_ptr<AuthInfo>, std::false_type>
     >,
     nullptr
 } };
@@ -111,6 +132,7 @@ void ApplyFriendPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         (void)_t;
         switch (_id) {
         case 0: _t->sig_show_search((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
+        case 1: _t->slot_add_auth_friend((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<AuthInfo>>>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -144,13 +166,13 @@ int ApplyFriendPage::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 1)
+        if (_id < 2)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 1)
+        if (_id < 2)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 1;
+        _id -= 2;
     }
     return _id;
 }

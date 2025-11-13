@@ -27,6 +27,15 @@ bool MySqlMgr::AddFriendApply(const int& from, const int& to)
 	return dao_.AddFriendApply(from,to);
 }
 
+bool MySqlMgr::AuthFriendApply(const int& from, const int& to) {
+	return dao_.AuthFriendApply(from, to);
+}
+
+bool MySqlMgr::AddFriend(const int& from, const int& to, std::string back_name)
+{
+	return dao_.AddFriend(from, to, back_name);
+}
+
 std::shared_ptr<UserInfo> MySqlMgr::GetUser(int uid) {
 	return dao_.GetUser(uid);
 }

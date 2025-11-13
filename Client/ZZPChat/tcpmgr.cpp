@@ -205,6 +205,63 @@ void TcpMgr::initHandlers()
 
        emit sig_friend_apply(apply_info);
     });
+    handlers_.insert(ReqId::ID_NOTIFY_AUTH_FRIEND_REQ,[this](ReqId id,int len,QByteArray data){
+        Q_UNUSED(len);
+        qDebug() << "handle id is " << id << " data is " << data;
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
+        if(jsonDoc.isNull()){
+            qDebug()<<"Failed to parse json data";
+            return;
+        }
+        QJsonObject jsonObj(jsonDoc.object());
+        if(!jsonObj.contains("error")){
+            int err = ErrorCodes::ERR_JSON;
+            qDebug()<<"Auth failed,err is "<<err;
+            return;
+        }
+        int err = jsonObj["error"].toInt();
+        if(err!=ErrorCodes::SUCCESS){
+            qDebug()<<"Auth friend failed,err is "<<err;
+            return;
+        }
+        int from_uid = jsonObj["fromuid"].toInt();
+        QString name = jsonObj["name"].toString();
+        QString nick = jsonObj["nick"].toString();
+        QString icon = jsonObj["icon"].toString();
+        int sex = jsonObj["sex"].toInt();
+
+        //int uid, QString name,QString nick, QString icon, int sex
+        auto auth_info = std::make_shared<AuthInfo>(from_uid,name,nick,icon,sex);
+        emit sig_add_auth_friend(auth_info);
+    });
+    handlers_.insert(ReqId::ID_AUTH_FRIEND_RSP,[this](ReqId id,int len,QByteArray data){
+        Q_UNUSED(len);
+        qDebug() << "handle id is " << id << " data is " << data;
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
+        if(jsonDoc.isNull()){
+            qDebug()<<"Failed to parse json data";
+            return;
+        }
+        QJsonObject jsonObj(jsonDoc.object());
+        if(!jsonObj.contains("error")){
+            int err = ErrorCodes::ERR_JSON;
+            qDebug()<<"Auth failed,err is "<<err;
+            return;
+        }
+        int err = jsonObj["error"].toInt();
+        if(err!=ErrorCodes::SUCCESS){
+            qDebug()<<"Auth friend failed,err is "<<err;
+            return;
+        }
+
+        auto name = jsonObj["name"].toString();
+        auto nick = jsonObj["nick"].toString();
+        auto icon = jsonObj["icon"].toString();
+        auto sex = jsonObj["sex"].toInt();
+        auto uid = jsonObj["uid"].toInt();
+        auto rsp = std::make_shared<AuthRsp>(uid, name, nick, icon, sex);
+        emit sig_auth_rsp(rsp);
+    });
 }
 
 void TcpMgr::handleMsg(ReqId id, int len, QByteArray data)
@@ -242,7 +299,6 @@ void TcpMgr::slot_send_data(ReqId reqId, QByteArray data)
 
     stream<<id<<len;
     block.append(data);
-    qDebug()<<"1:"<<block;
     socket_.write(block);
 }
 

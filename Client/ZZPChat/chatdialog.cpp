@@ -72,6 +72,10 @@ ChatDialog::ChatDialog(QWidget *parent) :
 
     //连接申请添加好友的信号
     connect(TcpMgr::getInstance().get(),&TcpMgr::sig_friend_apply,this,&ChatDialog::slot_apply_friend);
+    //连接通知添加好友信号
+    connect(TcpMgr::getInstance().get(),&TcpMgr::sig_add_auth_friend,this,&ChatDialog::slot_add_auth_friend);
+    //连接添加好友信息回包
+    connect(TcpMgr::getInstance().get(),&TcpMgr::sig_auth_rsp,this,&ChatDialog::slot_auth_rsp);
 }
 
 ChatDialog::~ChatDialog()
@@ -211,13 +215,49 @@ void ChatDialog::slot_apply_friend(std::shared_ptr<AddFriendApply> apply)
     if(b_already){
         return;
     }
-    qDebug()<<"1";
+
     UserMgr::getInstance()->AddApplyList(std::make_shared<ApplyInfo>(apply));
-    qDebug()<<"2";
     ui->side_contact_lb->ShowRedPoint(true);
-    qDebug()<<"3";
     ui->con_user_list->ShowRedPoint(true);
-    qDebug()<<"4";
     ui->friend_apply_page->addNewApply(apply);
+}
+
+void ChatDialog::slot_add_auth_friend(std::shared_ptr<AuthInfo> auth_info)
+{
+    qDebug() << "receive slot_add_auth_friend uid is " << auth_info->_uid
+        << " name is " << auth_info->_name << " nick is " << auth_info->_nick;
+    //判断如果已经是好友则跳过
+    bool b_friend = UserMgr::getInstance()->CheckFriendById(auth_info->_uid);
+    if(b_friend){
+        return;
+    }
+    UserMgr::getInstance()->AddFriend(auth_info);
+    auto*chat_user_wid = new ChatUserWid();
+    auto user_info = std::make_shared<UserInfo>(auth_info);
+    chat_user_wid->SetInfo(user_info);
+    QListWidgetItem* item = new QListWidgetItem();
+    item->setSizeHint(chat_user_wid->sizeHint());
+    ui->chat_user_list->insertItem(0,item);
+    ui->chat_user_list->setItemWidget(item,chat_user_wid);
+
+}
+
+void ChatDialog::slot_auth_rsp(std::shared_ptr<AuthRsp> auth_rsp)
+{
+    qDebug() << "receive slot_auth_friend uid is " << auth_rsp->_uid
+        << " name is " << auth_rsp->_name << " nick is " << auth_rsp->_nick;
+    //判断如果已经是好友则跳过
+    bool b_friend = UserMgr::getInstance()->CheckFriendById(auth_rsp->_uid);
+    if(b_friend){
+        return;
+    }
+    UserMgr::getInstance()->AddFriend(auth_rsp);
+    auto*chat_user_wid = new ChatUserWid();
+    auto user_info = std::make_shared<UserInfo>(auth_rsp);
+    chat_user_wid->SetInfo(user_info);
+    QListWidgetItem* item = new QListWidgetItem();
+    item->setSizeHint(chat_user_wid->sizeHint());
+    ui->chat_user_list->insertItem(0,item);
+    ui->chat_user_list->setItemWidget(item,chat_user_wid);
 }
 

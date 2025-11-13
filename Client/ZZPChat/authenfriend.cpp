@@ -443,18 +443,19 @@ void AuthenFriend::SlotApplySure()
     qDebug()<<"slot apply sure called";
     QJsonObject jsonObj;
     auto uid = UserMgr::getInstance()->GetUid();
-    jsonObj["uid"] = uid;
-
-    auto bakname = ui->back_ed->text();
-    if(bakname.isEmpty())
-    {
-        bakname = ui->back_ed->placeholderText();
+    jsonObj["fromuid"] = uid;
+    jsonObj["touid"] = _apply_info->_uid;
+    QString back_name = "";
+    if(ui->back_ed->text().isEmpty()){
+        back_name = ui->back_ed->placeholderText();
+    }else{
+        back_name = ui->back_ed->text();
     }
-    jsonObj["bakname"] = bakname;
+    jsonObj["back"] = back_name;
 
     QJsonDocument Doc(jsonObj);
     QByteArray jsonData = Doc.toJson(QJsonDocument::Compact);
-    emit TcpMgr::getInstance()->sig_send_data(ReqId::ID_ADD_FRIEND_REQ,jsonData);
+    emit TcpMgr::getInstance()->sig_send_data(ReqId::ID_AUTH_FRIEND_REQ,jsonData);
     this->hide();
     deleteLater();
 }

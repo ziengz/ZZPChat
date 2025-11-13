@@ -6,7 +6,7 @@ TEMPLATE = app
 DESTDIR = ./bin
 
 CONFIG += c++17
-
+LIBS += -luser32
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -163,4 +163,29 @@ CONFIG(debug, debug|release) {
     }
 }
 
-win32-msvc*:QMAKE_CXXFLAGS += /wd"4819" /utf-8
+msvc {
+    # 字符编码
+    QMAKE_CFLAGS += /utf-8
+    QMAKE_CXXFLAGS += /utf-8
+
+    # 解决PDB文件冲突
+    QMAKE_CXXFLAGS += /FS
+
+    # 关键：启用__cplusplus宏的正确定义（Qt 6必需）
+    QMAKE_CXXFLAGS += /Zc:__cplusplus
+
+    # 使用正确的运行时库（与Qt匹配）
+    QMAKE_CXXFLAGS_DEBUG -= /MTd
+    QMAKE_CXXFLAGS_DEBUG += /MDd
+    QMAKE_CXXFLAGS_RELEASE -= /MT
+    QMAKE_CXXFLAGS_RELEASE += /MD
+
+    # C++标准
+    QMAKE_CXXFLAGS += /std:c++17
+
+    # 手动添加MSVC标准库路径（已配置，保留）
+    MSVC_INCLUDE = "E:\Microsoft Visual Studio\2022\Community_IDE\VC\Tools\MSVC\14.29.30133\include"
+    WINSDK_INCLUDE = "C:\Program Files (x86)\Windows Kits\10\Include\10.0.20348.0\ucrt"
+    INCLUDEPATH += $$MSVC_INCLUDE $$WINSDK_INCLUDE
+}
+

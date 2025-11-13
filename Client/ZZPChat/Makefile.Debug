@@ -19,7 +19,7 @@ CXXFLAGS      = -fno-keep-inline-dllexport -g -std=gnu++1z -Wall -Wextra -Wextra
 INCPATH       = -I. -ID:/Qt6_3/6.5.0/mingw_64/include -ID:/Qt6_3/6.5.0/mingw_64/include/QtWidgets -ID:/Qt6_3/6.5.0/mingw_64/include/QtGui -ID:/Qt6_3/6.5.0/mingw_64/include/QtNetwork -ID:/Qt6_3/6.5.0/mingw_64/include/QtCore -Idebug -I. -I/include -ID:/Qt6_3/6.5.0/mingw_64/mkspecs/win32-g++ 
 LINKER      =        g++
 LFLAGS        =        -Wl,-subsystem,windows -mthreads
-LIBS        =        D:/Qt6_3/6.5.0/mingw_64/lib/libQt6Widgets.a D:/Qt6_3/6.5.0/mingw_64/lib/libQt6Gui.a D:/Qt6_3/6.5.0/mingw_64/lib/libQt6Network.a D:/Qt6_3/6.5.0/mingw_64/lib/libQt6Core.a -lmingw32 D:/Qt6_3/6.5.0/mingw_64/lib/libQt6EntryPoint.a -lshell32  
+LIBS        =        -luser32 D:/Qt6_3/6.5.0/mingw_64/lib/libQt6Widgets.a D:/Qt6_3/6.5.0/mingw_64/lib/libQt6Gui.a D:/Qt6_3/6.5.0/mingw_64/lib/libQt6Network.a D:/Qt6_3/6.5.0/mingw_64/lib/libQt6Core.a -lmingw32 D:/Qt6_3/6.5.0/mingw_64/lib/libQt6EntryPoint.a -lshell32  
 QMAKE         = D:/Qt6_3/6.5.0/mingw_64/bin/qmake.exe
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -14413,9 +14413,44 @@ debug/authenfriend.o: authenfriend.cpp authenfriend.h \
 		D:/Qt6_3/6.5.0/mingw_64/include/QtCore/QJsonObject \
 		D:/Qt6_3/6.5.0/mingw_64/include/QtCore/qjsonobject.h \
 		ui_authenfriend.h \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtWidgets/QApplication \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtWidgets/qapplication.h \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtGui/qguiapplication.h \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtGui/qinputmethod.h \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtGui/qguiapplication_platform.h \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtWidgets/QHBoxLayout \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtWidgets/qboxlayout.h \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtWidgets/qlayout.h \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtWidgets/qlayoutitem.h \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtWidgets/qgridlayout.h \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtWidgets/QScrollArea \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtWidgets/qscrollarea.h \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtWidgets/qabstractscrollarea.h \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtWidgets/QSpacerItem \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtWidgets/QVBoxLayout \
+		clickedbtn.h \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtWidgets/QPushButton \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtWidgets/qpushbutton.h \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtWidgets/qabstractbutton.h \
+		clickedoncelabel.h \
+		customizeedit.h \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtWidgets/QLineEdit \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtWidgets/qlineedit.h \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtGui/qtextcursor.h \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtGui/qtextformat.h \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtGui/qpen.h \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtGui/qtextoption.h \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtCore/QDebug \
 		D:/Qt6_3/6.5.0/mingw_64/include/QtWidgets/QScrollBar \
 		D:/Qt6_3/6.5.0/mingw_64/include/QtWidgets/qscrollbar.h \
-		D:/Qt6_3/6.5.0/mingw_64/include/QtWidgets/qabstractslider.h
+		D:/Qt6_3/6.5.0/mingw_64/include/QtWidgets/qabstractslider.h \
+		usermgr.h \
+		singleton.h \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtCore/QJsonDocument \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtCore/qjsondocument.h \
+		tcpmgr.h \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtCore/QDataStream \
+		D:/Qt6_3/6.5.0/mingw_64/include/QtNetwork/QTcpSocket
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug/authenfriend.o authenfriend.cpp
 
 debug/bubbleframe.o: bubbleframe.cpp bubbleframe.h \

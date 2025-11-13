@@ -6,13 +6,13 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    QApplication app1(argc, argv);
     QFile qss(":/style/stylesheet.qss");
     if(qss.open(QFile::ReadOnly))
     {
         qDebug()<<"open success";
         QString style = (QString)qss.readAll();
-        a.setStyleSheet(style);
+        app1.setStyleSheet(style);
         qss.close();
     }
     else{
@@ -42,5 +42,5 @@ int main(int argc, char *argv[])
     qDebug()<<gate_url_prefix;
     MainWindow w;
     w.show();
-    return a.exec();
+    return app1.exec();
 }

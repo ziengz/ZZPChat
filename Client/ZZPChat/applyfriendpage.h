@@ -26,8 +26,8 @@ private:
     void loadApplyList();
     Ui::ApplyFriendPage *ui;
     std::unordered_map<int,ApplyFriendItem*>_unauth_items;
-public:
-    void slot_auth_rsp(std::shared_ptr<AuthRsp>);
+public slots:
+    void slot_add_auth_friend(std::shared_ptr<AuthInfo> auth_info);
 signals:
     void sig_show_search(bool);
 };
