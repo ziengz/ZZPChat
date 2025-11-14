@@ -14,7 +14,7 @@ ApplyFriendPage::ApplyFriendPage(QWidget *parent) :
     connect(ui->apply_friend_list,&ApplyFriendList::sig_show_search,this,&ApplyFriendPage::sig_show_search);
     loadApplyList();
 
-    connect(TcpMgr::getInstance().get(),&TcpMgr::sig_add_auth_friend,this,&ApplyFriendPage::slot_add_auth_friend);
+    connect(TcpMgr::getInstance().get(),&TcpMgr::sig_auth_rsp,this,&ApplyFriendPage::slot_auth_rsp);
 
 }
 
@@ -126,9 +126,9 @@ void ApplyFriendPage::loadApplyList()
     }
 }
 
-void ApplyFriendPage::slot_add_auth_friend(std::shared_ptr<AuthInfo> auth_info)
+void ApplyFriendPage::slot_auth_rsp(std::shared_ptr<AuthRsp> auth_rsp)
 {
-    auto uid = auth_info->_uid;
+    auto uid = auth_rsp->_uid;
     auto find_iter = _unauth_items.find(uid);
     if(find_iter == _unauth_items.end()){
         return;

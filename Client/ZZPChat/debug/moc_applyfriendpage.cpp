@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'applyfriendpage.h'
 **
-** Created by: The Qt Meta Object Compiler version 68 (Qt 6.5.0)
+** Created by: The Qt Meta Object Compiler version 68 (Qt 6.5.3)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -22,7 +22,7 @@ QT_BEGIN_MOC_NAMESPACE
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'applyfriendpage.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 68
-#error "This file was generated using the moc from 6.5.0. It"
+#error "This file was generated using the moc from 6.5.3. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -42,9 +42,9 @@ static constexpr auto qt_meta_stringdata_CLASSApplyFriendPageENDCLASS = QtMocHel
     "ApplyFriendPage",
     "sig_show_search",
     "",
-    "slot_add_auth_friend",
-    "std::shared_ptr<AuthInfo>",
-    "auth_info"
+    "slot_auth_rsp",
+    "std::shared_ptr<AuthRsp>",
+    "auth_rsp"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSApplyFriendPageENDCLASS_t {
@@ -52,9 +52,9 @@ struct qt_meta_stringdata_CLASSApplyFriendPageENDCLASS_t {
     char stringdata0[16];
     char stringdata1[16];
     char stringdata2[1];
-    char stringdata3[21];
-    char stringdata4[26];
-    char stringdata5[10];
+    char stringdata3[14];
+    char stringdata4[25];
+    char stringdata5[9];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSApplyFriendPageENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -63,16 +63,16 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSApplyFriendPageENDCLASS_t qt_me
         QT_MOC_LITERAL(0, 15),  // "ApplyFriendPage"
         QT_MOC_LITERAL(16, 15),  // "sig_show_search"
         QT_MOC_LITERAL(32, 0),  // ""
-        QT_MOC_LITERAL(33, 20),  // "slot_add_auth_friend"
-        QT_MOC_LITERAL(54, 25),  // "std::shared_ptr<AuthInfo>"
-        QT_MOC_LITERAL(80, 9)   // "auth_info"
+        QT_MOC_LITERAL(33, 13),  // "slot_auth_rsp"
+        QT_MOC_LITERAL(47, 24),  // "std::shared_ptr<AuthRsp>"
+        QT_MOC_LITERAL(72, 8)   // "auth_rsp"
     },
     "ApplyFriendPage",
     "sig_show_search",
     "",
-    "slot_add_auth_friend",
-    "std::shared_ptr<AuthInfo>",
-    "auth_info"
+    "slot_auth_rsp",
+    "std::shared_ptr<AuthRsp>",
+    "auth_rsp"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -118,9 +118,9 @@ Q_CONSTINIT const QMetaObject ApplyFriendPage::staticMetaObject = { {
         // method 'sig_show_search'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<bool, std::false_type>,
-        // method 'slot_add_auth_friend'
+        // method 'slot_auth_rsp'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<std::shared_ptr<AuthInfo>, std::false_type>
+        QtPrivate::TypeAndForceComplete<std::shared_ptr<AuthRsp>, std::false_type>
     >,
     nullptr
 } };
@@ -132,7 +132,7 @@ void ApplyFriendPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         (void)_t;
         switch (_id) {
         case 0: _t->sig_show_search((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
-        case 1: _t->slot_add_auth_friend((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<AuthInfo>>>(_a[1]))); break;
+        case 1: _t->slot_auth_rsp((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<AuthRsp>>>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
