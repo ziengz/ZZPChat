@@ -26,6 +26,10 @@ private:
 	bool isPureDigit(std::string uid_str);
 	void getUserByUid(std::string uid_str, Json::Value& rtvalue);
 	void getUserByName(std::string uid_str, Json::Value& rtvalue);
+	void DealChatTextMsg(std::shared_ptr<Session> session, const short& msg_id, const std::string& msg_data);
+
+	bool GetFriendApplyInfo(int to_uid, std::vector<std::shared_ptr<ApplyInfo>>& list);
+	bool GetFriendList(int self_id, std::vector<std::shared_ptr<UserInfo>>& user_list);
 
 
 	std::thread _work_thread;

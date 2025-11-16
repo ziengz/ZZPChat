@@ -207,6 +207,8 @@ public:
 	bool AddFriendApply(const int& from, const int& to);
 	bool AuthFriendApply(const int& from, const int& to);
 	bool AddFriend(const int& from, const int& to, std::string back_name);
+	bool GetApplyList(int to_id, std::vector<std::shared_ptr<ApplyInfo>>& applyList, int begin, int limit);
+	bool GetFriendList(int self_id, std::vector<std::shared_ptr<UserInfo>>& user_info_list);
 	//bool TestProcedure(const std::string& email, int& uid, std::string& name);
 	std::shared_ptr<UserInfo> GetUser(int uid);
 	std::shared_ptr<UserInfo> GetUser(std::string name);

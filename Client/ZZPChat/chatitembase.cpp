@@ -1,7 +1,7 @@
 
 #include "chatitembase.h"
 
-ChatItemBase::ChatItemBase(ChatRole role, QWidget *parent):QWidget(parent)
+ChatItemBase::ChatItemBase(ChatRole role, QWidget *parent):QWidget(parent),m_role(role)
 {
     m_pNameLabel = new QLabel();
     m_pNameLabel->setObjectName("chat_user_name");
@@ -22,7 +22,7 @@ ChatItemBase::ChatItemBase(ChatRole role, QWidget *parent):QWidget(parent)
     pGLayout->setContentsMargins(3, 3, 3, 3);
 
     QSpacerItem*pSpace = new QSpacerItem(40,20,QSizePolicy::Expanding,QSizePolicy::Minimum);
-    if(role==ChatRole::Self){
+    if(m_role==ChatRole::Self){
         //名字与头像之间间距8px
         m_pNameLabel->setContentsMargins(0,0,8,0);
         m_pNameLabel->setAlignment(Qt::AlignRight);

@@ -77,7 +77,28 @@ Status ChatServiceImpl::NotifyAuthFriend(ServerContext* context, const AuthFrien
 
 Status ChatServiceImpl::NotifyTextChatMsg(ServerContext* context, const TextChatMsgReq* request, TextChatMsgRsp* response)
 {
-	return Status();
+	auto touid = request->touid();
+	auto session = UserMgr::GetIntance()->getSession(touid);
+	if (session == nullptr) {
+		return Status::OK;
+	}
+	Json::Value rtvalue;
+	rtvalue["error"] = Error_Codes::Success;
+	rtvalue["fromuid"] = request->fromuid();
+	rtvalue["touid"] = request->touid();
+
+	Json::Value text_array;
+	for (auto& msg : request->textmsgs()) {
+		Json::Value elem;
+		elem["content"] = msg.msgcontent();
+		elem["msgid"] = msg.msgid();
+		text_array.append(elem);
+	}
+	rtvalue["text_array"] = text_array;
+	std::string return_str = rtvalue.toStyledString();
+
+	session->Send(return_str, ID_NOTIFY_TEXT_CHAT_MSG_REQ);
+	return Status::OK;
 }
 
 bool ChatServiceImpl::GetBaseInfo(std::string base_key, int uid, std::shared_ptr<UserInfo>& userinfo)

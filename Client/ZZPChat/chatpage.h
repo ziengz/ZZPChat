@@ -2,6 +2,7 @@
 #define CHATPAGE_H
 
 #include <QWidget>
+#include "userdata.h"
 
 namespace Ui {
 class ChatPage;
@@ -14,6 +15,8 @@ class ChatPage : public QWidget
 public:
     explicit ChatPage(QWidget *parent = nullptr);
     ~ChatPage();
+    void SetUserInfo(std::shared_ptr<UserInfo> user_info);
+    void AppendChatMsg(std::shared_ptr<TextChatData> msg);
 protected:
     void paintEvent(QPaintEvent *event) override;
 private slots:
@@ -21,6 +24,11 @@ private slots:
 
 private:
     Ui::ChatPage *ui;
+    std::shared_ptr<UserInfo>_user_info;
+    QMap<QString,QWidget*>_bubble_map;
+
+signals:
+    void sig_append_chat_msg(std::shared_ptr<TextChatData> msg);
 };
 
 #endif // CHATPAGE_H

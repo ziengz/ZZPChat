@@ -69,6 +69,7 @@ void ConUserItem::SetInfo(int uid, QString name, QString icon)
     ui->user_name_lb->setText(_info->_name);
 }
 
+
 void ConUserItem::ShowRedPoint(bool show)
 {
     if(show){

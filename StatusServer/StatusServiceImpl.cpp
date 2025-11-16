@@ -85,7 +85,7 @@ ChatServer StatusServiceImpl::getChatServer()
 {
 	//选择连接数量最小的，压力最小，使得负载均衡
 	std::lock_guard<std::mutex>lock(mutex_);
-	//去除第一个作为最小基准
+	//第一个作为最小基准
 	auto minServer = servers_.begin()->second;
 	auto count_str = RedisMgr::GetIntance()->HGet(LOGIN_COUNT, minServer.name);
 

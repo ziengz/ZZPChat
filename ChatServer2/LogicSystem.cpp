@@ -31,6 +31,8 @@ void LogicSystem::RegisterCallBack()
 		std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 	_fun_callbacks[ID_AUTH_FRIEND_REQ] = std::bind(&LogicSystem::AuthFriendApply, this,
 		std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+	_fun_callbacks[ID_TEXT_CHAT_MSG_REQ] = std::bind(&LogicSystem::DealChatTextMsg, this,
+		std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 }
 
 void LogicSystem::PostMsgToQue(std::shared_ptr<LogicNode> msg)
@@ -174,8 +176,42 @@ void LogicSystem::LoginHandler(std::shared_ptr<Session> session, const short& ms
 	returnValue["icon"] = user_info->icon;
 
 	//从数据库中获取申请列表
-
+	std::vector<std::shared_ptr<ApplyInfo>>apply_list;
+	auto b_apply = GetFriendApplyInfo(uid, apply_list);
+	if (b_apply) {
+		for (auto& apply : apply_list) {
+			Json::Value obj;
+			obj["name"] = apply->_name;
+			obj["uid"] = apply->_uid;
+			obj["icon"] = apply->_icon;
+			obj["nick"] = apply->_nick;
+			obj["sex"] = apply->_sex;
+			obj["desc"] = apply->_desc;
+			obj["status"] = apply->_status;
+			returnValue["apply_list"].append(obj);
+		}
+	}
 	//获取好友列表
+	std::vector<std::shared_ptr<UserInfo>>user_list;
+	bool b_friend_list = GetFriendList(uid, user_list);
+	
+	for (auto& iter : user_list) {
+		std::cout << iter << std::endl;
+	}
+
+	if (b_friend_list) {
+		for (auto& friend_ele : user_list) {
+			Json::Value obj;
+			obj["name"] = friend_ele->name;
+			obj["uid"] = friend_ele->uid;
+			obj["icon"] = friend_ele->icon;
+			obj["nick"] = friend_ele->nick;
+			obj["sex"] = friend_ele->sex;
+			obj["desc"] = friend_ele->desc;
+			obj["back"] = friend_ele->back;
+			returnValue["friend_list"].append(obj);
+		}
+	}
 
 	auto server_name = ConfigMgr::Instance().GetValue("SelfServer", "Name");
 	//将登陆数量增加
@@ -499,4 +535,67 @@ void LogicSystem::getUserByName(std::string name, Json::Value& rtvalue)
 		rtvalue["sex"] = user_info->sex;
 		rtvalue["icon"] = user_info->icon;
 	}
+}
+
+void LogicSystem::DealChatTextMsg(std::shared_ptr<Session> session, const short& msg_id, const std::string& msg_data)
+{
+	Json::Reader reader;
+	Json::Value root;
+	reader.parse(msg_data, root);
+
+	auto fromuid = root["fromuid"].asInt();
+	auto touid = root["touid"].asInt();
+	const Json::Value arrays = root["text_array"];
+	Json::Value rtvalue;
+	rtvalue["error"] = Error_Codes::Success;
+	rtvalue["text_array"] = arrays;
+	rtvalue["fromuid"] = fromuid;
+	rtvalue["touid"] = touid;
+
+	Defer defer([this, &rtvalue, session]() {
+		std::string return_str = rtvalue.toStyledString();
+		session->Send(return_str, ID_TEXT_CHAT_MSG_RSP);
+		});
+	//查询redis，查找touid对应server ip
+	std::string to_str = std::to_string(touid);
+	std::string to_ip_key = USERIPPREFIX + to_str;
+	std::string to_ip_value = "";
+	bool b_ip = RedisMgr::GetIntance()->Get(to_ip_key, to_ip_value);
+	if (!b_ip) {
+		return;
+	}
+	auto& cfg = ConfigMgr::Instance();
+	auto self_name = cfg["SelfServer"]["Name"];
+	//如果同一服务器直接通知
+	if (self_name == to_ip_value) {
+		auto session = UserMgr::GetIntance()->getSession(touid);
+		if (session) {
+			std::string return_str = rtvalue.toStyledString();
+			session->Send(return_str, ID_NOTIFY_TEXT_CHAT_MSG_REQ);
+		}
+		return;
+	}
+	TextChatMsgReq text_msg_req;
+	text_msg_req.set_fromuid(fromuid);
+	text_msg_req.set_touid(touid);
+	for (const auto& text_obj : arrays) {
+		auto content = text_obj["content"].asString();
+		auto msgid = text_obj["msgid"].asString();
+		std::cout << "msgid is " << msgid << " content is " << content<<std::endl;
+		auto* text_msg = text_msg_req.add_textmsgs();
+		text_msg->set_msgid(msgid);
+		text_msg->set_msgcontent(content);
+	}
+	ChatGrpcClient::GetIntance()->NotifyTextChatMsg(to_ip_value, text_msg_req, rtvalue);
+
+}
+
+bool LogicSystem::GetFriendApplyInfo(int to_uid, std::vector<std::shared_ptr<ApplyInfo>>& list)
+{
+	return MySqlMgr::GetIntance()->GetApplyList(to_uid, list, 0, 10);
+
+}
+
+bool LogicSystem::GetFriendList(int self_id, std::vector<std::shared_ptr<UserInfo>>& user_list) {
+	return MySqlMgr::GetIntance()->GetFriendList(self_id, user_list);
 }

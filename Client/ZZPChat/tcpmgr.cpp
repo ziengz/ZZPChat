@@ -133,9 +133,14 @@ void TcpMgr::initHandlers()
         auto desc = jsonObj["desc"].toString();
         auto user_info = std::make_shared<UserInfo>(uid, name, nick, icon, sex,"",desc);
 
-        UserMgr::getInstance()->setSearchInfo(user_info);
+        UserMgr::getInstance()->setUserInfo(user_info);
         UserMgr::getInstance()->SetToken(jsonObj["Token"].toString());
-
+        if(jsonObj.contains("apply_list")){
+            UserMgr::getInstance()->AppendApplyList(jsonObj["apply_list"].toArray());
+        }
+        if(jsonObj.contains("friend_list")){
+            UserMgr::getInstance()->AppendFriendList(jsonObj["friend_list"].toArray());
+        }
         emit sig_switch_chatdlg();
 
     });
@@ -261,6 +266,53 @@ void TcpMgr::initHandlers()
         auto uid = jsonObj["uid"].toInt();
         auto rsp = std::make_shared<AuthRsp>(uid, name, nick, icon, sex);
         emit sig_auth_rsp(rsp);
+    });
+
+    //B所在的服务器会通知B，告诉B有来自A的消息，通知消息为ID_NOTIFY_TEXT_CHAT_MSG_REQ
+    handlers_.insert(ReqId::ID_NOTIFY_TEXT_CHAT_MSG_REQ,[this](ReqId id,int len,QByteArray data){
+        Q_UNUSED(len);
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
+        if(jsonDoc.isNull()){
+            qDebug()<<"Failed to create QJsonDocument.";
+            return;
+        }
+        QJsonObject jsonObj(jsonDoc.object());
+        int err = jsonObj["error"].toInt();
+        if(!jsonObj.contains("error")){
+            qDebug()<<"Chat Msg Rsp Failed, err is Json Parse Err"<<err;
+            return;
+        }
+        if(err!=ErrorCodes::SUCCESS){
+            qDebug()<<"Chat Msg Rsp Failed, err is Json Parse Err"<<err;
+            return;
+        }
+        qDebug()<<"receive text chat Notify Success";
+        auto msg_ptr = std::make_shared<TextChatMsg>(jsonObj["fromuid"].toInt(),jsonObj["touid"].toInt(),
+                                                     jsonObj["text_array"].toArray());
+        emit sig_text_chat_msg(msg_ptr);
+
+    });
+
+    //A给B发送文本消息，A所在的服务器会给A发送ID_TEXT_CHAT_MSG_RSP消息。
+    handlers_.insert(ReqId::ID_TEXT_CHAT_MSG_RSP,[this](ReqId id,int len,QByteArray data){
+        Q_UNUSED(len);
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
+        if(jsonDoc.isNull()){
+            qDebug()<<"Failed to create QJsonDocument.";
+            return;
+        }
+        QJsonObject jsonObj(jsonDoc.object());
+        int err = jsonObj["error"].toInt();
+        if(!jsonObj.contains("error")){
+            qDebug()<<"Chat Msg Rsp Failed, err is Json Parse Err"<<err;
+            return;
+        }
+        if(err!=ErrorCodes::SUCCESS){
+            qDebug()<<"Chat Msg Rsp Failed, err is Json Parse Err"<<err;
+            return;
+        }
+        qDebug() << "Receive Text Chat Rsp Success " ;
+        //ui上做处理，显示已送达之类的
     });
 }
 

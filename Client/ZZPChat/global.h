@@ -71,6 +71,7 @@ const int tip_offset = 5;
 //申请好友标签输入框最低长度
 const int MIN_APPLY_LABEL_ED_LEN = 40;
 const QString add_prefix = "添加标签：";
+const int CHAT_COUNT_PRE_PAGE = 13;
 
 //label状态
 enum ClickLbState{

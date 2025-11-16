@@ -13,6 +13,7 @@ class ChatView : public QWidget
 public:
     explicit ChatView(QWidget *parent = nullptr);
     void appendChatItem(QWidget *item);  //尾插
+    void removeAllItem();
 protected:
     bool eventFilter(QObject *watched, QEvent *event)override;
     void paintEvent(QPaintEvent *event) override;

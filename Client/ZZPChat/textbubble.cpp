@@ -43,7 +43,7 @@ void TextBubble::adjustTextHeight()
     }
     //获取布局内容到外边框的距离
     int vMargin = this->layout()->contentsMargins().top();
-    this->setFixedHeight(text_height + doc_margin * 2 + vMargin * 2);
+    setFixedHeight(text_height + doc_margin * 2 + vMargin * 2);
 }
 
 //设置气泡长度
@@ -63,40 +63,12 @@ void TextBubble::setPlainText(const QString &text)
     QTextDocument*doc = m_pTextEdit->document();
     for(QTextBlock it = doc->begin();it!=doc->end();it = it.next()){
         int txtw = int(fm.horizontalAdvance(it.text()));
-        max_width=max_width<txtw?txtw:max_width;
+        max_width = max_width < txtw ? txtw : max_width;
     }
-    this->setMaximumWidth(max_width+doc_margin*2+(margin_left+margin_right));
+    this->setMaximumWidth(max_width + doc_margin * 2 + (margin_left + margin_right)+5);
 }
 
 void TextBubble::initStyleSheet()
 {
     m_pTextEdit->setStyleSheet("QTextEdit{background:transparent;border:none}");
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

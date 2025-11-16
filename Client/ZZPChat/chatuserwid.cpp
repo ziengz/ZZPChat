@@ -53,6 +53,19 @@ void ChatUserWid::SetInfo(QString name, QString head, QString msg)
     ui->user_chat_lb->setText(_msg);
 }
 
+void ChatUserWid::SetInfo(std::shared_ptr<FriendInfo> friend_info)
+{
+    _user_info = std::make_shared<UserInfo>(friend_info);
+    int random = QRandomGenerator::global()->bounded(100);
+    int head_i = heads.size() % random;
+    if(_user_info->_icon.isEmpty()){
+        _user_info->_icon = heads[head_i];
+    }
+    QPixmap pix(_user_info->_icon);
+    ui->icon_lb->setPixmap(pix.scaled(ui->icon_lb->size(),Qt::KeepAspectRatio,Qt::SmoothTransformation));
+    ui->icon_lb->setScaledContents(true);
+}
+
 void ChatUserWid::ShowRedPoint(bool bshow)
 {
     if(bshow){
@@ -60,5 +73,22 @@ void ChatUserWid::ShowRedPoint(bool bshow)
     }else{
         ui->red_point->hide();
     }
+}
+
+void ChatUserWid::updateLastMsg(std::vector<std::shared_ptr<TextChatData>> msgs)
+{
+    //更新最新消息
+    QString last_msg = "";
+    for(auto& msg : msgs){
+        last_msg = msg->_msg_content;
+        _user_info->_chat_msgs.push_back(msg);
+    }
+    _user_info->_last_msg = last_msg;
+    ui->user_chat_lb->setText(last_msg);
+}
+
+std::shared_ptr<UserInfo> ChatUserWid::GetUserInfo()
+{
+    return _user_info;
 }
 

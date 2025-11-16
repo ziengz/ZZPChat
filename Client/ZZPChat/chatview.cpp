@@ -61,6 +61,11 @@ void ChatView::appendChatItem(QWidget *item)
     isAppended = true;
 }
 
+void ChatView::removeAllItem()
+{
+
+}
+
 bool ChatView::eventFilter(QObject *watched, QEvent *event)
 {
     if(watched == m_pScrollArea&&event->type()==QEvent::Enter)
