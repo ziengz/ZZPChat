@@ -34,6 +34,7 @@ SOURCES += \
     customizeedit.cpp \
     findfaildlg.cpp \
     findsuccessdlg.cpp \
+    friendinfopage.cpp \
     friendlabel.cpp \
     global.cpp \
     grouptipitem.cpp \
@@ -77,6 +78,7 @@ HEADERS += \
     customizeedit.h \
     findfaildlg.h \
     findsuccessdlg.h \
+    friendinfopage.h \
     friendlabel.h \
     global.h \
     grouptipitem.h \
@@ -110,6 +112,7 @@ FORMS += \
     conuseritem.ui \
     findfaildlg.ui \
     findsuccessdlg.ui \
+    friendinfopage.ui \
     friendlabel.ui \
     grouptipitem.ui \
     loadingdlg.ui \

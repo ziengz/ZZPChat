@@ -109,7 +109,7 @@ struct FriendInfo {
 };
 
 struct UserInfo{
-    UserInfo(int uid, QString name, QString nick, QString icon, int sex,QString last_msg,QString desc):
+    UserInfo(int uid, QString name, QString nick, QString icon, int sex,QString last_msg = "",QString desc = ""):
         _uid(uid),_name(name),_nick(nick),_icon(icon),_sex(sex),_last_msg(last_msg),_desc(desc){}
 
     UserInfo(std::shared_ptr<AuthInfo> auth):
@@ -123,6 +123,11 @@ struct UserInfo{
     UserInfo(int uid, QString name, QString icon):
     _uid(uid), _name(name), _icon(icon),_nick(_name),
     _sex(0),_last_msg(""),_desc(""){
+
+    }
+    UserInfo(std::shared_ptr<SearchInfo> search_info):
+        _uid(search_info->_uid),_name(search_info->_name),_nick(search_info->_nick),
+    _icon(search_info->_icon),_sex(search_info->_sex),_last_msg(""){
 
     }
     UserInfo(std::shared_ptr<FriendInfo> friend_info):

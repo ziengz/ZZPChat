@@ -2,6 +2,9 @@
 #include <boost/beast/http.hpp>
 #include <boost/beast.hpp>
 #include <boost/asio.hpp>
+#include <boost/uuid/uuid_io.hpp>
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_generators.hpp>
 #include <memory>
 #include <iostream>
 #include <functional>
@@ -61,3 +64,8 @@ private:
 #define USER_BASE_INFO "ubaseinfo_"
 #define LOGIN_COUNT  "logincount"
 #define LOCK_COUNT "lockcount"
+
+//分布式锁的持有时间
+#define LOCK_TIME_OUT 10
+//分布式锁的重试时间
+#define ACQUIRE_TIME_OUT 5

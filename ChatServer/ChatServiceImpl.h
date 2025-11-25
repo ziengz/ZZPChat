@@ -4,6 +4,7 @@
 #include "message.grpc.pb.h"
 #include "message.pb.h"
 #include "data.h"
+#include "CServer.h"
 
 using grpc::Channel;
 using grpc::Status;
@@ -20,6 +21,8 @@ using message::ChatService;
 using message::TextChatMsgReq;
 using message::TextChatMsgRsp;
 using message::TextChatData;
+using message::KickUserReq;
+using message::KickUserRsp;
 
 //对于chatServer2类不仅是客户端还是服务器
 class ChatServiceImpl final:public ChatService::Service
@@ -29,10 +32,12 @@ public:
 	Status NotifyAddFriend(ServerContext* context, const AddFriendReq* request, AddFriendRsp* reply) override;
 	Status NotifyAuthFriend(ServerContext* context, const AuthFriendReq* request, AuthFriendRsp* response) override;
 	Status NotifyTextChatMsg(ServerContext* context, const TextChatMsgReq* request, TextChatMsgRsp* response) override;
+	Status NotifyKickUser(ServerContext* context, const KickUserReq* request, KickUserRsp* response);
 	bool GetBaseInfo(std::string base_key, int uid, std::shared_ptr<UserInfo>& userinfo);
+	void RegisterServer(std::shared_ptr<CServer> pserver);
 
 private:
-
+	std::shared_ptr<CServer>_p_server;
 
 };
 

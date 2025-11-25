@@ -43,6 +43,8 @@ static constexpr auto qt_meta_stringdata_CLASSContactUserListENDCLASS = QtMocHel
     "",
     "sig_switch_apply_friend_page",
     "sig_switch_friend_info_page",
+    "std::shared_ptr<UserInfo>",
+    "user_info",
     "slot_item_clicked",
     "QListWidgetItem*",
     "item",
@@ -55,21 +57,23 @@ static constexpr auto qt_meta_stringdata_CLASSContactUserListENDCLASS = QtMocHel
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSContactUserListENDCLASS_t {
-    uint offsetsAndSizes[28];
+    uint offsetsAndSizes[32];
     char stringdata0[16];
     char stringdata1[25];
     char stringdata2[1];
     char stringdata3[29];
     char stringdata4[28];
-    char stringdata5[18];
-    char stringdata6[17];
-    char stringdata7[5];
-    char stringdata8[21];
-    char stringdata9[26];
-    char stringdata10[10];
-    char stringdata11[14];
-    char stringdata12[25];
-    char stringdata13[9];
+    char stringdata5[26];
+    char stringdata6[10];
+    char stringdata7[18];
+    char stringdata8[17];
+    char stringdata9[5];
+    char stringdata10[21];
+    char stringdata11[26];
+    char stringdata12[10];
+    char stringdata13[14];
+    char stringdata14[25];
+    char stringdata15[9];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSContactUserListENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -80,21 +84,25 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSContactUserListENDCLASS_t qt_me
         QT_MOC_LITERAL(41, 0),  // ""
         QT_MOC_LITERAL(42, 28),  // "sig_switch_apply_friend_page"
         QT_MOC_LITERAL(71, 27),  // "sig_switch_friend_info_page"
-        QT_MOC_LITERAL(99, 17),  // "slot_item_clicked"
-        QT_MOC_LITERAL(117, 16),  // "QListWidgetItem*"
-        QT_MOC_LITERAL(134, 4),  // "item"
-        QT_MOC_LITERAL(139, 20),  // "slot_add_auth_friend"
-        QT_MOC_LITERAL(160, 25),  // "std::shared_ptr<AuthInfo>"
-        QT_MOC_LITERAL(186, 9),  // "auth_info"
-        QT_MOC_LITERAL(196, 13),  // "slot_auth_rsp"
-        QT_MOC_LITERAL(210, 24),  // "std::shared_ptr<AuthRsp>"
-        QT_MOC_LITERAL(235, 8)   // "suth_rsp"
+        QT_MOC_LITERAL(99, 25),  // "std::shared_ptr<UserInfo>"
+        QT_MOC_LITERAL(125, 9),  // "user_info"
+        QT_MOC_LITERAL(135, 17),  // "slot_item_clicked"
+        QT_MOC_LITERAL(153, 16),  // "QListWidgetItem*"
+        QT_MOC_LITERAL(170, 4),  // "item"
+        QT_MOC_LITERAL(175, 20),  // "slot_add_auth_friend"
+        QT_MOC_LITERAL(196, 25),  // "std::shared_ptr<AuthInfo>"
+        QT_MOC_LITERAL(222, 9),  // "auth_info"
+        QT_MOC_LITERAL(232, 13),  // "slot_auth_rsp"
+        QT_MOC_LITERAL(246, 24),  // "std::shared_ptr<AuthRsp>"
+        QT_MOC_LITERAL(271, 8)   // "suth_rsp"
     },
     "ContactUserList",
     "sig_loading_contact_user",
     "",
     "sig_switch_apply_friend_page",
     "sig_switch_friend_info_page",
+    "std::shared_ptr<UserInfo>",
+    "user_info",
     "slot_item_clicked",
     "QListWidgetItem*",
     "item",
@@ -125,22 +133,22 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSContactUserListENDCLASS[] = {
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
        1,    0,   50,    2, 0x06,    1 /* Public */,
        3,    0,   51,    2, 0x06,    2 /* Public */,
-       4,    0,   52,    2, 0x06,    3 /* Public */,
+       4,    1,   52,    2, 0x06,    3 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       5,    1,   53,    2, 0x0a,    4 /* Public */,
-       8,    1,   56,    2, 0x0a,    6 /* Public */,
-      11,    1,   59,    2, 0x0a,    8 /* Public */,
+       7,    1,   55,    2, 0x0a,    5 /* Public */,
+      10,    1,   58,    2, 0x0a,    7 /* Public */,
+      13,    1,   61,    2, 0x0a,    9 /* Public */,
 
  // signals: parameters
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 5,    6,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 6,    7,
-    QMetaType::Void, 0x80000000 | 9,   10,
-    QMetaType::Void, 0x80000000 | 12,   13,
+    QMetaType::Void, 0x80000000 | 8,    9,
+    QMetaType::Void, 0x80000000 | 11,   12,
+    QMetaType::Void, 0x80000000 | 14,   15,
 
        0        // eod
 };
@@ -160,6 +168,7 @@ Q_CONSTINIT const QMetaObject ContactUserList::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'sig_switch_friend_info_page'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<std::shared_ptr<UserInfo>, std::false_type>,
         // method 'slot_item_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QListWidgetItem *, std::false_type>,
@@ -181,7 +190,7 @@ void ContactUserList::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         switch (_id) {
         case 0: _t->sig_loading_contact_user(); break;
         case 1: _t->sig_switch_apply_friend_page(); break;
-        case 2: _t->sig_switch_friend_info_page(); break;
+        case 2: _t->sig_switch_friend_info_page((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<UserInfo>>>(_a[1]))); break;
         case 3: _t->slot_item_clicked((*reinterpret_cast< std::add_pointer_t<QListWidgetItem*>>(_a[1]))); break;
         case 4: _t->slot_add_auth_friend((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<AuthInfo>>>(_a[1]))); break;
         case 5: _t->slot_auth_rsp((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<AuthRsp>>>(_a[1]))); break;
@@ -204,7 +213,7 @@ void ContactUserList::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
             }
         }
         {
-            using _t = void (ContactUserList::*)();
+            using _t = void (ContactUserList::*)(std::shared_ptr<UserInfo> );
             if (_t _q_method = &ContactUserList::sig_switch_friend_info_page; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 2;
                 return;
@@ -256,8 +265,9 @@ void ContactUserList::sig_switch_apply_friend_page()
 }
 
 // SIGNAL 2
-void ContactUserList::sig_switch_friend_info_page()
+void ContactUserList::sig_switch_friend_info_page(std::shared_ptr<UserInfo> _t1)
 {
-    QMetaObject::activate(this, &staticMetaObject, 2, nullptr);
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    QMetaObject::activate(this, &staticMetaObject, 2, _a);
 }
 QT_WARNING_POP

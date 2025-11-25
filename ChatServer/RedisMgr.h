@@ -107,6 +107,11 @@ public:
 	// 相当于执行：EXISTS key
 	bool ExistsKey(const std::string& key);
     void Close();
+
+    //获取分布式锁
+    std::string acquirLock(const std::string& LockName, int lockTimeout, int acquireTimeout);
+    //释放分布式锁
+    bool releaseLock(const std::string& LockName, const std::string& identifier);
 private:
     RedisMgr();
     std::unique_ptr<RedisConPool> con_pool_;

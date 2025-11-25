@@ -19,6 +19,7 @@ public:
     void setUserInfo(std::shared_ptr<UserInfo> user_info);
     int GetUid();
     QString GetName();
+    QString GetIcon();
     std::shared_ptr<UserInfo>GetUserInfo();
     std::vector<std::shared_ptr<ApplyInfo>> GetApplyList();
     bool CheckFriendById(int uid);

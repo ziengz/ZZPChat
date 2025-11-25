@@ -26,6 +26,11 @@ QString UserMgr::GetName()
     return _user_info->_name;
 }
 
+QString UserMgr::GetIcon()
+{
+    return _user_info->_icon;
+}
+
 std::shared_ptr<UserInfo> UserMgr::GetUserInfo()
 {
     return _user_info;

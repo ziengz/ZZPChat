@@ -1,4 +1,5 @@
 #include "RedisMgr.h"
+#include "DistLock.h"
 
 RedisMgr::~RedisMgr()
 {
@@ -283,6 +284,34 @@ bool RedisMgr::ExistsKey(const std::string& key)
 
 void RedisMgr::Close() {
     con_pool_->Close();
+}
+
+std::string RedisMgr::acquirLock(const std::string& LockName, int lockTimeout, int acquireTimeout)
+{
+	auto con = con_pool_->getRedisContext();
+	if (con == nullptr) {
+		return "";
+	}
+	Defer defer([&con, this]() {
+		con_pool_->ReturnRedisCon(std::move(con));
+		});
+	return DistLock::GetIntance()->acquirLock(con, LockName,acquireTimeout,lockTimeout);
+}
+
+bool RedisMgr::releaseLock(const std::string& LockName, const std::string& identifier)
+{
+    auto con = con_pool_->getRedisContext();
+    if (con == nullptr) {
+        return false;  
+    }
+    if (identifier.empty()) {
+        return false;
+    }
+    Defer defer([&con, this]() {
+        con_pool_->ReturnRedisCon(std::move(con));
+    });
+    return DistLock::GetIntance()->releaseLock(con, LockName, identifier);
+    
 }
 
 

@@ -8,7 +8,7 @@ TcpMgr::~TcpMgr()
 
 }
 
-void TcpMgr::CloseCOnnection()
+void TcpMgr::CloseConnection()
 {
     socket_.close();
 }
@@ -313,6 +313,30 @@ void TcpMgr::initHandlers()
         }
         qDebug() << "Receive Text Chat Rsp Success " ;
         //ui上做处理，显示已送达之类的
+    });
+    handlers_.insert(ReqId::ID_NOTIFY_OFF_LINE_REQ,[this](ReqId id,int len,QByteArray data){
+        Q_UNUSED(len);
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
+        if(jsonDoc.isNull()){
+            qDebug()<<"failed to create JsonDoc";
+            return;
+        }
+        QJsonObject jsonObj(jsonDoc.object());
+
+        if(!jsonObj.contains("error")){
+            int err = ErrorCodes::ERR_JSON;
+            qDebug()<<"Notify offline failed ,err is "<<err;
+            return;
+        }
+        int err = jsonObj["error"].toInt();
+        if(err!=ErrorCodes::SUCCESS){
+            qDebug()<<"Notify offline failed,error is "<<err;
+            return;
+        }
+        auto uid = jsonObj["uid"].toInt();
+        qDebug()<<"notify uid is "<<uid<<"offline success";
+
+        emit sig_offline();
     });
 }
 

@@ -109,4 +109,31 @@ TextChatMsgRsp ChatGrpcClient::NotifyTextChatMsg(std::string server_ip, const Te
     return rsp;
 }
 
+KickUserRsp ChatGrpcClient::NotifyKickUser(std::string server_ip, const KickUserReq req)
+{
+    KickUserRsp rsp;
+    Defer defer([&rsp,&req]() {
+        rsp.set_uid(req.uid());
+        rsp.set_error(Error_Codes::Success);
+        });
+    auto find_iter = _pools.find(server_ip);
+    if (find_iter == _pools.end()) {
+        return rsp;
+    }
+    auto& pool = find_iter->second;
+
+    auto stub = pool->getConnection();
+    Defer defer2([&pool, &stub]() {
+        pool->returnConnection(std::move(stub));
+        });
+    ClientContext context;
+    Status status = stub->NotifyKickUser(&context, req, &rsp);
+    if (!status.ok()) {
+        rsp.set_error(Error_Codes::RPCFailed);
+        return rsp;
+    }
+    return rsp;
+
+}
+
 

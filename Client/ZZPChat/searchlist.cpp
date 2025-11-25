@@ -122,6 +122,7 @@ void SearchList::slot_user_search(std::shared_ptr<SearchInfo> si)
         auto b_exist = UserMgr::getInstance()->CheckFriendById(si->_uid);
         if(b_exist){
             //处理跳转查找用户聊天页面
+            emit sig_jump_chat_item(si);
         }
 
 

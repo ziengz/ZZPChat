@@ -1,4 +1,5 @@
 E:\ZZPChat\StatusServer\ConfigMgr.cpp;E:\ZZPChat\StatusServer\StatusServer\x64\Debug\ConfigMgr.obj
+E:\ZZPChat\StatusServer\DistLock.cpp;E:\ZZPChat\StatusServer\StatusServer\x64\Debug\DistLock.obj
 E:\ZZPChat\StatusServer\IOContextPool.cpp;E:\ZZPChat\StatusServer\StatusServer\x64\Debug\IOContextPool.obj
 E:\ZZPChat\StatusServer\message.grpc.pb.cc;E:\ZZPChat\StatusServer\StatusServer\x64\Debug\message.grpc.pb.obj
 E:\ZZPChat\StatusServer\message.pb.cc;E:\ZZPChat\StatusServer\StatusServer\x64\Debug\message.pb.obj

@@ -6,9 +6,10 @@
 #include "RedisMgr.h"
 #include "ChatGrpcClient.h"
 #include "Session.h"
+#include "CServer.h"
 
 
-LogicSystem::LogicSystem():_b_stop(false)
+LogicSystem::LogicSystem():_b_stop(false),_p_server(nullptr)
 {
 	RegisterCallBack();
 	_work_thread = std::thread(&LogicSystem::DealMsg, this);
@@ -19,6 +20,11 @@ LogicSystem::~LogicSystem()
 	std::lock_guard<std::mutex>lock(mutex_);
 	_b_stop = true;
 	cond_.notify_all();
+}
+
+void LogicSystem::SetServer(std::shared_ptr<CServer> pserver)
+{
+	_p_server = pserver;
 }
 
 void LogicSystem::RegisterCallBack()
@@ -157,6 +163,7 @@ void LogicSystem::LoginHandler(std::shared_ptr<Session> session, const short& ms
 		returnValue["error"] = Error_Codes::TokenInvalid;
 		return;
 	}
+
 	std::string base_key = USER_BASE_INFO + uid_str;
 	auto user_info = std::make_shared<UserInfo>();
 	bool b_base = GetBaseInfo(base_key, uid, user_info);
@@ -214,6 +221,39 @@ void LogicSystem::LoginHandler(std::shared_ptr<Session> session, const short& ms
 	}
 
 	auto server_name = ConfigMgr::Instance().GetValue("SelfServer", "Name");
+	{
+		//此处添加分布式锁。让该线程独占登录
+	//拼接用户ip对应的key
+		std::string lock_key = LOCK_PREFIX + uid_str;
+		std::string identifier = RedisMgr::GetIntance()->acquirLock(lock_key, LOCK_TIME_OUT, ACQUIRE_TIME_OUT);
+		
+		Defer defer2([lock_key, identifier, this]() {
+			RedisMgr::GetIntance()->releaseLock(lock_key, identifier);
+		});
+		//判断该用户是否在别处或者本服务登录
+		std::string uid_ip_value = "";
+		std::string uid_ip_key = USERIPPREFIX + uid_str;
+		bool b_ip = RedisMgr::GetIntance()->Get(uid_ip_key, uid_ip_value);
+		
+		//说明用户已经登陆，此处应该踢掉之前用户登陆状态
+		if (b_ip) {
+			if (uid_ip_value == server_name) {
+				//查找旧的连接
+				auto old_session = UserMgr::GetIntance()->getSession(uid);
+				if (old_session) {
+					old_session->NotifyOffline(uid);
+					//清除旧链接
+					_p_server->ClearSession(old_session->GetSessionid());
+				}
+			}
+			else {
+				//通知grpc通知其他服务器踢人
+				KickUserReq kick_req;
+				kick_req.set_uid(uid);
+				ChatGrpcClient::GetIntance()->NotifyKickUser(uid_ip_value, kick_req);
+			}
+		}
+	};
 	//将登陆数量增加
 	auto rd_res = RedisMgr::GetIntance()->HGet(LOGIN_COUNT, server_name);
 	int count = 0;
@@ -233,6 +273,8 @@ void LogicSystem::LoginHandler(std::shared_ptr<Session> session, const short& ms
 	
 	//uid和session绑定，方便后续踢人操作
 	UserMgr::GetIntance()->SetUserSession(uid, session);
+	std::string uid_session_key = USER_SESSION_PREFIX + uid_str;
+	RedisMgr::GetIntance()->Set(uid_session_key, session->GetSessionid());
 	return;
 }
 
@@ -599,3 +641,4 @@ bool LogicSystem::GetFriendApplyInfo(int to_uid, std::vector<std::shared_ptr<App
 bool LogicSystem::GetFriendList(int self_id, std::vector<std::shared_ptr<UserInfo>>& user_list) {
 	return MySqlMgr::GetIntance()->GetFriendList(self_id, user_list);
 }
+

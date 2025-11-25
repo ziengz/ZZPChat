@@ -186,7 +186,7 @@ void Session::AsyncReadBody(int length)
 			std::cout << "recv_msg is " << _recv_msg_node->data_ << std::endl;
 
 			//此处将消息投递到逻辑队列中，给客户端回包
-			LogicSystem::GetIntance()->PostMsgToQue(std::make_shared<LogicNode>(Shared_self(), _recv_msg_node));
+			LogicSystem::GetIntance()->PostMsgToQue(std::make_shared<LogicNode>(Shared_self(),_recv_msg_node));
 			AsyncReadHead(HEAD_TOTAL_LEN);
 		}
 		catch (std::exception& e) {
@@ -227,6 +227,17 @@ void Session::AsyncReadLen(std::size_t read_len, std::size_t total_len, FuncCall
 	}
 }
 
+void Session::NotifyOffline(int uid) {
+	Json::Value root;
+	root["error"] = Error_Codes::Success;
+	root["uid"] = uid;
+	
+	std::string return_str = root.toStyledString();
+	Send(return_str, ID_NOTIFY_OFF_LINE_REQ);
+	return;
+}
+
 LogicNode::LogicNode(std::shared_ptr<Session>session, std::shared_ptr<RecvNode>recvnode):_session(session),_recvnode(recvnode)
 {
 }
+

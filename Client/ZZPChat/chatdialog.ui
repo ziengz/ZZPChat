@@ -311,21 +311,21 @@
      </property>
      <widget class="ChatPage" name="chat_page"/>
      <widget class="ApplyFriendPage" name="friend_apply_page"/>
-     <widget class="QWidget" name="add_friend_page"/>
+     <widget class="FriendInfoPage" name="friend_info_page"/>
     </widget>
    </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
+   <class>ClickedBtn</class>
+   <extends>QPushButton</extends>
+   <header location="global">clickedbtn.h</header>
+  </customwidget>
+  <customwidget>
    <class>CustomizeEdit</class>
    <extends>QLineEdit</extends>
    <header>customizeedit.h</header>
-  </customwidget>
-  <customwidget>
-   <class>ClickedBtn</class>
-   <extends>QPushButton</extends>
-   <header>clickedbtn.h</header>
   </customwidget>
   <customwidget>
    <class>ChatUserList</class>
@@ -358,6 +358,12 @@
    <class>ApplyFriendPage</class>
    <extends>QWidget</extends>
    <header location="global">applyfriendpage.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FriendInfoPage</class>
+   <extends>QWidget</extends>
+   <header location="global">friendinfopage.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

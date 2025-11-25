@@ -59,6 +59,7 @@ static constexpr auto qt_meta_stringdata_CLASSTcpMgrENDCLASS = QtMocHelpers::str
     "std::shared_ptr<AuthRsp>",
     "sig_text_chat_msg",
     "std::shared_ptr<TextChatMsg>",
+    "sig_offline",
     "slot_tcp_connect",
     "ServerInfo",
     "slot_send_data",
@@ -66,7 +67,7 @@ static constexpr auto qt_meta_stringdata_CLASSTcpMgrENDCLASS = QtMocHelpers::str
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSTcpMgrENDCLASS_t {
-    uint offsetsAndSizes[48];
+    uint offsetsAndSizes[50];
     char stringdata0[7];
     char stringdata1[16];
     char stringdata2[1];
@@ -87,10 +88,11 @@ struct qt_meta_stringdata_CLASSTcpMgrENDCLASS_t {
     char stringdata17[25];
     char stringdata18[18];
     char stringdata19[29];
-    char stringdata20[17];
-    char stringdata21[11];
-    char stringdata22[15];
-    char stringdata23[3];
+    char stringdata20[12];
+    char stringdata21[17];
+    char stringdata22[11];
+    char stringdata23[15];
+    char stringdata24[3];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSTcpMgrENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -116,10 +118,11 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSTcpMgrENDCLASS_t qt_meta_string
         QT_MOC_LITERAL(252, 24),  // "std::shared_ptr<AuthRsp>"
         QT_MOC_LITERAL(277, 17),  // "sig_text_chat_msg"
         QT_MOC_LITERAL(295, 28),  // "std::shared_ptr<TextChatMsg>"
-        QT_MOC_LITERAL(324, 16),  // "slot_tcp_connect"
-        QT_MOC_LITERAL(341, 10),  // "ServerInfo"
-        QT_MOC_LITERAL(352, 14),  // "slot_send_data"
-        QT_MOC_LITERAL(367, 2)   // "id"
+        QT_MOC_LITERAL(324, 11),  // "sig_offline"
+        QT_MOC_LITERAL(336, 16),  // "slot_tcp_connect"
+        QT_MOC_LITERAL(353, 10),  // "ServerInfo"
+        QT_MOC_LITERAL(364, 14),  // "slot_send_data"
+        QT_MOC_LITERAL(379, 2)   // "id"
     },
     "TcpMgr",
     "sig_con_success",
@@ -141,6 +144,7 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSTcpMgrENDCLASS_t qt_meta_string
     "std::shared_ptr<AuthRsp>",
     "sig_text_chat_msg",
     "std::shared_ptr<TextChatMsg>",
+    "sig_offline",
     "slot_tcp_connect",
     "ServerInfo",
     "slot_send_data",
@@ -156,27 +160,28 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSTcpMgrENDCLASS[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-      11,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       9,       // signalCount
+      10,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   80,    2, 0x06,    1 /* Public */,
-       4,    2,   83,    2, 0x06,    3 /* Public */,
-       8,    1,   88,    2, 0x06,    6 /* Public */,
-       9,    0,   91,    2, 0x06,    8 /* Public */,
-      10,    1,   92,    2, 0x06,    9 /* Public */,
-      12,    1,   95,    2, 0x06,   11 /* Public */,
-      14,    1,   98,    2, 0x06,   13 /* Public */,
-      16,    1,  101,    2, 0x06,   15 /* Public */,
-      18,    1,  104,    2, 0x06,   17 /* Public */,
+       1,    1,   86,    2, 0x06,    1 /* Public */,
+       4,    2,   89,    2, 0x06,    3 /* Public */,
+       8,    1,   94,    2, 0x06,    6 /* Public */,
+       9,    0,   97,    2, 0x06,    8 /* Public */,
+      10,    1,   98,    2, 0x06,    9 /* Public */,
+      12,    1,  101,    2, 0x06,   11 /* Public */,
+      14,    1,  104,    2, 0x06,   13 /* Public */,
+      16,    1,  107,    2, 0x06,   15 /* Public */,
+      18,    1,  110,    2, 0x06,   17 /* Public */,
+      20,    0,  113,    2, 0x06,   19 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-      20,    1,  107,    2, 0x0a,   19 /* Public */,
-      22,    2,  110,    2, 0x0a,   21 /* Public */,
+      21,    1,  114,    2, 0x0a,   20 /* Public */,
+      23,    2,  117,    2, 0x0a,   22 /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Bool,    3,
@@ -188,10 +193,11 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSTcpMgrENDCLASS[] = {
     QMetaType::Void, 0x80000000 | 15,    2,
     QMetaType::Void, 0x80000000 | 17,    2,
     QMetaType::Void, 0x80000000 | 19,    2,
+    QMetaType::Void,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 21,    2,
-    QMetaType::Void, 0x80000000 | 5, QMetaType::QByteArray,   23,    7,
+    QMetaType::Void, 0x80000000 | 22,    2,
+    QMetaType::Void, 0x80000000 | 5, QMetaType::QByteArray,   24,    7,
 
        0        // eod
 };
@@ -232,6 +238,8 @@ Q_CONSTINIT const QMetaObject TcpMgr::staticMetaObject = { {
         // method 'sig_text_chat_msg'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<std::shared_ptr<TextChatMsg>, std::false_type>,
+        // method 'sig_offline'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'slot_tcp_connect'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<ServerInfo, std::false_type>,
@@ -258,8 +266,9 @@ void TcpMgr::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 6: _t->sig_add_auth_friend((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<AuthInfo>>>(_a[1]))); break;
         case 7: _t->sig_auth_rsp((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<AuthRsp>>>(_a[1]))); break;
         case 8: _t->sig_text_chat_msg((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<TextChatMsg>>>(_a[1]))); break;
-        case 9: _t->slot_tcp_connect((*reinterpret_cast< std::add_pointer_t<ServerInfo>>(_a[1]))); break;
-        case 10: _t->slot_send_data((*reinterpret_cast< std::add_pointer_t<ReqId>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[2]))); break;
+        case 9: _t->sig_offline(); break;
+        case 10: _t->slot_tcp_connect((*reinterpret_cast< std::add_pointer_t<ServerInfo>>(_a[1]))); break;
+        case 11: _t->slot_send_data((*reinterpret_cast< std::add_pointer_t<ReqId>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QByteArray>>(_a[2]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -327,6 +336,13 @@ void TcpMgr::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
                 return;
             }
         }
+        {
+            using _t = void (TcpMgr::*)();
+            if (_t _q_method = &TcpMgr::sig_offline; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+                *result = 9;
+                return;
+            }
+        }
     }
 }
 
@@ -353,13 +369,13 @@ int TcpMgr::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 12;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 11)
+        if (_id < 12)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 11;
+        _id -= 12;
     }
     return _id;
 }
@@ -424,5 +440,11 @@ void TcpMgr::sig_text_chat_msg(std::shared_ptr<TextChatMsg> _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 8, _a);
+}
+
+// SIGNAL 9
+void TcpMgr::sig_offline()
+{
+    QMetaObject::activate(this, &staticMetaObject, 9, nullptr);
 }
 QT_WARNING_POP

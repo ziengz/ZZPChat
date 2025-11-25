@@ -27,9 +27,12 @@ public slots:
     void slotSwitchReset();
     void slotSwitchLogin2();
     void slotSwitchChat();
+    void slotOffline();
 
 
 private:
+    void offlineLogin();
+
     Ui::MainWindow *ui;
     LoginDialog* _log_Dlg;
     RegisterDialog* _reg_dlg;

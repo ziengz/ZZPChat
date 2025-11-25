@@ -131,7 +131,9 @@ void ContactUserList::slot_item_clicked(QListWidgetItem *item)
 
     if(itemType==ListItemType::CONTACT_USER_ITEM){
         qDebug()<<"contact user item clicked";
-        emit sig_switch_friend_info_page();
+        auto con_item = qobject_cast<ConUserItem*>(customItem);
+        auto user_info = con_item->GetInfo();
+        emit sig_switch_friend_info_page(user_info);
         return;
     }
 }

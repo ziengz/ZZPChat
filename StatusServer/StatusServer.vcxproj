@@ -135,6 +135,7 @@ xcopy $(ProjectDir)*.dll   $(SolutionDir)$(Platform)\$(Configuration)\   /y</Com
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ConfigMgr.cpp" />
+    <ClCompile Include="DistLock.cpp" />
     <ClCompile Include="IOContextPool.cpp" />
     <ClCompile Include="message.grpc.pb.cc" />
     <ClCompile Include="message.pb.cc" />
@@ -151,6 +152,7 @@ xcopy $(ProjectDir)*.dll   $(SolutionDir)$(Platform)\$(Configuration)\   /y</Com
   <ItemGroup>
     <ClInclude Include="ConfigMgr.h" />
     <ClInclude Include="const.h" />
+    <ClInclude Include="DistLock.h" />
     <ClInclude Include="IOContextPool.h" />
     <ClInclude Include="message.grpc.pb.h" />
     <ClInclude Include="message.pb.h" />

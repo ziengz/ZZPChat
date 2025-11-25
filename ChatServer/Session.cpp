@@ -227,6 +227,17 @@ void Session::AsyncReadLen(std::size_t read_len, std::size_t total_len, FuncCall
 	}
 }
 
+void Session::NotifyOffline(int uid) {
+	Json::Value root;
+	root["error"] = Error_Codes::Success;
+	root["uid"] = uid;
+	
+	std::string return_str = root.toStyledString();
+	Send(return_str, ID_NOTIFY_OFF_LINE_REQ);
+	return;
+}
+
 LogicNode::LogicNode(std::shared_ptr<Session>session, std::shared_ptr<RecvNode>recvnode):_session(session),_recvnode(recvnode)
 {
 }
+

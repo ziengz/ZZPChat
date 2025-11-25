@@ -87,6 +87,14 @@ ChatServer StatusServiceImpl::getChatServer()
 	std::lock_guard<std::mutex>lock(mutex_);
 	//第一个作为最小基准
 	auto minServer = servers_.begin()->second;
+
+	auto lock_key = LOGIN_COUNT;
+	//使用登陆数量锁
+	auto identify = RedisMgr::GetIntance()->acquirLock(lock_key, LOCK_TIME_OUT, ACQUIRE_TIME_OUT);
+	Defer defer([lock_key,identify, this]() {
+		RedisMgr::GetIntance()->releaseLock(lock_key, identify);
+		});
+
 	auto count_str = RedisMgr::GetIntance()->HGet(LOGIN_COUNT, minServer.name);
 
 	//如果不存在，则默认设置为最大

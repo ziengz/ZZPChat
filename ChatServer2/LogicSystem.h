@@ -5,6 +5,7 @@
 #include "data.h"
 #include "MsgNode.h"
 
+class CServer;
 typedef  std::function<void(std::shared_ptr<Session>, const short& msg_id, const std::string& msg_data)> FunCallBack;
 
 class LogicSystem:public Singleton<LogicSystem>
@@ -14,6 +15,7 @@ public:
 	~LogicSystem();
 	void PostMsgToQue(std::shared_ptr<LogicNode>msg);
 	bool GetBaseInfo(std::string base_key, int uid,std::shared_ptr<UserInfo>& userinfo);
+	void SetServer(std::shared_ptr<CServer> pserver);
 
 private:
 	LogicSystem();
@@ -36,6 +38,7 @@ private:
 	std::queue<std::shared_ptr<LogicNode>> _msg_que;
 	std::map<short, FunCallBack> _fun_callbacks;
 	std::map<int, std::shared_ptr<UserInfo>>_users;
+	std::shared_ptr<CServer> _p_server;
 	std::condition_variable cond_;
 	std::mutex mutex_;
 	bool _b_stop;

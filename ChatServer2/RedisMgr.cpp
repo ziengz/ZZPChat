@@ -1,4 +1,5 @@
 #include "RedisMgr.h"
+#include "DistLock.h"
 
 RedisMgr::~RedisMgr()
 {
@@ -11,7 +12,8 @@ RedisMgr::RedisMgr()
     auto host = config["Redis"]["Host"];
     auto port = config["Redis"]["Port"];
     auto pass = config["Redis"]["Pass"];
-    con_pool_.reset(new RedisConPool(5, host.c_str(), atoi(port.c_str()), pass.c_str()));
+    //因为分布式锁也会占用连接，为了防止连接被占用耗尽连接池，所以我们提前扩大连接池的数量为10
+    con_pool_.reset(new RedisConPool(10, host.c_str(), atoi(port.c_str()), pass.c_str()));
 }
 
 bool RedisMgr::Get(const std::string& key, std::string& value) {
@@ -243,7 +245,7 @@ std::string RedisMgr::HGet(const std::string& key, const std::string& hkey)
 
 bool RedisMgr::HDel(const std::string& key, std::string& field)
 {
-    auto connect = con_pool_->getRedisContext();
+    auto connect = con_pool_->getRedisContext(); 
     if (connect == nullptr) {
         return false;
     }
@@ -307,6 +309,33 @@ bool RedisMgr::ExistsKey(const std::string& key)
 
 void RedisMgr::Close() {
     con_pool_->Close();
+}
+
+std::string RedisMgr::acquirLock(const std::string& LockName, int lockTimeout, int acquireTimeout)
+{
+    auto con = con_pool_->getRedisContext();
+    if (con == nullptr) {
+        return "";
+    }
+    Defer defer([&con, this]() {
+        con_pool_->ReturnRedisCon(std::move(con));
+        });
+    return DistLock::GetIntance()->acquirLock(con, LockName, acquireTimeout, lockTimeout);
+}
+
+bool RedisMgr::releaseLock(const std::string& LockName, const std::string& identifier)
+{
+    if (identifier.empty()) {
+        return true;
+    }
+    auto con = con_pool_->getRedisContext();
+    if (con == nullptr) {
+        return false;
+    }
+    Defer defer([&con,this]() {
+        con_pool_->ReturnRedisCon(std::move(con));
+        });
+    return DistLock::GetIntance()->releaseLock(con, LockName, identifier);
 }
 
 

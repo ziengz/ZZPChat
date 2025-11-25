@@ -15,7 +15,7 @@ class TcpMgr:public QObject,public singleton<TcpMgr>,
     friend class singleton<TcpMgr>;
 public:
     ~TcpMgr();
-    void CloseCOnnection();
+    void CloseConnection();
 private:
     TcpMgr();
     void initHandlers();
@@ -44,6 +44,7 @@ signals:
     void sig_add_auth_friend(std::shared_ptr<AuthInfo>);
     void sig_auth_rsp(std::shared_ptr<AuthRsp>);
     void sig_text_chat_msg(std::shared_ptr<TextChatMsg>);
+    void sig_offline();
 };
 
 #endif // TCPMGR_H

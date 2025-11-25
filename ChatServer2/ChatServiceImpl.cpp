@@ -101,6 +101,23 @@ Status ChatServiceImpl::NotifyTextChatMsg(ServerContext* context, const TextChat
 	return Status::OK;
 }
 
+Status ChatServiceImpl::NotifyKickUser(ServerContext* context, const KickUserReq* request, KickUserRsp* response) {
+	auto uid = request->uid();
+	auto session = UserMgr::GetIntance()->getSession(uid);
+	
+	//如果不在内存中，直接返回
+	if (session == nullptr) {
+		return Status::OK;
+	}
+	Defer defer([&response,&request]() {
+		response->set_error(Error_Codes::Success);
+		response->set_uid(request->uid());
+	});
+	session->NotifyOffline(uid);
+	_p_server->ClearSession(session->GetSessionid());
+	return Status::OK;
+}
+
 bool ChatServiceImpl::GetBaseInfo(std::string base_key, int uid, std::shared_ptr<UserInfo>& userinfo)
 {
 	//优先查redis中查询用户信息
@@ -146,4 +163,9 @@ bool ChatServiceImpl::GetBaseInfo(std::string base_key, int uid, std::shared_ptr
 	}
 
 	return true;
+}
+
+void ChatServiceImpl::RegisterServer(std::shared_ptr<CServer> pserver)
+{
+	_p_server = pserver;
 }

@@ -1,6 +1,7 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QMessageBox>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -23,6 +24,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(_log_Dlg,&LoginDialog::switchReset,this,&MainWindow::slotSwitchReset);
     //连接创建聊天界面信号
     connect(TcpMgr::getInstance().get(),&TcpMgr::sig_switch_chatdlg,this,&MainWindow::slotSwitchChat);
+
+    connect(TcpMgr::getInstance().get(),&TcpMgr::sig_offline,this,&MainWindow::slotOffline);
 
     //测试用直接跳到聊天界面
     //emit TcpMgr::getInstance()->sig_switch_chatdlg();
@@ -102,6 +105,28 @@ void MainWindow::slotSwitchChat()
     _log_Dlg->hide();
     this->setMinimumSize(QSize(1050,900));
     this->setMaximumSize(QWIDGETSIZE_MAX,QWIDGETSIZE_MAX);
+}
+
+void MainWindow::slotOffline()
+{
+    QMessageBox::information(this, "下线提示", "同账号异地登录，该终端下线！");
+    TcpMgr::getInstance()->CloseConnection();
+    offlineLogin();
+}
+
+void MainWindow::offlineLogin()
+{
+    _log_Dlg = new LoginDialog(this);
+    _log_Dlg->setWindowFlags(Qt::CustomizeWindowHint|Qt::FramelessWindowHint);
+    this->setCentralWidget(_log_Dlg);
+
+    _chat_dlg->hide();
+    this->setMaximumSize(300,500);
+    this->setMinimumSize(300,500);
+    this->resize(300,500);
+    _log_Dlg->show();
+    connect(_log_Dlg,&LoginDialog::switchRegister,this,&MainWindow::slotSwitchReg);
+    connect(_log_Dlg,&LoginDialog::switchReset,this,&MainWindow::slotSwitchReset);
 }
 
 

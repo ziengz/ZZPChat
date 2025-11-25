@@ -3,6 +3,7 @@ E:\ZZPChat\ChatServer\ChatServer.cpp;E:\ZZPChat\ChatServer\ChatServer\x64\Debug\
 E:\ZZPChat\ChatServer\ChatServiceImpl.cpp;E:\ZZPChat\ChatServer\ChatServer\x64\Debug\ChatServiceImpl.obj
 E:\ZZPChat\ChatServer\ConfigMgr.cpp;E:\ZZPChat\ChatServer\ChatServer\x64\Debug\ConfigMgr.obj
 E:\ZZPChat\ChatServer\CServer.cpp;E:\ZZPChat\ChatServer\ChatServer\x64\Debug\CServer.obj
+E:\ZZPChat\ChatServer\DistLock.cpp;E:\ZZPChat\ChatServer\ChatServer\x64\Debug\DistLock.obj
 E:\ZZPChat\ChatServer\IOContextPool.cpp;E:\ZZPChat\ChatServer\ChatServer\x64\Debug\IOContextPool.obj
 E:\ZZPChat\ChatServer\LogicSystem.cpp;E:\ZZPChat\ChatServer\ChatServer\x64\Debug\LogicSystem.obj
 E:\ZZPChat\ChatServer\message.grpc.pb.cc;E:\ZZPChat\ChatServer\ChatServer\x64\Debug\message.grpc.pb.obj

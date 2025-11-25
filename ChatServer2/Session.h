@@ -26,6 +26,8 @@ public:
 	void SetUserId(int uid);
 	int GetUserId();
 	tcp::socket& GetSocket();
+
+	void NotifyOffline(int uid);
 private:
 	CServer* server_;
 	tcp::socket socket_;
@@ -44,9 +46,9 @@ class LogicNode {
 	friend class LogicSystem;
 public:
 	LogicNode(std::shared_ptr<Session>, std::shared_ptr<RecvNode>);
-private:;
-	   std::shared_ptr<Session> _session;
-	   std::shared_ptr<RecvNode>_recvnode;
+private:
+	std::shared_ptr<Session> _session;
+	std::shared_ptr<RecvNode>_recvnode;
 
 };
 
