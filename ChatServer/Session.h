@@ -26,6 +26,12 @@ public:
 	void SetUserId(int uid);
 	int GetUserId();
 	tcp::socket& GetSocket();
+	//判断心跳是否过期
+	bool IsHeartbeatExpired(std::time_t& now);
+	//处理异常session
+	void DealExceptionSession();
+	//更新心跳
+	void UpdataHeartbeat();
 
 	void NotifyOffline(int uid);
 private:
@@ -40,6 +46,11 @@ private:
 	char data_[MAX_LEN];
 	std::string _session_id;
 	int _uid;
+	//记录上一次接收数据的时间
+	std::atomic<std::time_t> _last_heartbeat;
+	//session锁
+	std::mutex _session_mutex;
+
 };
 
 class LogicNode {

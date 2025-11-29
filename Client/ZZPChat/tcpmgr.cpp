@@ -91,6 +91,7 @@ TcpMgr::TcpMgr():host_(""),port_(0),b_recv_pending(false),
 
     connect(&socket_,&QTcpSocket::disconnected,[&](){
         qDebug()<<"Disconnect from server";
+        emit sig_connection_closed();
     });
     connect(this,&TcpMgr::sig_send_data,this,&TcpMgr::slot_send_data);
     //注册消息
@@ -337,6 +338,27 @@ void TcpMgr::initHandlers()
         qDebug()<<"notify uid is "<<uid<<"offline success";
 
         emit sig_offline();
+    });
+    handlers_.insert(ReqId::ID_HEARTBEAT_RSP,[this](ReqId id,int len,QByteArray data){
+        Q_UNUSED(len);
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
+        if(jsonDoc.isNull()){
+            qDebug()<<"failed to create JsonDoc";
+            return;
+        }
+        QJsonObject jsonObj(jsonDoc.object());
+        if(jsonObj.contains("error")){
+            int err = ErrorCodes::ERR_JSON;
+            qDebug()<<"Heart Beat msg failed,err is json parse err"<<err;
+            return;
+        }
+        int err = jsonObj["error"].toInt();
+        if(err != ErrorCodes::SUCCESS){
+            qDebug()<<"Heart beat msg failed ,err is "<<err;
+            return;
+        }
+        qDebug()<<"Receive heart beat msg success";
+
     });
 }
 

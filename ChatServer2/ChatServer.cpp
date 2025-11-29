@@ -33,9 +33,9 @@ int main()
         auto port = config["SelfServer"]["Port"];
         auto server_ptr = std::make_shared<CServer>(ioc, atoi(port.c_str()));
         //启动定时器
+        server_ptr->StartTimer();
 
         //定义GrpcServer
-
         std::string server_address(config["SelfServer"]["Host"] + ":" + config["SelfServer"]["RPCPort"]);
         ServerBuilder builder;
         ChatServiceImpl service;
@@ -67,6 +67,7 @@ int main()
         ioc.run();
 
         grpc_server_thread.join();
+        server_ptr->StopTimer();
     }
     catch (std::exception&e) {
         std::cout << "Exception is " << e.what() << std::endl;

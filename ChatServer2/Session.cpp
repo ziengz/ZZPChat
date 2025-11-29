@@ -3,6 +3,7 @@
 #include <boost/uuid/uuid_generators.hpp>
 #include "CServer.h"
 #include "LogicSystem.h"
+#include "RedisMgr.h"
 
 Session::Session(boost::asio::io_context& io_context, CServer* server) :
 	socket_(io_context),b_stop(false),b_head_parse(false),server_(server),_uid(0)
@@ -10,6 +11,8 @@ Session::Session(boost::asio::io_context& io_context, CServer* server) :
 	boost::uuids::uuid a_uuid = uuids::random_generator()();
 	_session_id = boost::uuids::to_string(a_uuid);
 	_recv_head_node = std::make_shared<MsgNode>(HEAD_TOTAL_LEN);
+	
+	_last_heartbeat = std::time(nullptr);
 }
 
 std::string Session::GetSessionid() {
@@ -29,6 +32,47 @@ int Session::GetUserId()
 tcp::socket& Session::GetSocket()
 {
 	return socket_;
+}
+
+bool Session::IsHeartbeatExpired(std::time_t& now)
+{
+	double diff_sec = std::difftime(now, _last_heartbeat);
+	if (diff_sec > 20) {
+		std::cout << "heartbeat expired,session id is " << _session_id << std::endl;
+		return true;
+	}
+	return false;
+}
+
+void Session::DealExceptionSession() {
+	auto self = Shared_self();
+	//使用分布式锁
+	auto uid_str = std::to_string(_uid);
+	std::string lock_key = LOCK_PREFIX + uid_str;
+	auto identifier = RedisMgr::GetIntance()->acquirLock(lock_key, LOCK_TIME_OUT, ACQUIRE_TIME_OUT);
+	Defer defer([identifier,this,lock_key,self]() {
+		server_->ClearSession(_session_id);
+		RedisMgr::GetIntance()->releaseLock(lock_key, identifier);
+	});
+	if (identifier.empty()) {
+		return;
+	}
+	std::string redis_session_id = "";
+	auto b_success = RedisMgr::GetIntance()->Get(USER_SESSION_PREFIX + uid_str, redis_session_id);
+	if (!b_success) {
+		return;
+	}
+	//不相同则说明其他地方登录账号
+	if (redis_session_id != _session_id) {
+		return;
+	}
+	RedisMgr::GetIntance()->Del(USER_SESSION_PREFIX + uid_str);
+	RedisMgr::GetIntance()->Del(USERIPPREFIX + uid_str);
+}
+
+void Session::UpdataHeartbeat() {
+	std::time_t now = std::time(nullptr);
+	_last_heartbeat = now;
 }
 
 void Session::Start() {
@@ -93,6 +137,7 @@ void Session::HandleWrite(const system::error_code& error, std::shared_ptr<Sessi
 		}
 		else {
 			std::cout << "handle write failed, error is " << error.what() << std::endl;
+			DealExceptionSession();
 			Close();
 		}
 	}
@@ -118,6 +163,7 @@ void Session::AsyncReadHead(int total_len)
 			if (error) {
 				std::cout << "read data failed,exception is " << error.what() << std::endl;
 				Close();
+				DealExceptionSession();
 				return;
 			}
 			if (bytes_transfered < HEAD_TOTAL_LEN) {
@@ -169,6 +215,7 @@ void Session::AsyncReadBody(int length)
 			if (e) {
 				std::cout << "read data failed,error is " << e.what() << std::endl;
 				Close();
+				DealExceptionSession();
 				return;
 			}
 			if (byte_transfered < length) {
@@ -179,12 +226,20 @@ void Session::AsyncReadBody(int length)
 				return;
 			}
 
+			//判断连接是否有效
+			if (!server_->CheckVaild(_session_id)) {
+				Close();
+				return;
+			}
+
 			_recv_msg_node->Clear();
 			memcpy(_recv_msg_node->data_, data_, length);
 			_recv_msg_node->cur_len_ += byte_transfered;
 			_recv_msg_node->data_[_recv_msg_node->total_len_] = '\0';
 			std::cout << "recv_msg is " << _recv_msg_node->data_ << std::endl;
 
+			//更新session心跳时间
+			UpdataHeartbeat();
 			//此处将消息投递到逻辑队列中，给客户端回包
 			LogicSystem::GetIntance()->PostMsgToQue(std::make_shared<LogicNode>(Shared_self(),_recv_msg_node));
 			AsyncReadHead(HEAD_TOTAL_LEN);

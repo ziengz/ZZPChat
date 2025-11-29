@@ -38,6 +38,8 @@ void LogicSystem::RegisterCallBack()
 		std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 	_fun_callbacks[ID_TEXT_CHAT_MSG_REQ] = std::bind(&LogicSystem::DealChatTextMsg, this,
 		std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+	_fun_callbacks[ID_HEART_BEAT_REQ] = std::bind(&LogicSystem::HeartBeatHandler,this,
+		std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 }
 
 void LogicSystem::PostMsgToQue(std::shared_ptr<LogicNode> msg)
@@ -629,6 +631,18 @@ void LogicSystem::DealChatTextMsg(std::shared_ptr<Session> session, const short&
 	}
 	ChatGrpcClient::GetIntance()->NotifyTextChatMsg(to_ip_value, text_msg_req, rtvalue);
 
+}
+
+void LogicSystem::HeartBeatHandler(std::shared_ptr<Session> session, const short& msg_id, const std::string& msg_data)
+{
+	Json::Reader reader;
+	Json::Value root;
+	reader.parse(msg_data, root);
+	auto uid = root["fromuid"].asInt();
+	std::cout << "receive heart beat msg,uid is " << uid << std::endl;
+	Json::Value rtvalue;
+	rtvalue["error"] = Error_Codes::Success;
+	session->Send(rtvalue.toStyledString(),ID_HEARTBEAT_RSP);
 }
 
 bool LogicSystem::GetFriendApplyInfo(int to_uid, std::vector<std::shared_ptr<ApplyInfo>>& list)

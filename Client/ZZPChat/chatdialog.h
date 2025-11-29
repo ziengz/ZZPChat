@@ -7,6 +7,7 @@
 #include "statewidget.h"
 #include "userdata.h"
 #include <QListWidgetItem>
+#include <QTimer>
 
 namespace Ui {
 class ChatDialog;
@@ -41,6 +42,7 @@ private:
     QList<StateWidget*> _lb_list;
     int cur_chat_uid;   //当前聊天的uid
     QMap<int,QListWidgetItem*>_chat_items_added;
+    QTimer* _timer;
 
 private slots:
     void slot_loading_chat_user();

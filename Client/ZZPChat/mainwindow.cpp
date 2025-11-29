@@ -27,6 +27,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(TcpMgr::getInstance().get(),&TcpMgr::sig_offline,this,&MainWindow::slotOffline);
 
+    connect(TcpMgr::getInstance().get(),&TcpMgr::sig_connection_closed,this,&MainWindow::SlotExcepConOffline);
+
     //测试用直接跳到聊天界面
     //emit TcpMgr::getInstance()->sig_switch_chatdlg();
 }
@@ -110,6 +112,13 @@ void MainWindow::slotSwitchChat()
 void MainWindow::slotOffline()
 {
     QMessageBox::information(this, "下线提示", "同账号异地登录，该终端下线！");
+    TcpMgr::getInstance()->CloseConnection();
+    offlineLogin();
+}
+
+void MainWindow::SlotExcepConOffline()
+{
+    QMessageBox::information(this,"下线提示","心跳超时或临界异常，该终端下线");
     TcpMgr::getInstance()->CloseConnection();
     offlineLogin();
 }

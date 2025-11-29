@@ -9,8 +9,12 @@ class CServer:public std::enable_shared_from_this<CServer>
 public:
 	CServer(asio::io_context&ioc, unsigned short port);
 	~CServer();
-
+	
 	void ClearSession(std::string uuid);
+	bool CheckVaild(std::string);
+	void on_timer(const boost::system::error_code& ec);
+	void StartTimer();
+	void StopTimer();
 private:
 	void StartAccept();
 	void HandleAccept(std::shared_ptr<Session>, const system::error_code& error);
@@ -20,5 +24,6 @@ private:
 	short port_;
 	std::map<std::string, std::shared_ptr<Session>> _sessions;
 	std::mutex mutex_;
+	asio::steady_timer _timer;
 };
 

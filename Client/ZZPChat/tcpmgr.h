@@ -45,6 +45,7 @@ signals:
     void sig_auth_rsp(std::shared_ptr<AuthRsp>);
     void sig_text_chat_msg(std::shared_ptr<TextChatMsg>);
     void sig_offline();
+    void sig_connection_closed();
 };
 
 #endif // TCPMGR_H

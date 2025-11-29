@@ -28,6 +28,7 @@ public slots:
     void slotSwitchLogin2();
     void slotSwitchChat();
     void slotOffline();
+    void SlotExcepConOffline();
 
 
 private:

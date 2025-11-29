@@ -21,7 +21,7 @@ private:
 	LogicSystem();
 	void DealMsg();
 	void RegisterCallBack();
-	void LoginHandler(std::shared_ptr<Session> session, const short& msg_id, const std::string& msg_data);
+	void LoginHandler(std::shared_ptr<Session> session, const short& msg_id, const std::string& msg_data); 
 	void SearchInfo(std::shared_ptr<Session>session, const short& msg_id, const std::string& msg_data);
 	void AddFriendApply(std::shared_ptr<Session>session, const short& msg_id, const std::string& msg_data);
 	void AuthFriendApply(std::shared_ptr<Session>session, const short& msg_id, const std::string& msg_data);
@@ -29,6 +29,7 @@ private:
 	void getUserByUid(std::string uid_str, Json::Value& rtvalue);
 	void getUserByName(std::string uid_str, Json::Value& rtvalue);
 	void DealChatTextMsg(std::shared_ptr<Session> session, const short& msg_id, const std::string& msg_data);
+	void HeartBeatHandler(std::shared_ptr<Session> session, const short& msg_id, const std::string& msg_data);
 
 	bool GetFriendApplyInfo(int to_uid, std::vector<std::shared_ptr<ApplyInfo>>& list);
 	bool GetFriendList(int self_id, std::vector<std::shared_ptr<UserInfo>>& user_list);
