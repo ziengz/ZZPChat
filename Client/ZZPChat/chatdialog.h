@@ -49,6 +49,7 @@ private slots:
     void slot_loading_con_user();
     void slot_side_chat();
     void slot_side_contect();
+    void slot_side_setting();
     void slot_text_changed(const QString& text);
     void slot_apply_friend(std::shared_ptr<AddFriendApply>);
     void slot_add_auth_friend(std::shared_ptr<AuthInfo>auth_info);

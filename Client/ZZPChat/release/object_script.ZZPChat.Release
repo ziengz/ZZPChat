@@ -24,6 +24,7 @@ release/friendlabel.o
 release/global.o
 release/grouptipitem.o
 release/httpmgr.o
+release/imagecropperlabel.o
 release/listitembase.o
 release/loadingdlg.o
 release/logindialog.o
@@ -39,6 +40,7 @@ release/tcpmgr.o
 release/textbubble.o
 release/timerbtn.o
 release/userdata.o
+release/userinfopage.o
 release/usermgr.o
 release/qrc_res.o
 release/moc_adduseritem.o
@@ -65,6 +67,8 @@ release/moc_friendinfopage.o
 release/moc_friendlabel.o
 release/moc_grouptipitem.o
 release/moc_httpmgr.o
+release/moc_imagecropperdialog.o
+release/moc_imagecropperlabel.o
 release/moc_listitembase.o
 release/moc_loadingdlg.o
 release/moc_logindialog.o
@@ -76,4 +80,5 @@ release/moc_searchlist.o
 release/moc_statewidget.o
 release/moc_tcpmgr.o
 release/moc_textbubble.o
+release/moc_userinfopage.o
 release/moc_usermgr.o

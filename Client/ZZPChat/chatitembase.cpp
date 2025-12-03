@@ -1,50 +1,75 @@
 
 #include "chatitembase.h"
 
-ChatItemBase::ChatItemBase(ChatRole role, QWidget *parent):QWidget(parent),m_role(role)
+ChatItemBase::ChatItemBase(ChatRole role, QWidget *parent)
+    : QWidget(parent)
+    , m_role(role)
 {
-    m_pNameLabel = new QLabel();
+    m_pNameLabel    = new QLabel();
     m_pNameLabel->setObjectName("chat_user_name");
     QFont font("Microsoft YaHei");
     font.setPointSize(9);
     m_pNameLabel->setFont(font);
     m_pNameLabel->setFixedHeight(20);
-
-    m_pIconLabel = new QLabel();
-    //设置图片可缩放
+    m_pIconLabel    = new QLabel();
     m_pIconLabel->setScaledContents(true);
-    m_pIconLabel->setFixedSize(42,42);
-    m_pBubble = new QWidget();
-
-    QGridLayout* pGLayout = new QGridLayout();
+    m_pIconLabel->setFixedSize(42, 42);
+    m_pBubble       = new QWidget();
+    QGridLayout *pGLayout = new QGridLayout();
     pGLayout->setVerticalSpacing(3);
     pGLayout->setHorizontalSpacing(3);
     pGLayout->setContentsMargins(3, 3, 3, 3);
 
-    QSpacerItem*pSpace = new QSpacerItem(40,20,QSizePolicy::Expanding,QSizePolicy::Minimum);
-    if(m_role==ChatRole::Self){
-        //名字与头像之间间距8px
+    QSpacerItem*pSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    //添加状态图标控件
+    m_pStatusLabel = new QLabel();
+    m_pStatusLabel->setFixedSize(16, 16);
+    m_pStatusLabel->setScaledContents(true);
+    if(m_role == ChatRole::Self)
+    {
         m_pNameLabel->setContentsMargins(0,0,8,0);
         m_pNameLabel->setAlignment(Qt::AlignRight);
-        pGLayout->addWidget(m_pNameLabel,0,1,1,1);
-        pGLayout->addWidget(m_pIconLabel,0,2,2,1,Qt::AlignTop);
-        pGLayout->addItem(pSpace,1,0,1,1);
-        pGLayout->addWidget(m_pBubble,1,1,1,1);
-        //设置可伸缩宫格为第一列和第二列，占比为2：3
-        pGLayout->setColumnStretch(0,2);
-        pGLayout->setColumnStretch(1,3);
-    }else
-    {
+        //名字标签
+        pGLayout->addWidget(m_pNameLabel, 0,2, 1,1);
+        //icon 头像
+        pGLayout->addWidget(m_pIconLabel, 0, 3, 2,1, Qt::AlignTop);
+        //第 0 列：依然是 pSpacer，占用第 1 行，第 0 列
+        pGLayout->addItem(pSpacer, 1, 0, 1, 1);
+        //气泡控件
+        pGLayout->addWidget(m_pBubble, 1,2, 1,1);
+        //状态图标
+        pGLayout->addWidget(m_pStatusLabel, 1, 1, 1, 1, Qt::AlignCenter);
+        pGLayout->setColumnStretch(0, 2);
+        pGLayout->setColumnStretch(1, 0);  // status 图标 (固定大小)
+        pGLayout->setColumnStretch(2, 3);  // 名字 + 气泡 (主要拉伸区域)
+        pGLayout->setColumnStretch(3, 0);  // 头像 (固定大小)
+    }else{
         m_pNameLabel->setContentsMargins(8,0,0,0);
         m_pNameLabel->setAlignment(Qt::AlignLeft);
-        pGLayout->addWidget(m_pNameLabel,0,1,1,1);
-        pGLayout->addWidget(m_pIconLabel,0,0,2,1,Qt::AlignTop);
-        pGLayout->addWidget(m_pBubble,1,1,1,1);
-        pGLayout->addItem(pSpace,2,1,1,1);
-        pGLayout->setColumnStretch(1,3);
-        pGLayout->setColumnStretch(2,2);
+        pGLayout->addWidget(m_pIconLabel, 0, 0, 2,1, Qt::AlignTop);
+        pGLayout->addWidget(m_pNameLabel, 0,1, 1,1);
+        pGLayout->addWidget(m_pBubble, 1,1, 1,1);
+        pGLayout->addItem(pSpacer, 2, 2, 1, 1);
+        pGLayout->setColumnStretch(1, 3);
+        pGLayout->setColumnStretch(2, 2);
     }
     this->setLayout(pGLayout);
+}
+
+void ChatItemBase::setStatus(int status)
+{
+    if(status==MsgStatus::UN_READ){
+        m_pStatusLabel->setPixmap(QPixmap(":/res/unread.png"));
+        return;
+    }
+    if(status==MsgStatus::SEND_FAILE){
+        m_pStatusLabel->setPixmap(QPixmap(":/res/send_fail.png"));
+        return;
+    }
+    if(status==MsgStatus::READED){
+        m_pStatusLabel->setPixmap(QPixmap(":/res/readed.png"));
+        return;
+    }
 }
 
 void ChatItemBase::setUserName(const QString &name)

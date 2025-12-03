@@ -18,7 +18,6 @@ IOContextPool::IOContextPool(std::size_t size):_io_contexts(size),_works(size), 
 
 IOContextPool::~IOContextPool()
 {
-	Stop();
 	std::cout << "IOContextPool is destroy" << std::endl;
 }
 

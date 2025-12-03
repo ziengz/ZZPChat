@@ -78,6 +78,11 @@ enum ClickLbState{
     Normal = 0,
     Selected = 1
 };
+enum MsgStatus{
+    UN_READ = 0,      //未读
+    SEND_FAILE = 1,   //发送失败
+    READED = 2        //已读
+};
 
 struct ServerInfo{
     QString Host;
@@ -91,6 +96,7 @@ enum ChatUIMode{
     SearchMode,//搜索模式
     ChatMode,//聊天模式
     ContactMode,//联系模式
+    SettingsMode,//设置模式
 };
 
 //自定义QListWidgeItem的几种类型

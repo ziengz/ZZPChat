@@ -30,9 +30,13 @@ private:
 	void getUserByName(std::string uid_str, Json::Value& rtvalue);
 	void DealChatTextMsg(std::shared_ptr<Session> session, const short& msg_id, const std::string& msg_data);
 	void HeartBeatHandler(std::shared_ptr<Session>session, const short& msg_id, const std::string& msg_data);
+	void GetUserThreadsHandler(std::shared_ptr<Session>session, const short& msg_id, const std::string& msg_data);
 
 	bool GetFriendApplyInfo(int to_uid, std::vector<std::shared_ptr<ApplyInfo>>& list);
 	bool GetFriendList(int self_id, std::vector<std::shared_ptr<UserInfo>>& user_list);
+	bool GetUserThreads(int64_t userId, int64_t lastId, int pageSize, std::vector<std::shared_ptr<ChatThreadInfo>>& threads,
+		bool& loadMore, int& nextLastId);
+
 
 
 	std::thread _work_thread;

@@ -39,6 +39,7 @@ SOURCES += \
     global.cpp \
     grouptipitem.cpp \
     httpmgr.cpp \
+    imagecropperlabel.cpp \
     listitembase.cpp \
     loadingdlg.cpp \
     logindialog.cpp \
@@ -54,6 +55,7 @@ SOURCES += \
     textbubble.cpp \
     timerbtn.cpp \
     userdata.cpp \
+    userinfopage.cpp \
     usermgr.cpp
 
 HEADERS += \
@@ -83,6 +85,8 @@ HEADERS += \
     global.h \
     grouptipitem.h \
     httpmgr.h \
+    imagecropperdialog.h \
+    imagecropperlabel.h \
     listitembase.h \
     loadingdlg.h \
     logindialog.h \
@@ -98,6 +102,7 @@ HEADERS += \
     textbubble.h \
     timerbtn.h \
     userdata.h \
+    userinfopage.h \
     usermgr.h
 
 FORMS += \
@@ -119,7 +124,8 @@ FORMS += \
     logindialog.ui \
     mainwindow.ui \
     registerdialog.ui \
-    resetdialog.ui
+    resetdialog.ui \
+    userinfopage.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

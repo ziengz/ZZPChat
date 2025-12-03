@@ -36,12 +36,16 @@ ChatDialog::ChatDialog(QWidget *parent) :
 
     ui->side_chat_lb->SetState("normal","hover","pressed","selected_normal","selected_hover","selected_pressed");
     ui->side_contact_lb->SetState("normal","hover","pressed","selected_normal","selected_hover","selected_pressed");
+    ui->side_settings_lb->SetState("normal","hover","pressed","selected_normal","selected_hover","selected_pressed");
 
     AddLBGroup(ui->side_chat_lb);
     AddLBGroup(ui->side_contact_lb);
     //处理点击其中一个图标时，其他图标会变为正常
-    connect(ui->side_chat_lb,&StateWidget::Clicked,this,&ChatDialog::slot_side_chat);
-    connect(ui->side_contact_lb,&StateWidget::Clicked,this,&ChatDialog::slot_side_contect);
+    AddLBGroup(ui->side_settings_lb);
+
+    connect(ui->side_chat_lb, &StateWidget::Clicked, this, &ChatDialog::slot_side_chat);
+    connect(ui->side_contact_lb, &StateWidget::Clicked, this, &ChatDialog::slot_side_contect);
+    connect(ui->side_settings_lb, &StateWidget::Clicked, this, &ChatDialog::slot_side_setting);
 
     //创建一个清除动作并设置图标
     QAction* clearAction = new QAction(ui->search_edit);
@@ -396,6 +400,16 @@ void ChatDialog::slot_side_contect()
     ClearLabelState(ui->side_contact_lb);
     ui->stackedWidget->setCurrentWidget(ui->friend_apply_page);
     _state = ChatUIMode::ContactMode;
+    ShowSearch(false);
+}
+
+void ChatDialog::slot_side_setting()
+{
+    qDebug()<<"receive side_setting clicked";
+    ui->search_edit->clear();
+    ClearLabelState(ui->side_settings_lb);
+    ui->stackedWidget->setCurrentWidget(ui->user_info_page);
+    _state = ChatUIMode::SettingsMode;
     ShowSearch(false);
 }
 

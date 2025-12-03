@@ -29,3 +29,23 @@ struct ApplyInfo {
 	int _sex;
 	int _status;
 };
+
+//聊天线程信息
+struct ChatThreadInfo {
+	int _thread_id;
+	std::string _type;     // "private" or "group"
+	int _user1_id;    // 私聊时对应 private_chat.user1_id；群聊时设为 0
+	int _user2_id;    // 私聊时对应 private_chat.user2_id；群聊时设为 0
+};
+
+//聊天消息信息
+struct ChatMessage {
+	int message_id;
+	int thread_id;
+	int sender_id;
+	int recv_id;
+	std::string unique_id;
+	std::string content;
+	std::string chat_time;
+	int status;
+};

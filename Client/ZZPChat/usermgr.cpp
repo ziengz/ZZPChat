@@ -26,6 +26,16 @@ QString UserMgr::GetName()
     return _user_info->_name;
 }
 
+QString UserMgr::GetNick()
+{
+    return _user_info->_nick;
+}
+
+QString UserMgr::GetDesc()
+{
+    return _user_info->_desc;
+}
+
 QString UserMgr::GetIcon()
 {
     return _user_info->_icon;

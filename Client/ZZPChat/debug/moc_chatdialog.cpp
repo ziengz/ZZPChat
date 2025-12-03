@@ -46,6 +46,7 @@ static constexpr auto qt_meta_stringdata_CLASSChatDialogENDCLASS = QtMocHelpers:
     "slot_loading_con_user",
     "slot_side_chat",
     "slot_side_contect",
+    "slot_side_setting",
     "slot_text_changed",
     "text",
     "slot_apply_friend",
@@ -76,7 +77,7 @@ static constexpr auto qt_meta_stringdata_CLASSChatDialogENDCLASS = QtMocHelpers:
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSChatDialogENDCLASS_t {
-    uint offsetsAndSizes[66];
+    uint offsetsAndSizes[68];
     char stringdata0[11];
     char stringdata1[23];
     char stringdata2[1];
@@ -84,32 +85,33 @@ struct qt_meta_stringdata_CLASSChatDialogENDCLASS_t {
     char stringdata4[15];
     char stringdata5[18];
     char stringdata6[18];
-    char stringdata7[5];
-    char stringdata8[18];
-    char stringdata9[32];
-    char stringdata10[21];
-    char stringdata11[26];
-    char stringdata12[10];
-    char stringdata13[14];
-    char stringdata14[25];
-    char stringdata15[9];
-    char stringdata16[18];
-    char stringdata17[17];
-    char stringdata18[5];
-    char stringdata19[19];
-    char stringdata20[29];
-    char stringdata21[4];
-    char stringdata22[26];
-    char stringdata23[30];
-    char stringdata24[8];
-    char stringdata25[20];
-    char stringdata26[28];
-    char stringdata27[3];
-    char stringdata28[34];
-    char stringdata29[26];
-    char stringdata30[10];
-    char stringdata31[30];
-    char stringdata32[22];
+    char stringdata7[18];
+    char stringdata8[5];
+    char stringdata9[18];
+    char stringdata10[32];
+    char stringdata11[21];
+    char stringdata12[26];
+    char stringdata13[10];
+    char stringdata14[14];
+    char stringdata15[25];
+    char stringdata16[9];
+    char stringdata17[18];
+    char stringdata18[17];
+    char stringdata19[5];
+    char stringdata20[19];
+    char stringdata21[29];
+    char stringdata22[4];
+    char stringdata23[26];
+    char stringdata24[30];
+    char stringdata25[8];
+    char stringdata26[20];
+    char stringdata27[28];
+    char stringdata28[3];
+    char stringdata29[34];
+    char stringdata30[26];
+    char stringdata31[10];
+    char stringdata32[30];
+    char stringdata33[22];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSChatDialogENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -121,33 +123,34 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSChatDialogENDCLASS_t qt_meta_st
         QT_MOC_LITERAL(35, 21),  // "slot_loading_con_user"
         QT_MOC_LITERAL(57, 14),  // "slot_side_chat"
         QT_MOC_LITERAL(72, 17),  // "slot_side_contect"
-        QT_MOC_LITERAL(90, 17),  // "slot_text_changed"
-        QT_MOC_LITERAL(108, 4),  // "text"
-        QT_MOC_LITERAL(113, 17),  // "slot_apply_friend"
-        QT_MOC_LITERAL(131, 31),  // "std::shared_ptr<AddFriendApply>"
-        QT_MOC_LITERAL(163, 20),  // "slot_add_auth_friend"
-        QT_MOC_LITERAL(184, 25),  // "std::shared_ptr<AuthInfo>"
-        QT_MOC_LITERAL(210, 9),  // "auth_info"
-        QT_MOC_LITERAL(220, 13),  // "slot_auth_rsp"
-        QT_MOC_LITERAL(234, 24),  // "std::shared_ptr<AuthRsp>"
-        QT_MOC_LITERAL(259, 8),  // "auth_rsp"
-        QT_MOC_LITERAL(268, 17),  // "slot_item_clicked"
-        QT_MOC_LITERAL(286, 16),  // "QListWidgetItem*"
-        QT_MOC_LITERAL(303, 4),  // "item"
-        QT_MOC_LITERAL(308, 18),  // "slot_text_chat_msg"
-        QT_MOC_LITERAL(327, 28),  // "std::shared_ptr<TextChatMsg>"
-        QT_MOC_LITERAL(356, 3),  // "msg"
-        QT_MOC_LITERAL(360, 25),  // "slot_append_send_chat_msg"
-        QT_MOC_LITERAL(386, 29),  // "std::shared_ptr<TextChatData>"
-        QT_MOC_LITERAL(416, 7),  // "msgdata"
-        QT_MOC_LITERAL(424, 19),  // "slot_jump_chat_item"
-        QT_MOC_LITERAL(444, 27),  // "std::shared_ptr<SearchInfo>"
-        QT_MOC_LITERAL(472, 2),  // "si"
-        QT_MOC_LITERAL(475, 33),  // "slot_jump_chat_item_from_info..."
-        QT_MOC_LITERAL(509, 25),  // "std::shared_ptr<UserInfo>"
-        QT_MOC_LITERAL(535, 9),  // "user_info"
-        QT_MOC_LITERAL(545, 29),  // "slot_switch_apply_friend_page"
-        QT_MOC_LITERAL(575, 21)   // "slot_friend_info_page"
+        QT_MOC_LITERAL(90, 17),  // "slot_side_setting"
+        QT_MOC_LITERAL(108, 17),  // "slot_text_changed"
+        QT_MOC_LITERAL(126, 4),  // "text"
+        QT_MOC_LITERAL(131, 17),  // "slot_apply_friend"
+        QT_MOC_LITERAL(149, 31),  // "std::shared_ptr<AddFriendApply>"
+        QT_MOC_LITERAL(181, 20),  // "slot_add_auth_friend"
+        QT_MOC_LITERAL(202, 25),  // "std::shared_ptr<AuthInfo>"
+        QT_MOC_LITERAL(228, 9),  // "auth_info"
+        QT_MOC_LITERAL(238, 13),  // "slot_auth_rsp"
+        QT_MOC_LITERAL(252, 24),  // "std::shared_ptr<AuthRsp>"
+        QT_MOC_LITERAL(277, 8),  // "auth_rsp"
+        QT_MOC_LITERAL(286, 17),  // "slot_item_clicked"
+        QT_MOC_LITERAL(304, 16),  // "QListWidgetItem*"
+        QT_MOC_LITERAL(321, 4),  // "item"
+        QT_MOC_LITERAL(326, 18),  // "slot_text_chat_msg"
+        QT_MOC_LITERAL(345, 28),  // "std::shared_ptr<TextChatMsg>"
+        QT_MOC_LITERAL(374, 3),  // "msg"
+        QT_MOC_LITERAL(378, 25),  // "slot_append_send_chat_msg"
+        QT_MOC_LITERAL(404, 29),  // "std::shared_ptr<TextChatData>"
+        QT_MOC_LITERAL(434, 7),  // "msgdata"
+        QT_MOC_LITERAL(442, 19),  // "slot_jump_chat_item"
+        QT_MOC_LITERAL(462, 27),  // "std::shared_ptr<SearchInfo>"
+        QT_MOC_LITERAL(490, 2),  // "si"
+        QT_MOC_LITERAL(493, 33),  // "slot_jump_chat_item_from_info..."
+        QT_MOC_LITERAL(527, 25),  // "std::shared_ptr<UserInfo>"
+        QT_MOC_LITERAL(553, 9),  // "user_info"
+        QT_MOC_LITERAL(563, 29),  // "slot_switch_apply_friend_page"
+        QT_MOC_LITERAL(593, 21)   // "slot_friend_info_page"
     },
     "ChatDialog",
     "slot_loading_chat_user",
@@ -155,6 +158,7 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSChatDialogENDCLASS_t qt_meta_st
     "slot_loading_con_user",
     "slot_side_chat",
     "slot_side_contect",
+    "slot_side_setting",
     "slot_text_changed",
     "text",
     "slot_apply_friend",
@@ -193,7 +197,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSChatDialogENDCLASS[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-      15,   14, // methods
+      16,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -201,38 +205,40 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSChatDialogENDCLASS[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,  104,    2, 0x08,    1 /* Private */,
-       3,    0,  105,    2, 0x08,    2 /* Private */,
-       4,    0,  106,    2, 0x08,    3 /* Private */,
-       5,    0,  107,    2, 0x08,    4 /* Private */,
-       6,    1,  108,    2, 0x08,    5 /* Private */,
-       8,    1,  111,    2, 0x08,    7 /* Private */,
-      10,    1,  114,    2, 0x08,    9 /* Private */,
-      13,    1,  117,    2, 0x08,   11 /* Private */,
-      16,    1,  120,    2, 0x08,   13 /* Private */,
-      19,    1,  123,    2, 0x08,   15 /* Private */,
-      22,    1,  126,    2, 0x08,   17 /* Private */,
-      25,    1,  129,    2, 0x08,   19 /* Private */,
-      28,    1,  132,    2, 0x08,   21 /* Private */,
-      31,    0,  135,    2, 0x08,   23 /* Private */,
-      32,    1,  136,    2, 0x08,   24 /* Private */,
+       1,    0,  110,    2, 0x08,    1 /* Private */,
+       3,    0,  111,    2, 0x08,    2 /* Private */,
+       4,    0,  112,    2, 0x08,    3 /* Private */,
+       5,    0,  113,    2, 0x08,    4 /* Private */,
+       6,    0,  114,    2, 0x08,    5 /* Private */,
+       7,    1,  115,    2, 0x08,    6 /* Private */,
+       9,    1,  118,    2, 0x08,    8 /* Private */,
+      11,    1,  121,    2, 0x08,   10 /* Private */,
+      14,    1,  124,    2, 0x08,   12 /* Private */,
+      17,    1,  127,    2, 0x08,   14 /* Private */,
+      20,    1,  130,    2, 0x08,   16 /* Private */,
+      23,    1,  133,    2, 0x08,   18 /* Private */,
+      26,    1,  136,    2, 0x08,   20 /* Private */,
+      29,    1,  139,    2, 0x08,   22 /* Private */,
+      32,    0,  142,    2, 0x08,   24 /* Private */,
+      33,    1,  143,    2, 0x08,   25 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,    7,
-    QMetaType::Void, 0x80000000 | 9,    2,
-    QMetaType::Void, 0x80000000 | 11,   12,
-    QMetaType::Void, 0x80000000 | 14,   15,
-    QMetaType::Void, 0x80000000 | 17,   18,
-    QMetaType::Void, 0x80000000 | 20,   21,
-    QMetaType::Void, 0x80000000 | 23,   24,
-    QMetaType::Void, 0x80000000 | 26,   27,
-    QMetaType::Void, 0x80000000 | 29,   30,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 29,   30,
+    QMetaType::Void, QMetaType::QString,    8,
+    QMetaType::Void, 0x80000000 | 10,    2,
+    QMetaType::Void, 0x80000000 | 12,   13,
+    QMetaType::Void, 0x80000000 | 15,   16,
+    QMetaType::Void, 0x80000000 | 18,   19,
+    QMetaType::Void, 0x80000000 | 21,   22,
+    QMetaType::Void, 0x80000000 | 24,   25,
+    QMetaType::Void, 0x80000000 | 27,   28,
+    QMetaType::Void, 0x80000000 | 30,   31,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 30,   31,
 
        0        // eod
 };
@@ -253,6 +259,8 @@ Q_CONSTINIT const QMetaObject ChatDialog::staticMetaObject = { {
         // method 'slot_side_chat'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'slot_side_contect'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'slot_side_setting'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'slot_text_changed'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
@@ -300,17 +308,18 @@ void ChatDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 1: _t->slot_loading_con_user(); break;
         case 2: _t->slot_side_chat(); break;
         case 3: _t->slot_side_contect(); break;
-        case 4: _t->slot_text_changed((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
-        case 5: _t->slot_apply_friend((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<AddFriendApply>>>(_a[1]))); break;
-        case 6: _t->slot_add_auth_friend((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<AuthInfo>>>(_a[1]))); break;
-        case 7: _t->slot_auth_rsp((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<AuthRsp>>>(_a[1]))); break;
-        case 8: _t->slot_item_clicked((*reinterpret_cast< std::add_pointer_t<QListWidgetItem*>>(_a[1]))); break;
-        case 9: _t->slot_text_chat_msg((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<TextChatMsg>>>(_a[1]))); break;
-        case 10: _t->slot_append_send_chat_msg((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<TextChatData>>>(_a[1]))); break;
-        case 11: _t->slot_jump_chat_item((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<SearchInfo>>>(_a[1]))); break;
-        case 12: _t->slot_jump_chat_item_from_infopage((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<UserInfo>>>(_a[1]))); break;
-        case 13: _t->slot_switch_apply_friend_page(); break;
-        case 14: _t->slot_friend_info_page((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<UserInfo>>>(_a[1]))); break;
+        case 4: _t->slot_side_setting(); break;
+        case 5: _t->slot_text_changed((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 6: _t->slot_apply_friend((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<AddFriendApply>>>(_a[1]))); break;
+        case 7: _t->slot_add_auth_friend((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<AuthInfo>>>(_a[1]))); break;
+        case 8: _t->slot_auth_rsp((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<AuthRsp>>>(_a[1]))); break;
+        case 9: _t->slot_item_clicked((*reinterpret_cast< std::add_pointer_t<QListWidgetItem*>>(_a[1]))); break;
+        case 10: _t->slot_text_chat_msg((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<TextChatMsg>>>(_a[1]))); break;
+        case 11: _t->slot_append_send_chat_msg((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<TextChatData>>>(_a[1]))); break;
+        case 12: _t->slot_jump_chat_item((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<SearchInfo>>>(_a[1]))); break;
+        case 13: _t->slot_jump_chat_item_from_infopage((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<UserInfo>>>(_a[1]))); break;
+        case 14: _t->slot_switch_apply_friend_page(); break;
+        case 15: _t->slot_friend_info_page((*reinterpret_cast< std::add_pointer_t<std::shared_ptr<UserInfo>>>(_a[1]))); break;
         default: ;
         }
     }
@@ -335,13 +344,13 @@ int ChatDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 15)
+        if (_id < 16)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 15;
+        _id -= 16;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 15)
+        if (_id < 16)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 15;
+        _id -= 16;
     }
     return _id;
 }

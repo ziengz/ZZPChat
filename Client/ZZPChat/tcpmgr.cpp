@@ -347,7 +347,7 @@ void TcpMgr::initHandlers()
             return;
         }
         QJsonObject jsonObj(jsonDoc.object());
-        if(jsonObj.contains("error")){
+        if(!jsonObj.contains("error")){
             int err = ErrorCodes::ERR_JSON;
             qDebug()<<"Heart Beat msg failed,err is json parse err"<<err;
             return;

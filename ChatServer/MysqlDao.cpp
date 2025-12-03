@@ -333,6 +333,82 @@ bool MysqlDao::GetFriendList(int self_id, std::vector<std::shared_ptr<UserInfo>>
 		return false;
 	}
 }
+
+bool MysqlDao::GetUserThreads(int64_t userId,
+	int64_t lastId,
+	int      pageSize,
+	std::vector<std::shared_ptr<ChatThreadInfo>>& threads,
+	bool& loadMore,
+	int& nextLastId) {
+	
+	loadMore = false;
+	nextLastId = lastId;
+	threads.clear();
+
+	auto con = pool_->getConnection();
+	Defer defer([this, &con]() {
+		pool_->returnConnection(std::move(con));
+		});
+	try {
+		std::string sql =
+			"WITH all_threads AS ( "
+			"  SELECT thread_id, 'private' AS type, user1_id, user2_id "
+			"    FROM private_chat "
+			"   WHERE (user1_id = ? OR user2_id = ?) "
+			"     AND thread_id > ? "
+			"  UNION ALL "
+			"  SELECT thread_id, 'group'   AS type, 0 AS user1_id, 0 AS user2_id "
+			"    FROM group_chat_member "
+			"   WHERE user_id   = ? "
+			"     AND thread_id > ? "
+			") "
+			"SELECT thread_id, type, user1_id, user2_id "
+			"  FROM all_threads "
+			" ORDER BY thread_id "
+			" LIMIT ?;";
+		std::unique_ptr<sql::PreparedStatement>pstmt(con->con_->prepareStatement(sql));
+
+		int idx = 1;
+		pstmt->setInt64(idx++, userId);              // private.user1_id
+		pstmt->setInt64(idx++, userId);              // private.user2_id
+		pstmt->setInt64(idx++, lastId);              // private.thread_id > lastId
+		pstmt->setInt64(idx++, userId);              // group.user_id
+		pstmt->setInt64(idx++, lastId);              // group.thread_id > lastId
+		pstmt->setInt(idx++, pageSize + 1);          // LIMIT pageSize+1
+
+		std::unique_ptr<sql::ResultSet>res(pstmt->executeQuery());
+		//把所有行读到临时容器中
+		std::vector <std::shared_ptr<ChatThreadInfo >> tmp;
+		while (res->next()) {
+			auto cti = std::make_shared<ChatThreadInfo>();
+			cti->_thread_id = res->getInt64("thread_id");
+			cti->_type = res->getString("type");
+			cti->_user1_id = res->getInt64("user1_id");
+			cti->_user2_id = res->getInt64("user2_id");
+			tmp.push_back(cti);
+		}
+
+		//判断读取到的内容是否多一条
+		if((int)tmp.size() > pageSize) {
+			loadMore = true;
+			tmp.pop_back();
+		}
+		//如果还有数据，更新nextLastId为最后一条thread_id
+		if (!tmp.empty()) {
+			nextLastId = tmp.back()->_thread_id;
+		}
+		threads = std::move(tmp);
+	}
+	catch (sql::SQLException& e) {
+		std::cerr << "SQLException: " << e.what()
+			<< " (MySQL error code: " << e.getErrorCode()
+			<< ", SQLState: " << e.getSQLState() << ")\n";
+		return false;
+	}
+	return false;
+
+}
+
 std::shared_ptr<UserInfo>MysqlDao::GetUser(int uid) {
 	auto con = pool_->getConnection();
 	if (con == nullptr) {

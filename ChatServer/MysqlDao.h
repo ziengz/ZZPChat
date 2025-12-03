@@ -209,6 +209,14 @@ public:
 	bool AddFriend(const int& from, const int& to, std::string back_name);
 	bool GetApplyList(int to_id, std::vector<std::shared_ptr<ApplyInfo>>& applyList, int begin, int limit);
 	bool GetFriendList(int self_id, std::vector<std::shared_ptr<UserInfo>>& user_info_list);
+	bool GetUserThreads(int64_t userId,
+		int64_t lastId,
+		int  pageSize,
+		std::vector<std::shared_ptr<ChatThreadInfo>>& threads,
+		bool& loadMore,
+		int& nextLastId);
+	
+
 	//bool TestProcedure(const std::string& email, int& uid, std::string& name);
 	std::shared_ptr<UserInfo> GetUser(int uid);
 	std::shared_ptr<UserInfo> GetUser(std::string name);

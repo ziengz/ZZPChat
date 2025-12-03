@@ -16,9 +16,9 @@ LogicSystem::LogicSystem():_b_stop(false),_p_server(nullptr)
 
 LogicSystem::~LogicSystem()
 {
-	std::lock_guard<std::mutex>lock(mutex_);
 	_b_stop = true;
 	cond_.notify_all();
+	_work_thread.join();
 }
 
 void LogicSystem::SetServer(std::shared_ptr<CServer> pserver)

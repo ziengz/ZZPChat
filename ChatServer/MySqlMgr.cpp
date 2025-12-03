@@ -44,6 +44,15 @@ bool MySqlMgr::GetFriendList(int self_id, std::vector<std::shared_ptr<UserInfo>>
 	return dao_.GetFriendList(self_id, user_info_list);
 }
 
+bool MySqlMgr::GetUserThreads(int64_t userId,
+	int64_t lastId,
+	int      pageSize,
+	std::vector<std::shared_ptr<ChatThreadInfo>>& threads,
+	bool& loadMore,
+	int& nextLastId) {
+	return dao_.GetUserThreads(userId,lastId, pageSize, threads, loadMore, nextLastId);
+}
+
 std::shared_ptr<UserInfo> MySqlMgr::GetUser(int uid) {
 	return dao_.GetUser(uid);
 }

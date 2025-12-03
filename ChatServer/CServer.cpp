@@ -106,6 +106,7 @@ void CServer::on_timer(const boost::system::error_code& ec)
 void CServer::StartTimer()
 {
 	auto self = shared_from_this();
+	//使用智能指针，引用计数最少为1，在这里+1，stop之后也不至于因为引用计数为0而出现异常
 	_timer.async_wait([self](boost::system::error_code ec) {
 		self->on_timer(ec);
 	});

@@ -16,9 +16,9 @@ LogicSystem::LogicSystem():_b_stop(false),_p_server(nullptr)
 
 LogicSystem::~LogicSystem()
 {
-	std::lock_guard<std::mutex>lock(mutex_);
 	_b_stop = true;
 	cond_.notify_all();
+	_work_thread.join();
 }
 
 void LogicSystem::SetServer(std::shared_ptr<CServer> pserver)
@@ -40,6 +40,7 @@ void LogicSystem::RegisterCallBack()
 		std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 	_fun_callbacks[ID_HEART_BEAT_REQ] = std::bind(&LogicSystem::HeartBeatHandler,this,
 		std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+	_fun_callbacks[ID_LOAD_CHAT_THREAD_REQ] = std::bind(&LogicSystem::)
 }
 
 void LogicSystem::PostMsgToQue(std::shared_ptr<LogicNode> msg)
@@ -645,6 +646,45 @@ void LogicSystem::HeartBeatHandler(std::shared_ptr<Session> session, const short
 	session->Send(rtvalue.toStyledString(),ID_HEARTBEAT_RSP);
 }
 
+void LogicSystem::GetUserThreadsHandler(std::shared_ptr<Session> session, const short& msg_id, const std::string& msg_data)
+{
+	Json::Reader reader;
+	Json::Value root;
+	reader.parse(msg_data, root);
+	auto uid = root["uid"].asInt();
+	auto last_id = root["thread_id"].asInt();
+	std::cout << "uid is " << uid << std::endl;
+	Json::Value rtvalue;
+	rtvalue["uid"] = uid;
+
+	rtvalue["error"] = Error_Codes::Success;
+	
+	Defer defer([rtvalue,this, session]() {
+		auto return_str = rtvalue.toStyledString();
+		session->Send(return_str, ID_LOAD_CHAT_THREAD_RSP);
+	});
+
+	std::vector<std::shared_ptr<ChatThreadInfo>> threads;
+	int page_size = 10;
+	bool load_more = false;
+	int next_last_id = 0;
+	bool res = GetUserThreads(uid, last_id, page_size, threads, load_more, next_last_id);
+	if (!res) {
+		rtvalue["error"] = Error_Codes::UidInvalid;
+		return;
+	}
+	rtvalue["load_more"] = load_more;
+	rtvalue["next_last_id"] = next_last_id;
+	for (auto& thread : threads) {
+		Json::Value thread_root;
+		thread_root["thread_id"] = int(thread->_thread_id);
+		thread_root["type"] = thread->_type;
+		thread_root["user1_id"] = thread->_user1_id;
+		thread_root["user2_id"] = thread->_user2_id;
+		rtvalue["threads"].append(thread_root);
+	}
+}
+
 bool LogicSystem::GetFriendApplyInfo(int to_uid, std::vector<std::shared_ptr<ApplyInfo>>& list)
 {
 	return MySqlMgr::GetIntance()->GetApplyList(to_uid, list, 0, 10);
@@ -653,5 +693,10 @@ bool LogicSystem::GetFriendApplyInfo(int to_uid, std::vector<std::shared_ptr<App
 
 bool LogicSystem::GetFriendList(int self_id, std::vector<std::shared_ptr<UserInfo>>& user_list) {
 	return MySqlMgr::GetIntance()->GetFriendList(self_id, user_list);
+}
+
+bool LogicSystem::GetUserThreads(int64_t userId, int64_t lastId, int pageSize, std::vector<std::shared_ptr<ChatThreadInfo>>& threads, bool& loadMore, int& nextLastId)
+{
+	return MySqlMgr::GetIntance()->GetUserThreads(userId, lastId, pageSize, threads, loadMore, nextLastId);
 }
 
